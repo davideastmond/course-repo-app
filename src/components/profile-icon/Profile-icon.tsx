@@ -4,11 +4,14 @@ import "./profile-icon-style.css";
 interface IProfileIconProps {
   imageSrc?: string;
   classNames?: string;
+  loginClickHandler: () => void;
+  genericUser?: boolean;
 }
 function ProfileIcon(props: IProfileIconProps) {
   return (
     <div className="Profile-Icon__main">
       <img
+        onClick={props.loginClickHandler}
         className={`profile-icon-image ${props.classNames || ""}`}
         src={props.imageSrc || GenericProfileIcon}
         alt="profile-icon"

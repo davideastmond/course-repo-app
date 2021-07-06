@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import BodyHeader from "../../components/body-header";
+import CourseContainer from "../../components/course-container";
 import HeaderBar from "../../components/header-bar";
 import {
   getAllCoursesAsync,
@@ -23,6 +24,7 @@ function HomePage() {
     <div>
       <HeaderBar />
       <BodyHeader />
+      <CourseContainer />
     </div>
   );
 }

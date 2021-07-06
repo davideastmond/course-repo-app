@@ -1,8 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
+import doGoogleLogin from "../../services/auth";
+
 function HeaderBar() {
+  const [done, setDone] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
+  const handleGoogleLogin = () => {
+    doGoogleLogin({ setDone, setErrorMessage });
+  };
+
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar__Zen-logo-section">
@@ -13,7 +21,10 @@ function HeaderBar() {
       </div>
       <div className="Nav__Header-bar__Profile-section">
         <p className="profile-name">Guest</p>
-        <ProfileIcon classNames="Nav__Header-bar__profile-icon-image" />
+        <ProfileIcon
+          classNames="Nav__Header-bar__profile-icon-image"
+          loginClickHandler={handleGoogleLogin}
+        />
       </div>
     </nav>
   );

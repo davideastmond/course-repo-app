@@ -1,0 +1,47 @@
+.Course-card__category-header {
+  background-color: #E9FBF4;
+  border-left-color: #2A8D85;
+  border-left-width: 2px;
+  border-left-style: solid;
+  max-width: 100px;
+  font-family: var(--main-font);  
+}
+
+.Course-card__inner-body {
+  border: 1px solid black;
+  padding: 30px;
+}
+
+.Generic-Profile-Icon {
+  grid-area: generic-circle-icon;
+}
+
+.Course-card__course-title {
+  font-family: var(--main-font);
+  font-weight: bold;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.Course-card__recommendation-section {
+  display: grid;
+  grid-template-columns: 32px auto;
+  grid-template-areas: "generic-circle-icon recommended-text";
+}
+
+.Recommended-by {
+  grid-area: recommended-text;
+  font-family: var(--main-font);
+  font-weight: lighter;
+  margin-left: 5px;
+  align-self: center;
+}
+
+.Course-card__synopsis-section {
+  font-family: var(--main-font);
+}
+
+.Course-card__tags-section {
+  display: flex;
+  width: 50%;
+}

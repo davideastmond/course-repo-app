@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
-import doGoogleLogin from "../../services/auth";
+//import doGoogleLogin from "../../services/auth";
 
 function HeaderBar() {
-  const [done, setDone] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  // const [done, setDone] = useState<boolean>(false);
+  // const [errorMessage, setErrorMessage] = useState<string>("");
   const handleGoogleLogin = () => {
-    doGoogleLogin({ setDone, setErrorMessage });
+    // doGoogleLogin({ setDone, setErrorMessage });
   };
 
   return (

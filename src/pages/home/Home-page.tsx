@@ -24,7 +24,9 @@ function HomePage() {
     <div>
       <HeaderBar />
       <BodyHeader />
-      <CourseContainer />
+      <div className="Home-Page__middle-section">
+        <CourseContainer />
+      </div>
     </div>
   );
 }

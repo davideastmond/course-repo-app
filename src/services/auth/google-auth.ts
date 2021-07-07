@@ -15,13 +15,15 @@ const doGoogleLogin = async ({
 }: IGoogleAuthProps) => {
   const requestAuth = async () => {
     try {
-      const res = await axios(`${process.env.REACT_APP_API_URL}/api/auth`);
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/auth`, {
+        withCredentials: true,
+      });
       if (res.status === 200) {
         setDone(true);
       }
     } catch (error) {
       setDone(false);
-      if (error.response.status === 401) {
+      if (error.status === 401) {
         typeof error?.message === "string" &&
           setErrorMessage(
             "Authentication unsuccessful, please select a google account to sign in with."

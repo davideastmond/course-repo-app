@@ -33,7 +33,7 @@
 .Nav__Header-bar__Profile-section {
   grid-area: profile-icon-section;
   display: grid;
-  grid-template-columns: 10% 32px;
+  grid-template-columns: 50px 32px;
   grid-template-areas: "profile-name avatar";
   justify-content: right;
 }

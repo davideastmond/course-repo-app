@@ -7,4 +7,10 @@
   --white: #ffffff;
   --main-font: Montserrat,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
   --main-font-color: #000000;
+  --light-grey: #7D7D7D;
+  --page-ambient-color: #F8FBF9;
+}
+
+h1, h2, h3, h4, h5, h5 {
+  margin: 0px;
 }

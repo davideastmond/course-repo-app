@@ -1,0 +1,10 @@
+.Content-tag__main {
+  border-radius: 16px;
+  max-width: 60px;
+  border: 1px solid black;
+  font-family: var(--main-font);
+  font-size: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 1%;
+}

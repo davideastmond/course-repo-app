@@ -1,0 +1,16 @@
+.Profile-Icon__main {
+  overflow: hidden;
+}
+
+.Generic-Profile-Icon {
+  background-color: green;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  font-family: var(--main-font);
+  font-size: 12px;
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+}

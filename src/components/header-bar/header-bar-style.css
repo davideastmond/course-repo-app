@@ -1,0 +1,48 @@
+.Nav__Header-bar {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-template-areas: "app-logo app-name profile-icon-section";
+  background-color: white;
+  height: 80px;
+  align-items: center;
+}
+
+.app-title {
+  font-family: var(--main-font);
+  font-size: 25px;
+  font-weight: bold;
+  margin: unset;
+}
+
+.profile-name {
+  font-family: "Open Sans", "sans-serif";
+  font-size: 16px;
+  color: var(--light-grey);
+  grid-area: profile-name;
+}
+
+.Nav__Header-bar__Zen-logo-section {
+  grid-area: app-logo;
+}
+
+.Nav__Header-bar__Apple-title-section {
+  grid-area: app-name;
+  align-items: center;
+}
+
+.Nav__Header-bar__Profile-section {
+  grid-area: profile-icon-section;
+  display: grid;
+  grid-template-columns: 50px 32px;
+  grid-template-areas: "profile-name avatar";
+  justify-content: right;
+}
+
+.Nav__Header-bar__profile-icon-image {
+  grid-area: avatar;
+}
+
+.profile-name {
+  margin: unset;
+  align-self: center;
+}

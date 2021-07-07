@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllCourses, postDummyCourseDataToAPI } from "../services/courses";
+import { getAllCourses } from "../services/courses";
 import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {

@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllCourses } from "../services/courses";
+import { getAllCourses, postDummyCourseDataToAPI } from "../services/courses";
 import stateStatus from "../utils/state-status";
 
-const initialState = {
+interface IInitialCoursesState {
+  courses: any[];
+  status: any;
+}
+const initialState: IInitialCoursesState = {
   courses: [],
   status: {
     state: "idle",

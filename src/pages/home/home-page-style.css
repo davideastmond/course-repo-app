@@ -9,4 +9,37 @@ body {
   font-size: 16px;
   line-height: 22px;
   color: var(--light-grey);
+  width: 232px;
+  height: 44px;
+}
+
+.Home-page__footer {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.add-course-button-size {
+  width: 199px;
+  height: 54px;
+  padding: 0px;
+  text-align: center;
+}
+
+.recommend-course-button-size {
+  height: 10px;
+}
+
+.Home-Page__middle-section__header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Home-Page__middle-section {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Home-Page__center-column {
+  width: 800px;
 }

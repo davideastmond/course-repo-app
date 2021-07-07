@@ -18,6 +18,38 @@ function CourseContainer(props: ICourseContainerProps) {
         tags={["one", "two"]}
         category="Engineering"
       />
+      <CourseCard
+        courseTitle="Test Title"
+        url="http://nbc.com"
+        userName="Guest"
+        description={dummyDescriptionText}
+        tags={["one", "two"]}
+        category="Engineering"
+      />
+      <CourseCard
+        courseTitle="Test Title"
+        url="http://nbc.com"
+        userName="Guest"
+        description={dummyDescriptionText}
+        tags={["one", "two"]}
+        category="Engineering"
+      />
+      <CourseCard
+        courseTitle="Test Title"
+        url="http://nbc.com"
+        userName="Guest"
+        description={dummyDescriptionText}
+        tags={["one", "two"]}
+        category="Engineering"
+      />
+      <CourseCard
+        courseTitle="Test Title"
+        url="http://nbc.com"
+        userName="Guest"
+        description={dummyDescriptionText}
+        tags={["one", "two"]}
+        category="Engineering"
+      />
     </div>
   );
 }

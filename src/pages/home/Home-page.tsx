@@ -1,26 +1,21 @@
 import { useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+// import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import BodyHeader from "../../components/body-header";
 import SideBrowser from "../../components/Browser";
+import ActionButton from "../../components/Buttons/ActionButton";
+
 import CourseContainer from "../../components/course-container";
 import HeaderBar from "../../components/header-bar";
-import {
-  getAllCoursesAsync,
-  selectAllCourses,
-} from "../../reducers/courses-slice";
+import TextInput from "../../components/Text-Input";
+// import {
+//   getAllCoursesAsync,
+//   selectAllCourses,
+// } from "../../reducers/courses-slice";
 
 import "./home-page-style.css";
 function HomePage() {
-  const dispatch = useDispatch();
-  const courses = useSelector(selectAllCourses, shallowEqual);
-
-  useEffect(() => {
-    dispatch(getAllCoursesAsync());
-  });
-
-  useEffect(() => {
-    console.log("all courses", courses);
-  }, [dispatch]);
+  // const dispatch = useDispatch();
+  // const courses = useSelector(selectAllCourses, shallowEqual);
   return (
     <div>
       <HeaderBar />
@@ -32,8 +27,25 @@ function HomePage() {
       </div>
       <div className="Home-Page__middle-section">
         <SideBrowser />
-        <CourseContainer />
+        <div className="Home-Page__center-column">
+          <div className="Home-Page__search-section">
+            <TextInput placeHolderText="Search for a course..." />
+          </div>
+          <CourseContainer />
+        </div>
+        <ActionButton
+          plusSymbol={true}
+          title={"Recommend a course"}
+          classNames={"recommend-course-button-size"}
+        />
       </div>
+      <footer className="Home-page__footer">
+        <ActionButton
+          plusSymbol={false}
+          title={"Load more courses"}
+          classNames={"add-course-button-size"}
+        />
+      </footer>
     </div>
   );
 }

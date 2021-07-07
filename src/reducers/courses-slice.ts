@@ -17,7 +17,6 @@ export const getAllCoursesAsync = createAsyncThunk(
   "courses/getAllCourses",
   async () => {
     const result = await getAllCourses();
-    console.log("result from async", result);
     return result;
   }
 );
@@ -33,7 +32,7 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        state.courses = action.payload.data;
+        state.courses = action.payload;
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");

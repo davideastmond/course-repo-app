@@ -1,7 +1,2 @@
-import React from "react";
-
-function Browser() {
-  return <div></div>;
-}
-
-export default Browser;
+import SideBrowser from "./Side-Browser";
+export default SideBrowser;

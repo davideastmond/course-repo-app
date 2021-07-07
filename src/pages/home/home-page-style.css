@@ -1,3 +1,12 @@
 body {
   background-color: var(--page-ambient-color);
 }
+
+.Middle-section__header-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: var(--light-grey);
+}

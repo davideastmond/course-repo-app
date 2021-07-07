@@ -11,21 +11,28 @@ interface ICourseCardProps {
   description: string;
   tags: Array<string>;
   category?: string;
+  color?: string;
 }
 function CourseCard(props: ICourseCardProps) {
   return (
     <div className="Course-card__main">
-      <div className="Course-card__category-header">
+      <div
+        className={`Course-card__category-header random-blush ${
+          props.color || ""
+        }`}
+      >
         {props.category || "not categorized"}
       </div>
       <div className="Course-card__inner-body">
         <div className="Course-card__course-title">
-          {props.courseTitle}
-          <img
-            className="external-link-icon"
-            src={ExternalLinkIcon}
-            alt="external link"
-          />
+          <a className="Course-card__external-link" href={props.url}>
+            {props.courseTitle}
+            <img
+              className="external-link-icon"
+              src={ExternalLinkIcon}
+              alt="external link"
+            />
+          </a>
         </div>
 
         <div className="Course-card__recommendation-section">

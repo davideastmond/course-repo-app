@@ -1,6 +1,4 @@
 .Course-card__category-header {
-  background-color: #E9FBF4;
-  border-left-color: #2A8D85;
   border-left-width: 4px;
   border-left-style: solid;
   max-width: 100px;
@@ -48,4 +46,9 @@
 }
 .external-link-icon {
   margin-left: 10px;
+}
+
+.Course-card__external-link {
+  text-decoration: none;
+  color: black;
 }

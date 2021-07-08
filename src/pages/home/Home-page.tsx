@@ -20,25 +20,27 @@ function HomePage() {
   return (
     <div>
       <HeaderBar />
-      <BodyHeader />
-      <div className="Home-Page__middle-section__header">
-        <div className="Middle-section__header-text">
-          Don’t see a course that you like? Add your own!
-        </div>
-      </div>
-      <div className="Home-Page__middle-section">
-        <SideBrowser />
-        <div className="Home-Page__center-column">
-          <div className="Home-Page__search-section">
-            <TextInput placeHolderText="Search for a course..." />
+      <div className="Home-Page__main-body">
+        <BodyHeader />
+        <div className="Home-Page__middle-section__header">
+          <div className="Middle-section__header-text">
+            Don’t see a course that you like? Add your own!
           </div>
-          {courses && <CourseContainer courses={courses} />}
         </div>
-        <ActionButton
-          plusSymbol={true}
-          title={"Recommend a course"}
-          classNames={"recommend-course-button-size"}
-        />
+        <div className="Home-Page__middle-section">
+          <SideBrowser />
+          <div className="Home-Page__center-column">
+            <div className="Home-Page__search-section">
+              <TextInput placeHolderText="Search for a course..." />
+            </div>
+            {courses && <CourseContainer courses={courses} />}
+          </div>
+          <ActionButton
+            plusSymbol={true}
+            title={"Recommend a course"}
+            classNames={"recommend-course-button-size"}
+          />
+        </div>
       </div>
       <footer className="Home-page__footer">
         <ActionButton

@@ -27,12 +27,10 @@ export const appSlice = createSlice({
       })
       .addCase(checkIsAuthedAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        console.log("31 action payload", action.payload);
         state.isLoggedIn = action.payload;
       })
       .addCase(checkIsAuthedAsync.rejected, (state) => {
-        stateStatus.error("can't do this");
-        console.log("error in checking if logged in");
+        stateStatus.error(state, "can't do this");
       });
   },
 });

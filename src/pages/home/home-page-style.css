@@ -43,3 +43,8 @@ body {
 .Home-Page__center-column {
   width: 800px;
 }
+
+.Home-Page__main-body {
+  margin-left: 15%;
+  margin-right: 15%;
+}

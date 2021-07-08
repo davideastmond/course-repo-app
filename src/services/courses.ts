@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ICourseRecommendationPost } from "../types";
 
 export const getAllCourses = async () => {
   const req = await axios({
@@ -8,10 +9,12 @@ export const getAllCourses = async () => {
   return req.data;
 };
 
-export const postDummyCourseDataToAPI = async () => {
-  const request = await axios({
+export const postCourseRecommendation = async (
+  data: ICourseRecommendationPost
+) => {
+  const req = await axios({
     method: "post",
-    url: `${process.env.REACT_APP_API_URL}/api/courses/test`,
+    url: `${process.env.REACT_APP_API_URL}/api/courses`,
   });
-  return request.data;
+  return req.data;
 };

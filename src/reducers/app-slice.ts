@@ -12,9 +12,7 @@ const initialState = {
 export const checkIsAuthedAsync = createAsyncThunk(
   "app/checkAuth",
   async (): Promise<any> => {
-    console.log("async function called here! 14");
-    const res = await checkIsAuthed();
-    return res;
+    return checkIsAuthed();
   }
 );
 

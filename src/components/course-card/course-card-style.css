@@ -1,7 +1,7 @@
 .Course-card__category-header {
   border-left-width: 4px;
   border-left-style: solid;
-  max-width: 100px;
+  max-width: 140px;
   font-family: var(--main-font);
   padding: 5px;
 }
@@ -51,4 +51,8 @@
 .Course-card__external-link {
   text-decoration: none;
   color: black;
+}
+
+.Course-card__main {
+  margin-top: 25px;
 }

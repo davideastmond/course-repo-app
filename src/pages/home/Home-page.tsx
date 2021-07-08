@@ -32,7 +32,7 @@ function HomePage() {
           <div className="Home-Page__search-section">
             <TextInput placeHolderText="Search for a course..." />
           </div>
-          <CourseContainer />
+          {courses && <CourseContainer courses={courses} />}
         </div>
         <ActionButton
           plusSymbol={true}

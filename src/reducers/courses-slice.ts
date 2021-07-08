@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllCourses } from "../services/courses";
+import { getAllCourses, postCourseRecommendation } from "../services/courses";
+import { ICourse, ICourseRecommendationPost } from "../types";
 import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
-  courses: any[];
+  courses: ICourse[];
   status: any;
 }
 const initialState: IInitialCoursesState = {
@@ -16,8 +17,14 @@ const initialState: IInitialCoursesState = {
 export const getAllCoursesAsync = createAsyncThunk(
   "courses/getAllCourses",
   async () => {
-    const result = await getAllCourses();
-    return result;
+    return getAllCourses();
+  }
+);
+
+export const postCourseRecommendationAsync = createAsyncThunk(
+  "courses/postCourseRecommendation",
+  async (data: ICourseRecommendationPost) => {
+    return postCourseRecommendation(data);
   }
 );
 
@@ -36,6 +43,16 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");
+      })
+      .addCase(postCourseRecommendationAsync.pending, (state) => {
+        stateStatus.loading(state, "posting course");
+      })
+      .addCase(postCourseRecommendationAsync.fulfilled, (state, action) => {
+        stateStatus.idle(state);
+        state.courses = action.payload;
+      })
+      .addCase(postCourseRecommendationAsync.rejected, (state) => {
+        stateStatus.error(state, "unable to post courses");
       });
   },
 });

@@ -11,33 +11,55 @@
   --light-grey-2: #D9D9D9;
   --page-ambient-color: #F8FBF9;
 
+  --pale-blue: #E2F2FF;
   --pale-light-green-color: #E9FBF4;
   --blush-color: #FFEEF6;
   --pale-yellow-color: #FDF6DF;
-  --lime-green-0: #2ECC71
+  --lime-green-0: #2ECC71;
+
+  --blue-color-6: #74B9FF;
+  --red-color-6: #FF7675;
+  --green-color-6: #00CEC9;
 }
 
 h1, h2, h3, h4, h5, h5 {
   margin: 0px;
 }
 
-.random-green {
+.course-category-color-green {
   background-color: var( --pale-light-green-color);
   border-left-color: #2A8D85;
 }
 
-.random-blush {
+.course-category-color-rose {
   background-color: var(--blush-color);
   border-left-color: #E84393
 }
 
-.random-pale-yellow {
+.course-category-color-yellow {
   background-color: var(--pale-yellow-color);
   border-left-color: #FDCB6E;
 }
 
+.course-category-color-blue {
+  background-color: var(--pale-blue);
+  border-left-color: #0984E3;
+}
+
 .menu-separator {
   border-bottom: 1px solid var(--light-grey-2);
+}
+
+.generic-profile-icon-color-red {
+  background-color: var(--red-color-6);
+}
+
+.generic-profile-icon-color-blue {
+  background-color: var(--blue-color-6);
+}
+
+.generic-profile-icon-color-green {
+  background-color: var(--green-color-6);
 }
 
 .cursor-pointer:hover {

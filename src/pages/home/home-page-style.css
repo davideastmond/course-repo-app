@@ -42,9 +42,14 @@ body {
 
 .Home-Page__center-column {
   width: 800px;
+  margin-left: 5%;
 }
 
 .Home-Page__main-body {
   margin-left: 15%;
   margin-right: 15%;
+}
+
+.left-margin {
+  margin-left: 5%;
 }

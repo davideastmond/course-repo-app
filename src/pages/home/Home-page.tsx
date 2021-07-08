@@ -1,5 +1,5 @@
 // import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { shallowEqual, useSelector } from "react-redux";
 import BodyHeader from "../../components/body-header";
 import SideBrowser from "../../components/Browser";
@@ -7,11 +7,13 @@ import ActionButton from "../../components/Buttons/ActionButton";
 
 import CourseContainer from "../../components/course-container";
 import HeaderBar from "../../components/header-bar";
+import FormDialog from "../../components/modal";
 import TextInput from "../../components/Text-Input";
 import { selectAllCourses } from "../../reducers";
 
 import "./home-page-style.css";
 function HomePage() {
+  const [open, setOpen] = useState(true); //change this to false
   const courses = useSelector(selectAllCourses, shallowEqual);
 
   useEffect(() => {
@@ -39,7 +41,9 @@ function HomePage() {
             plusSymbol={true}
             title={"Recommend a course"}
             classNames={"recommend-course-button-size left-margin"}
+            // onClick={() => setOpen(true)}
           />
+          <FormDialog open={open} setOpen={setOpen} />
         </div>
       </div>
       <footer className="Home-page__footer">

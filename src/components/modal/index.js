@@ -14,8 +14,6 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
-// import Rating from "@material-ui/lab/Rating";
-// import Typography from "@material-ui/core/Typography";
 
 const useStyles = makeStyles((theme) => ({
   styledHeader: {
@@ -43,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   chip: { margin: "0px 2px" },
 }));
 
-export default function FormDialog({ open, setOpen }) {
+const FormDialog = ({ open, setOpen }) => {
   const classes = useStyles();
   const [topic, setTopic] = useState("");
   const [tags, setTags] = useState("");
@@ -137,7 +135,6 @@ export default function FormDialog({ open, setOpen }) {
             </Grid>
             <Grid item sm={12} md={6}>
               <FormControl variant="outlined" fullWidth>
-                {/* <FormControl variant="outlined" className={classes.formControl}> */}
                 <InputLabel id="demo-simple-select-outlined-label" shrink>
                   Topic
                 </InputLabel>
@@ -162,14 +159,6 @@ export default function FormDialog({ open, setOpen }) {
                 </Select>
               </FormControl>
             </Grid>
-            {/* <Grid container direction="column">
-               <Grid item>
-                  <Typography variant="caption">Your rating (Optional) </Typography>
-                </Grid>
-                <Grid item>
-                  <Rating size="large" /> // can remove the material-ui/lab package if not using this component
-              </Grid>
-            </Grid> */}
             <Grid container item sm={6} spacing={0}>
               <Grid item sm={9}>
                 <TextField
@@ -230,4 +219,6 @@ export default function FormDialog({ open, setOpen }) {
       </Dialog>
     </div>
   );
-}
+};
+
+export default FormDialog;

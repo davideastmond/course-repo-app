@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ContentTag from "../Content-tag";
 import GenericUserIcon from "../profile-icon/Generic-User-Icon";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
@@ -8,6 +8,7 @@ import {
   COURSE_CATEGORY_COLOR,
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,
 } from "../../types";
+import { getUserById } from "../../services/users";
 
 interface ICourseCardProps {
   _id: string;
@@ -25,6 +26,15 @@ interface ICourseCardProps {
 }
 
 function CourseCard(props: ICourseCardProps) {
+  const [userName, setUserNames] = useState<any>({});
+  useEffect(() => {
+    const getUsers = async () => {
+      const user = await getUserById(props.postedByUserId);
+      setUserNames({ [`${user._id}`]: `${user.firstName} ${user.lastName}` });
+    };
+    getUsers();
+  }, []);
+
   return (
     <div className="Course-card__main">
       <div
@@ -49,8 +59,12 @@ function CourseCard(props: ICourseCardProps) {
         </div>
 
         <div className="Course-card__recommendation-section">
-          <GenericUserIcon userName={props.userName || "Guest"} />
-          <div className="Recommended-by">Recommended by {props.userName}</div>
+          <GenericUserIcon
+            userName={userName[props.postedByUserId] || "Guest"}
+          />
+          <div className="Recommended-by">
+            Recommended by {userName[props.postedByUserId]}
+          </div>
         </div>
         <div className="Course-card__synopsis-section">{props.description}</div>
         <div className="Course-card__tags-section">

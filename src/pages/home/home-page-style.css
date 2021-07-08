@@ -30,6 +30,11 @@ body {
   height: 10px;
 }
 
+.recommend-course-button-size:hover {
+  cursor:pointer;
+  background-color: #2a8d85;
+}
+
 .Home-Page__middle-section__header {
   display: flex;
   justify-content: flex-end;

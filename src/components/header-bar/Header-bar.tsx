@@ -2,8 +2,8 @@ import React from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
-import { ContextMenu, ContextMenuOption } from "../context-menu";
-import { ContextMenuSeparator } from "../context-menu/Menu-divider";
+// import { ContextMenu, ContextMenuOption } from "../context-menu";
+// import { ContextMenuSeparator } from "../context-menu/Menu-divider";
 //import doGoogleLogin from "../../services/auth";
 
 function HeaderBar() {
@@ -28,7 +28,7 @@ function HeaderBar() {
             classNames="Nav__Header-bar__profile-icon-image"
             loginClickHandler={handleGoogleLogin}
           />
-          <ContextMenu>
+          {/* <ContextMenu>
             <ContextMenuOption
               title="Profile"
               action={() => console.log("profile button clicked")}
@@ -38,7 +38,7 @@ function HeaderBar() {
               title="Logout"
               action={() => console.log(" logout button clicked")}
             />
-          </ContextMenu>
+          </ContextMenu> */}
         </div>
       </div>
     </nav>

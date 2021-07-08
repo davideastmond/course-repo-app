@@ -41,7 +41,7 @@ function HomePage() {
             plusSymbol={true}
             title={"Recommend a course"}
             classNames={"recommend-course-button-size left-margin"}
-            // onClick={() => setOpen(true)}
+            action={() => setOpen(true)}
           />
           <FormDialog open={open} setOpen={setOpen} />
         </div>

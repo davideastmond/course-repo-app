@@ -2,6 +2,8 @@ import React from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
+import { ContextMenu, ContextMenuOption } from "../context-menu";
+import { ContextMenuSeparator } from "../context-menu/Menu-divider";
 //import doGoogleLogin from "../../services/auth";
 
 function HeaderBar() {
@@ -18,7 +20,7 @@ function HeaderBar() {
           <img className="app-logo" src={ZenLogo} alt="zen logo"></img>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
-          <h3 className="app-title">Course Repo</h3>
+          <h3 className="app-title">Learning & Skills Repository</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
           <p className="profile-name">Guest</p>
@@ -26,6 +28,17 @@ function HeaderBar() {
             classNames="Nav__Header-bar__profile-icon-image"
             loginClickHandler={handleGoogleLogin}
           />
+          <ContextMenu>
+            <ContextMenuOption
+              title="Profile"
+              action={() => console.log("profile button clicked")}
+            />
+            {ContextMenuSeparator()}
+            <ContextMenuOption
+              title="Logout"
+              action={() => console.log(" logout button clicked")}
+            />
+          </ContextMenu>
         </div>
       </div>
     </nav>

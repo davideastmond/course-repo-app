@@ -78,7 +78,7 @@ const FormDialog = ({ open, setOpen }) => {
         tags: finalTags,
       })
     );
-    // setOpen(false)
+    setOpen(false);
   };
 
   const handleChange = ({ target: { value } }) => {
@@ -173,13 +173,13 @@ const FormDialog = ({ open, setOpen }) => {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={"Design"}>Design</MenuItem>
-                  <MenuItem value={"Engeneering"}>Engeneering</MenuItem>
-                  <MenuItem value={"Human Resources"}>Human Resources</MenuItem>
-                  <MenuItem value={"Management"}>Management</MenuItem>
-                  <MenuItem value={"Marketing"}>Marketing</MenuItem>
-                  <MenuItem value={"Product"}>Product</MenuItem>
-                  <MenuItem value={"Sales"}>Sales</MenuItem>
+                  <MenuItem value={"design"}>Design</MenuItem>
+                  <MenuItem value={"engineering"}>Engineering</MenuItem>
+                  <MenuItem value={"human_resources"}>Human Resources</MenuItem>
+                  <MenuItem value={"management"}>Management</MenuItem>
+                  <MenuItem value={"marketing"}>Marketing</MenuItem>
+                  <MenuItem value={"product"}>Product</MenuItem>
+                  <MenuItem value={"sales"}>Sales</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

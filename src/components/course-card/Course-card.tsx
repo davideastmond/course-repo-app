@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState } from "react";
 import ContentTag from "../Content-tag";
 import GenericUserIcon from "../profile-icon/Generic-User-Icon";
@@ -48,7 +49,11 @@ function CourseCard(props: ICourseCardProps) {
       </div>
       <div className="Course-card__inner-body">
         <div className="Course-card__course-title">
-          <a className="Course-card__external-link" href={props.courseUrl}>
+          <a
+            className="Course-card__external-link"
+            target="_blank"
+            href={props.courseUrl}
+          >
             {props.courseTitle}
             <img
               className="external-link-icon"

@@ -23,7 +23,7 @@ function HeaderBar() {
           <h3 className="app-title">Zen Learn</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
-          <p className="profile-name">Guest</p>
+          <p className="profile-name">David</p>
           <ProfileIcon
             classNames="Nav__Header-bar__profile-icon-image"
             loginClickHandler={handleGoogleLogin}

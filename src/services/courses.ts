@@ -28,5 +28,10 @@ export const postCourseRecommendation = async (
       tags: data.tags,
     },
   });
-  return req.data;
+  const courses = req.data as ICourse[];
+  return courses.sort(
+    (a, b) =>
+      parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
+      parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
+  );
 };

@@ -27,7 +27,6 @@ export const postCourseRecommendationAsync = createAsyncThunk(
   "courses/postCourseRecommendation",
   async (data: ICourseRecommendationPost) => {
     const res = await postCourseRecommendation(data);
-    console.log("Reducer res", res);
     return res;
   }
 );
@@ -37,7 +36,6 @@ export const coursesSlice = createSlice({
   initialState,
   reducers: {
     setCourseFilter(state, action: { payload: string }) {
-      console.log("Line 40 setCourseFilter payload", action.payload);
       state.filter = action.payload;
     },
   },

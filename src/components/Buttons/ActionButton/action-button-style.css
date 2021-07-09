@@ -1,0 +1,25 @@
+/* Recommend a course */
+.Action-button__text {
+  width: 171px;
+  height: 22px;  
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 22px;
+  color: #FFFFFF;
+  padding-bottom: 5px;
+}
+
+.Action-button__main {
+  background-color: var(--lime-green-0);
+  display: flex;
+  padding: 20px;
+  justify-content: center;
+  border-radius: 8px;
+}
+
+.center-buttons {
+  align-self: center;
+  margin-right: 10px;
+}

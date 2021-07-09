@@ -1,9 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllCourses } from "../services/courses";
+import { getAllCourses, postCourseRecommendation } from "../services/courses";
+import { ICourse, ICourseRecommendationPost } from "../types";
 import stateStatus from "../utils/state-status";
 
-const initialState = {
+interface IInitialCoursesState {
+  courses: ICourse[];
+  status: any;
+  filter: string;
+}
+const initialState: IInitialCoursesState = {
   courses: [],
+  filter: "all",
   status: {
     state: "idle",
   },
@@ -12,16 +19,26 @@ const initialState = {
 export const getAllCoursesAsync = createAsyncThunk(
   "courses/getAllCourses",
   async () => {
-    const result = await getAllCourses();
-    console.log("result from async", result);
-    return result;
+    return getAllCourses();
+  }
+);
+
+export const postCourseRecommendationAsync = createAsyncThunk(
+  "courses/postCourseRecommendation",
+  async (data: ICourseRecommendationPost) => {
+    const res = await postCourseRecommendation(data);
+    return res;
   }
 );
 
 export const coursesSlice = createSlice({
   name: "courses",
   initialState,
-  reducers: {},
+  reducers: {
+    setCourseFilter(state, action: { payload: string }) {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllCoursesAsync.pending, (state) => {
@@ -29,14 +46,29 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        state.courses = action.payload.data;
+        state.courses = action.payload;
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");
+      })
+      .addCase(postCourseRecommendationAsync.pending, (state) => {
+        stateStatus.loading(state, "posting course");
+      })
+      .addCase(postCourseRecommendationAsync.fulfilled, (state, action) => {
+        stateStatus.idle(state);
+        state.courses = action.payload;
+      })
+      .addCase(postCourseRecommendationAsync.rejected, (state) => {
+        stateStatus.error(state, "unable to post courses");
       });
   },
 });
 
-export const selectAllCourses = (state: any) => state.courses.courses;
-
+export const selectAllCourses = (state: any) => {
+  if (state.courses.filter === "all") return state.courses.courses;
+  return state.courses.courses.filter(
+    (course: ICourse) => course.category === state.courses.filter
+  );
+};
+export const { setCourseFilter } = coursesSlice.actions;
 export default coursesSlice.reducer;

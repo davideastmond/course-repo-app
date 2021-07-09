@@ -1,0 +1,34 @@
+.Side-browser__header-text {
+  font-family: var(--main-font);
+  color: var(--light-grey);
+  font-size: 12.8px;
+  padding: 10px;  
+}
+
+.Side-browser-menu-option-label {
+  font-family: var(--main-font);
+  color: black;
+  font-size: 20px;
+  font-weight: normal;
+  padding: 15px;
+}
+
+.Side-browser-option__main {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.Side-browser__Main {
+  height: 652px;
+  background-color: white;
+  padding: 1%;
+  width: 16%;
+}
+
+.Browser-option-selected {
+  background-color: var(--pale-light-green-color);
+}
+
+.Side-browser-menu-option-label:hover {
+  cursor: pointer;
+}

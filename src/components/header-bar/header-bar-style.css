@@ -1,10 +1,22 @@
 .Nav__Header-bar {
+  background-color: white;
+}
+
+/* .Nav__Header-bar_body {
   display: grid;
   grid-template-columns: auto auto auto;
   grid-template-areas: "app-logo app-name profile-icon-section";
-  background-color: white;
-  height: 80px;
   align-items: center;
+  margin-left: 15%;
+  margin-right: 15%;
+  height: 60px;
+} */
+
+.Nav__Header-bar_body {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 .app-title {
@@ -45,4 +57,30 @@
 .profile-name {
   margin: unset;
   align-self: center;
+}
+
+
+
+@media only screen and (min-width: 2030px) {
+  .Nav__Header-bar_body {
+    margin-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 2050px) {
+  .Nav__Header-bar_body {
+    margin-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 2150px) {
+  .Nav__Header-bar_body {
+    margin-right: 17%;
+  }
+}
+
+@media only screen and (min-width: 2500px) {
+  .Nav__Header-bar_body {
+    margin-right: 20%;
+  }
 }

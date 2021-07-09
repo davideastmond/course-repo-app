@@ -1,0 +1,43 @@
+.Context-menu-option-text {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height */
+
+  /* grey 500 */
+  color: #2E3841;
+}
+
+.Context-menu-option__main-body {
+  padding: 10%;
+}
+
+.ContextMenu__root__main-body {
+  width: 193px;
+  position: absolute;
+  /* grey100 */
+  background: #FFFFFF;
+  /* grey 200 */
+  border: 1px solid #F0F0F0;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+  top: 57px;
+  right: 103px;
+}
+
+.ContextMenu__separator {
+  /* separator */
+
+  position: absolute;
+  width: 193px;
+  height: 0px;
+  left: 0px;
+  top: 54px;
+
+  /* grey 200 */
+  border: 1px solid #F0F0F0;
+
+}

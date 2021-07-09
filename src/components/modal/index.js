@@ -74,7 +74,7 @@ const FormDialog = ({ open, setOpen }) => {
         courseTitle,
         courseUrl,
         description,
-        category,
+        category: category.toLowerCase(),
         tags: finalTags,
       })
     );

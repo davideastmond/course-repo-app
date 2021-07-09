@@ -6,9 +6,11 @@ import stateStatus from "../utils/state-status";
 interface IInitialCoursesState {
   courses: ICourse[];
   status: any;
+  filter: string;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
+  filter: "all",
   status: {
     state: "idle",
   },
@@ -33,7 +35,12 @@ export const postCourseRecommendationAsync = createAsyncThunk(
 export const coursesSlice = createSlice({
   name: "courses",
   initialState,
-  reducers: {},
+  reducers: {
+    setCourseFilter(state, action: { payload: string }) {
+      console.log("Line 40 setCourseFilter payload", action.payload);
+      state.filter = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllCoursesAsync.pending, (state) => {
@@ -59,6 +66,11 @@ export const coursesSlice = createSlice({
   },
 });
 
-export const selectAllCourses = (state: any) => state.courses.courses;
-
+export const selectAllCourses = (state: any) => {
+  if (state.courses.filter === "all") return state.courses.courses;
+  return state.courses.courses.filter(
+    (course: ICourse) => course.category === state.courses.filter
+  );
+};
+export const { setCourseFilter } = coursesSlice.actions;
 export default coursesSlice.reducer;

@@ -20,7 +20,7 @@ function HeaderBar() {
           <img className="app-logo" src={ZenLogo} alt="zen logo"></img>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
-          <h3 className="app-title">Learning & Skills Repository</h3>
+          <h3 className="app-title">Zen Learn</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
           <p className="profile-name">Guest</p>

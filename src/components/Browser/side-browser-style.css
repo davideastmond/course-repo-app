@@ -17,3 +17,18 @@
   padding-top: 5px;
   padding-bottom: 5px;
 }
+
+.Side-browser__Main {
+  height: 652px;
+  background-color: white;
+  padding: 1%;
+  width: 16%;
+}
+
+.Browser-option-selected {
+  background-color: var(--pale-light-green-color);
+}
+
+.Side-browser-menu-option-label:hover {
+  cursor: pointer;
+}

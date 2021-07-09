@@ -13,7 +13,7 @@ import { selectAllCourses } from "../../reducers";
 
 import "./home-page-style.css";
 function HomePage() {
-  const [open, setOpen] = useState(true); //change this to false
+  const [open, setOpen] = useState(false); //change this to false
   const courses = useSelector(selectAllCourses, shallowEqual);
 
   useEffect(() => {

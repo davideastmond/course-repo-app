@@ -11,6 +11,7 @@ function SideBrowser() {
         </div>
       </div>
       <div className="Side-browser__menu-body_main">
+        <SideBrowserMenuOption optionLabel="All" />
         <SideBrowserMenuOption optionLabel="Design" />
         <SideBrowserMenuOption optionLabel="Engineering" />
         <SideBrowserMenuOption optionLabel="Human Resources" />

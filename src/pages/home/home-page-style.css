@@ -58,3 +58,9 @@ body {
 .left-margin {
   margin-left: 5%;
 }
+
+@media only screen and (min-width: 2500px) {
+  .Middle-section__header-text {
+    margin-right: 110px;
+  }
+}

@@ -14,7 +14,9 @@ import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Chip from "@material-ui/core/Chip";
-
+import "./modal-style.css";
+import { useDispatch } from "react-redux";
+import { postCourseRecommendationAsync } from "../../reducers/courses-slice";
 const useStyles = makeStyles((theme) => ({
   styledHeader: {
     "& h2": {
@@ -43,9 +45,15 @@ const useStyles = makeStyles((theme) => ({
 
 const FormDialog = ({ open, setOpen }) => {
   const classes = useStyles();
-  const [topic, setTopic] = useState("");
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseUrl, setCourseUrl] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [tags, setTags] = useState("");
   const [finalTags, setFinalTags] = useState([]);
+
+  const dispatch = useDispatch();
+
   let tagsArray = [];
 
   const handleAddTags = (_tags) => {
@@ -59,8 +67,22 @@ const FormDialog = ({ open, setOpen }) => {
     setOpen(false);
   };
 
+  const handleSubmitRecommendation = () => {
+    console.log("finalTags", finalTags);
+    dispatch(
+      postCourseRecommendationAsync({
+        courseTitle,
+        courseUrl,
+        description,
+        category,
+        tags: finalTags,
+      })
+    );
+    // setOpen(false)
+  };
+
   const handleChange = ({ target: { value } }) => {
-    setTopic(value);
+    setCategory(value);
   };
 
   const handleDelete = (tag) => {
@@ -103,7 +125,7 @@ const FormDialog = ({ open, setOpen }) => {
                   shrink: true,
                 }}
                 fullWidth={true}
-                onChange={({ target: { value } }) => console.log(value)}
+                onChange={({ target: { value } }) => setCourseTitle(value)}
               />
             </Grid>
             <Grid item sm={12} md={6}>
@@ -117,6 +139,8 @@ const FormDialog = ({ open, setOpen }) => {
                   shrink: true,
                 }}
                 fullWidth
+                onChange={({ target: { value } }) => setCourseUrl(value)}
+                className="test-validation"
               />
             </Grid>
             <Grid item sm={12} md={6}>
@@ -128,7 +152,7 @@ const FormDialog = ({ open, setOpen }) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
-                onChange={({ target: { value } }) => console.log({ value })}
+                onChange={({ target: { value } }) => setDescription(value)}
                 multiline
                 fullWidth
               />
@@ -141,7 +165,7 @@ const FormDialog = ({ open, setOpen }) => {
                 <Select
                   labelId="demo-simple-select-outlined-label"
                   id="demo-simple-select-outlined"
-                  value={topic}
+                  value={category}
                   onChange={handleChange}
                   label="Topic"
                   displayEmpty
@@ -209,7 +233,7 @@ const FormDialog = ({ open, setOpen }) => {
             Close window
           </Button>
           <Button
-            onClick={handleClose}
+            onClick={handleSubmitRecommendation}
             variant="contained"
             classes={{ contained: classes.confirmButton }}
           >

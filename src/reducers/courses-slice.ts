@@ -24,7 +24,9 @@ export const getAllCoursesAsync = createAsyncThunk(
 export const postCourseRecommendationAsync = createAsyncThunk(
   "courses/postCourseRecommendation",
   async (data: ICourseRecommendationPost) => {
-    return postCourseRecommendation(data);
+    const res = await postCourseRecommendation(data);
+    console.log("Reducer res", res);
+    return res;
   }
 );
 

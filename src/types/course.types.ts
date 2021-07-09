@@ -8,8 +8,8 @@ export interface ICourse {
     [keyof: string]: string;
   };
   tags: Array<string>;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: String;
+  updatedAt: String;
   category: string | CourseCategory;
 }
 
@@ -49,5 +49,6 @@ export interface ICourseRecommendationPost {
   courseTitle: string;
   courseUrl: string;
   description: string;
-  rating: number;
+  category: string;
+  tags: string[];
 }

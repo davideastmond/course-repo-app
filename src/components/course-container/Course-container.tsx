@@ -16,6 +16,9 @@ function CourseContainer(props: ICourseContainerProps) {
         props.courses.map((course, index) => (
           <CourseCard {...{ ...course }} key={course._id} />
         ))}
+      {props.courses.length === 0 && (
+        <div className="Courses-Empty-list">Nothing to display</div>
+      )}
     </div>
   );
 }

@@ -6,7 +6,7 @@ import "./side-browser-style.css";
 
 function SideBrowser() {
   const dispatch = useDispatch();
-  const options: any = {
+  const options: { [key in number]: string } = {
     0: "all",
     1: "design",
     2: "engineering",

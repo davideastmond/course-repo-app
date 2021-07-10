@@ -1,18 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { checkIsAuthedAsync, selectIsLoggedIn } from "../../reducers";
 // import { ContextMenu, ContextMenuOption } from "../context-menu";
 // import { ContextMenuSeparator } from "../context-menu/Menu-divider";
 //import doGoogleLogin from "../../services/auth";
 
 function HeaderBar() {
-  // const [done, setDone] = useState<boolean>(false);
-  // const [errorMessage, setErrorMessage] = useState<string>("");
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
+
   const handleGoogleLogin = () => {
     // doGoogleLogin({ setDone, setErrorMessage });
   };
+  useEffect(() => {
+    dispatch(checkIsAuthedAsync());
+  }, []);
 
+  useEffect(() => {
+    console.log("isLoggedIn?", isLoggedIn);
+  }, [isLoggedIn]);
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
@@ -23,11 +32,17 @@ function HeaderBar() {
           <h3 className="app-title">Zen Learn</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
-          <p className="profile-name">David</p>
-          <ProfileIcon
-            classNames="Nav__Header-bar__profile-icon-image"
-            loginClickHandler={handleGoogleLogin}
-          />
+          {!isLoggedIn && (
+            <>
+              <p className="profile-name">Guest</p>
+              <ProfileIcon
+                classNames="Nav__Header-bar__profile-icon-image"
+                loginClickHandler={handleGoogleLogin}
+                genericUser={true}
+              />
+            </>
+          )}
+
           {/* <ContextMenu>
             <ContextMenuOption
               title="Profile"

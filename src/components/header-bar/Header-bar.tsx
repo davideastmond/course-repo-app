@@ -1,23 +1,77 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { checkIsAuthedAsync, selectIsLoggedIn } from "../../reducers";
-// import { ContextMenu, ContextMenuOption } from "../context-menu";
-// import { ContextMenuSeparator } from "../context-menu/Menu-divider";
-//import doGoogleLogin from "../../services/auth";
+import { ContextMenu, ContextMenuOption } from "../context-menu";
+import { ContextMenuSeparator } from "../context-menu/Menu-divider";
+import doGoogleLogin from "../../services/auth";
+
+const ProfileContextMenu = (
+  loggedInStatus: boolean,
+  actions: {
+    googleLogInCallBack: () => void;
+    logOutCallBack: () => void;
+    showProfileCallBack: () => void;
+  }
+) => {
+  return loggedInStatus ? (
+    <ContextMenu>
+      <ContextMenuOption title="Profile" action={actions.showProfileCallBack} />
+      {ContextMenuSeparator()}
+      <ContextMenuOption title="Logout" action={actions.logOutCallBack} />
+    </ContextMenu>
+  ) : (
+    <ContextMenu>
+      <ContextMenuOption
+        title="Sign in with Google"
+        action={actions.googleLogInCallBack}
+      />
+    </ContextMenu>
+  );
+};
 
 function HeaderBar() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
-
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  const [done, setDone] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const handleGoogleLogin = () => {
-    // doGoogleLogin({ setDone, setErrorMessage });
+    doGoogleLogin({ setDone, setErrorMessage });
+    console.log("Handle google log-in");
+  };
+
+  const handleLogOut = () => {
+    console.log("Handle log out!");
+  };
+
+  const handleShowProfile = () => {
+    console.log("Handle show profile");
   };
   useEffect(() => {
     dispatch(checkIsAuthedAsync());
   }, []);
+
+  const clickedInMenuRef = useRef(false);
+  useEffect(() => {
+    const handleClose = () => {
+      if (!clickedInMenuRef.current) {
+        setProfileMenuOpen(false);
+      } else {
+        clickedInMenuRef.current = false;
+        window?.addEventListener("click", handleClose, { once: true });
+      }
+    };
+    if (profileMenuOpen) {
+      window?.addEventListener("click", handleClose, { once: true });
+    }
+
+    return () => {
+      window?.removeEventListener("click", handleClose);
+    };
+  }, [profileMenuOpen]);
 
   useEffect(() => {
     console.log("isLoggedIn?", isLoggedIn);
@@ -37,23 +91,17 @@ function HeaderBar() {
               <p className="profile-name">Guest</p>
               <ProfileIcon
                 classNames="Nav__Header-bar__profile-icon-image"
-                loginClickHandler={handleGoogleLogin}
+                loginClickHandler={() => setProfileMenuOpen(true)}
                 genericUser={true}
               />
+              {profileMenuOpen &&
+                ProfileContextMenu(isLoggedIn, {
+                  googleLogInCallBack: handleGoogleLogin,
+                  logOutCallBack: handleLogOut,
+                  showProfileCallBack: handleShowProfile,
+                })}
             </>
           )}
-
-          {/* <ContextMenu>
-            <ContextMenuOption
-              title="Profile"
-              action={() => console.log("profile button clicked")}
-            />
-            {ContextMenuSeparator()}
-            <ContextMenuOption
-              title="Logout"
-              action={() => console.log(" logout button clicked")}
-            />
-          </ContextMenu> */}
         </div>
       </div>
     </nav>

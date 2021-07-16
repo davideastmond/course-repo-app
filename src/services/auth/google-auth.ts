@@ -29,7 +29,7 @@ const doGoogleLogin = async ({
             "Authentication unsuccessful, please select a google account to sign in with."
           );
       } else {
-        setErrorMessage("An authentication error occured");
+        setErrorMessage("An authentication error occurred");
         console.error(error);
       }
     }

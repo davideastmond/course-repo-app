@@ -64,3 +64,11 @@ body {
     margin-right: 70px;
   }
 }
+
+.Home-Page__Spinner-Overlay {
+  position: absolute;
+  width: 100vw;
+  opacity: .5;
+  background-color: silver;
+  height: 1000vh;
+}

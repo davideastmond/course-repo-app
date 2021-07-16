@@ -25,9 +25,12 @@
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   top: 57px;
-  right: 103px;
 }
 
+.Context-menu-option__main-body:hover {
+  cursor: pointer;
+  background-color: #F0F0F0;
+}
 .ContextMenu__separator {
   /* separator */
 

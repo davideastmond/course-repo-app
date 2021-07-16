@@ -17,15 +17,16 @@ export const getAllCourses = async () => {
 export const postCourseRecommendation = async (
   data: ICourseRecommendationPost
 ) => {
+  const { courseTitle, courseUrl, description, category, tags } = data;
   const req = await axios({
     method: "post",
     url: `${process.env.REACT_APP_API_URL}/api/courses`,
     data: {
-      courseTitle: data.courseTitle,
-      courseUrl: data.courseUrl,
-      description: data.description,
-      category: data.category,
-      tags: data.tags,
+      courseTitle,
+      courseUrl,
+      description,
+      category,
+      tags,
     },
   });
   const courses = req.data as ICourse[];

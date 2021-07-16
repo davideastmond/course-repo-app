@@ -8,8 +8,8 @@ export interface ICourse {
     [keyof: string]: string;
   };
   tags: Array<string>;
-  createdAt: String;
-  updatedAt: String;
+  createdAt: string;
+  updatedAt: string;
   category: string | CourseCategory;
 }
 

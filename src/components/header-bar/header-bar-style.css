@@ -31,6 +31,9 @@
   font-size: 16px;
   color: var(--light-grey);
   grid-area: profile-name;
+  margin: unset;
+  margin-right: 20px;
+  align-self: center;
 }
 
 .Nav__Header-bar__Zen-logo-section {
@@ -45,20 +48,17 @@
 .Nav__Header-bar__Profile-section {
   grid-area: profile-icon-section;
   display: grid;
-  grid-template-columns: 50px 32px;
+  grid-template-columns: auto 32px;
   grid-template-areas: "profile-name avatar";
   justify-content: right;
 }
 
 .Nav__Header-bar__profile-icon-image {
   grid-area: avatar;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
-
-.profile-name {
-  margin: unset;
-  align-self: center;
-}
-
 
 
 @media only screen and (min-width: 2030px) {

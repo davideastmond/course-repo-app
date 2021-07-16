@@ -4,7 +4,7 @@ import "./profile-icon-style.css";
 interface IProfileIconProps {
   imageSrc?: string;
   classNames?: string;
-  loginClickHandler: () => void;
+  showProfileMenuHandler: () => void;
   genericUser: boolean;
 }
 function ProfileIcon(props: IProfileIconProps) {
@@ -12,7 +12,7 @@ function ProfileIcon(props: IProfileIconProps) {
     <div className="Profile-Icon__main">
       {props.genericUser && (
         <img
-          onClick={props.loginClickHandler}
+          onClick={props.showProfileMenuHandler}
           className={`profile-icon-image ${props.classNames || ""}`}
           src={GenericProfileIcon}
           alt="profile-icon"
@@ -20,7 +20,7 @@ function ProfileIcon(props: IProfileIconProps) {
       )}
       {!props.genericUser && (
         <img
-          onClick={props.loginClickHandler}
+          onClick={props.showProfileMenuHandler}
           className={`profile-icon-image ${props.classNames || ""}`}
           src={props.imageSrc || GenericProfileIcon}
           alt="profile-icon"

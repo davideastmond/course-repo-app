@@ -2,11 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
 import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { checkIsAuthedAsync, selectIsLoggedIn } from "../../reducers";
 import { ContextMenu, ContextMenuOption } from "../context-menu";
 import { ContextMenuSeparator } from "../context-menu/Menu-divider";
-import doGoogleLogin from "../../services/auth";
+import { IProcessedUser } from "../../types";
+import { selectCourseRecommendationModalOpenState } from "../../reducers";
+import { shallowEqual, useSelector } from "react-redux";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -32,27 +32,27 @@ const ProfileContextMenu = (
   );
 };
 
-function HeaderBar() {
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
+interface IHeaderBarProps {
+  googleLoginAction: () => void;
+  logOutAction: () => void;
+  loggedIn: boolean;
+  userData?: IProcessedUser;
+}
+function HeaderBar(props: IHeaderBarProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
-  const [done, setDone] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
-  const handleGoogleLogin = () => {
-    doGoogleLogin({ setDone, setErrorMessage });
-    console.log("Handle google log-in");
-  };
-
-  const handleLogOut = () => {
-    console.log("Handle log out!");
-  };
-
+  const courseRecommenderModalOpen = useSelector(
+    selectCourseRecommendationModalOpenState,
+    shallowEqual
+  );
   const handleShowProfile = () => {
     console.log("Handle show profile");
   };
+
   useEffect(() => {
-    dispatch(checkIsAuthedAsync());
-  }, []);
+    if (courseRecommenderModalOpen && courseRecommenderModalOpen === true) {
+      clickedInMenuRef.current = true;
+    }
+  }, [courseRecommenderModalOpen]);
 
   const clickedInMenuRef = useRef(false);
   useEffect(() => {
@@ -73,9 +73,13 @@ function HeaderBar() {
     };
   }, [profileMenuOpen]);
 
-  useEffect(() => {
-    console.log("isLoggedIn?", isLoggedIn);
-  }, [isLoggedIn]);
+  const userName = props.userData
+    ? `${props.userData.firstName || ""} ${props.userData.lastName || ""}`
+    : "Guest";
+  const openProfileMenu = () => {
+    setProfileMenuOpen(true);
+    clickedInMenuRef.current = true;
+  };
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
@@ -86,22 +90,35 @@ function HeaderBar() {
           <h3 className="app-title">Zen Learn</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
-          {!isLoggedIn && (
+          {!props.loggedIn && (
             <>
               <p className="profile-name">Guest</p>
               <ProfileIcon
                 classNames="Nav__Header-bar__profile-icon-image"
-                loginClickHandler={() => setProfileMenuOpen(true)}
+                showProfileMenuHandler={openProfileMenu}
                 genericUser={true}
               />
-              {profileMenuOpen &&
-                ProfileContextMenu(isLoggedIn, {
-                  googleLogInCallBack: handleGoogleLogin,
-                  logOutCallBack: handleLogOut,
-                  showProfileCallBack: handleShowProfile,
-                })}
             </>
           )}
+          {props.loggedIn && (
+            <>
+              <p className="profile-name">{userName}</p>
+              <ProfileIcon
+                classNames="Nav__Header-bar__profile-icon-image"
+                genericUser={false}
+                showProfileMenuHandler={openProfileMenu}
+                imageSrc={
+                  props.userData?.avatar ? props.userData.avatar[0].url : ""
+                }
+              />
+            </>
+          )}
+          {profileMenuOpen &&
+            ProfileContextMenu(props.loggedIn, {
+              googleLogInCallBack: props.googleLoginAction,
+              logOutCallBack: props.logOutAction,
+              showProfileCallBack: handleShowProfile,
+            })}
         </div>
       </div>
     </nav>

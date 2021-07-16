@@ -18,7 +18,7 @@ export interface IProcessedUser {
   firstName: string;
   lastName: string;
   jobTitle: string;
-  avatar?: Array<{ url: string }>;
+  avatar?: { url: string }[];
   createdAt: Date;
   updatedAt: Date;
 }

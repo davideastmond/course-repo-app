@@ -11,6 +11,8 @@ export interface IUser {
   avatar?: Array<{ url: string }>;
   createdAt: Date;
   updatedAt: Date;
+  department: string;
+  interestTags: string[];
 }
 
 export interface IProcessedUser {
@@ -21,4 +23,6 @@ export interface IProcessedUser {
   avatar?: { url: string }[];
   createdAt: Date;
   updatedAt: Date;
+  department: string;
+  interestTags: string[];
 }

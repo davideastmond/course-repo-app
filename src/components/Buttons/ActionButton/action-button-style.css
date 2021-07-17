@@ -23,3 +23,14 @@
   align-self: center;
   margin-right: 10px;
 }
+
+.Action-button__main:hover {
+  cursor: pointer;
+}
+
+.Action-button__slim {
+  width: 174px;
+  height: 38px;
+  padding: unset;
+  padding-left: 17px;
+}

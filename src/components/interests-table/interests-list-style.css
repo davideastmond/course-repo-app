@@ -1,0 +1,9 @@
+.Interests-list__Main-Container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 2.5%;
+}
+
+.Add-Interests-Button-top-margin-buffer {
+  margin-top: 24px;
+}

@@ -10,7 +10,7 @@ export const getUserById = async (id: string): Promise<IProcessedUser> => {
   });
 
   if (req.status === 200) {
-    return req.data;
+    return req.data as IProcessedUser;
   }
   return Promise.reject("Unable to retrieve user by id");
 };

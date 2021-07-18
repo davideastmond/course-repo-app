@@ -15,6 +15,7 @@ import TextFieldUpdateIcon from "../../images/icons/text-field-update-icon.svg";
 import "./profile-page-style.css";
 import "./table-styling.css";
 import InterestsTable from "../../components/interests-table";
+import AddInterestsModal from "../../components/addInterestsModal";
 
 function ProfilePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -92,7 +93,7 @@ function ProfilePage() {
                   JOB TITLE
                 </td>
                 <td className="bottom-border font-plain-text-cell-data">
-                  Team Lead
+                  {userData.jobTitle || ""}
                 </td>
                 <td className="bottom-border edit-text-icon-spacing">
                   <img src={TextFieldUpdateIcon} alt="Update job title" />
@@ -102,7 +103,9 @@ function ProfilePage() {
                 <td className="cell-padding label-category-width font-category-title">
                   DEPARTMENT
                 </td>
-                <td className="font-plain-text-cell-data">Engineering</td>
+                <td className="font-plain-text-cell-data">
+                  {userData.department || ""}
+                </td>
                 <td className="empty"></td>
               </tr>
             </tbody>
@@ -129,6 +132,9 @@ function ProfilePage() {
             ]}
           />
         </div>
+      </div>
+      <div className="Page-Modal">
+        <AddInterestsModal />
       </div>
     </div>
   );

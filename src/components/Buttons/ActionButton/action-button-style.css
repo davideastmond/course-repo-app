@@ -7,16 +7,26 @@
   font-weight: bold;
   font-size: 16px;
   line-height: 22px;
-  color: #FFFFFF;
   padding-bottom: 5px;
 }
 
 .Action-button__main {
-  background-color: var(--lime-green-0);
   display: flex;
   padding: 20px;
   justify-content: center;
   border-radius: 8px;
+}
+
+.Action-button__color__green {
+  background-color: var(--lime-green-0);
+  color: white;
+  border: unset;
+}
+
+.Action-button__color__plain {
+  background-color: white;
+  color: var(--light-grey);
+  border: 1px solid var(--light-grey);
 }
 
 .center-buttons {
@@ -33,4 +43,8 @@
   height: 38px;
   padding: unset;
   padding-left: 17px;
+}
+
+.Action-button__plus-arrow {
+  color: black;
 }

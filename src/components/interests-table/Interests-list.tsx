@@ -3,12 +3,10 @@ import ContentTag from "../Content-tag";
 import "./interests-list-style.css";
 interface IInterestsListProps {
   interestTags: string[];
+  deleteInterestHandler: (interestTitle: string) => void;
 }
 
 function InterestsList(props: IInterestsListProps) {
-  const tagCloseButtonClickHandler = () => {
-    console.log("Not implemented yet");
-  };
   return (
     <div className="Interests-list__Main-Container">
       {props.interestTags &&
@@ -17,7 +15,7 @@ function InterestsList(props: IInterestsListProps) {
           <ContentTag
             title={interest}
             hasCloseButton={true}
-            closeButtonClicked={tagCloseButtonClickHandler}
+            closeButtonClicked={props.deleteInterestHandler}
             key={index}
           />
         ))}

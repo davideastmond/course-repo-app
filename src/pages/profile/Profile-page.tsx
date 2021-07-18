@@ -26,7 +26,7 @@ function ProfilePage() {
   const [authInProgress, setAuthInProgress] = useState<boolean>(false);
   const [done, setDone] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
-
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const handleGoogleLogin = () => {
@@ -38,8 +38,6 @@ function ProfilePage() {
   const handleLogOut = () => {
     dispatch(logOutAsync());
   };
-
-  // console.log("Profile isloggedIn", window.sessionStorage.getItem("user_data"))
 
   return (
     <div className="Profile-page__container">
@@ -111,31 +109,16 @@ function ProfilePage() {
             </tbody>
           </table>
           <InterestsTable
-            interestTags={[
-              "Lorem",
-              "Bid dad water way",
-              "Reuben",
-              "Huzzzz",
-              "Joseph",
-              "Alternation",
-              "Induction",
-              "Concrete",
-              "Tenser Flow Automation",
-              "Thyme",
-              "Astral Dunce",
-              "Collaboration",
-              "Soup styles",
-              "Pepper shaker",
-              "Risk",
-              "King",
-              "Interstellar",
-            ]}
+            addInterestButtonClickHandler={() => setModalVisible(true)}
+            interestTags={[]}
           />
         </div>
       </div>
-      <div className="Page-Modal">
-        <AddInterestsModal />
-      </div>
+      {modalVisible && (
+        <div className="Page-Modal">
+          <AddInterestsModal closeModalHandler={() => setModalVisible(false)} />
+        </div>
+      )}
     </div>
   );
 }

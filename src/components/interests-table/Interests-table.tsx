@@ -6,8 +6,12 @@ interface IInterestsTableProps {
   interestTags: string[];
   classNames?: string;
   tableClassNames?: string;
+  addInterestButtonClickHandler: () => void;
 }
 function InterestsTable(props: IInterestsTableProps) {
+  const handleDeleteInterests = (title: string) => {
+    console.log("not implemented", title);
+  };
   return (
     <div className={`Interests-section__Main-body ${props.classNames || ""}`}>
       <table
@@ -23,20 +27,30 @@ function InterestsTable(props: IInterestsTableProps) {
         </thead>
         <tbody>
           {(!props.interestTags || props.interestTags.length === 0) && (
-            <EmptyInterestsSection />
+            <EmptyInterestsSection
+              addInterestsButtonClickHandler={
+                props.addInterestButtonClickHandler
+              }
+            />
           )}
           {props.interestTags && props.interestTags.length > 0 && (
             <tr>
-              <InterestsList interestTags={props.interestTags} />
+              <InterestsList
+                interestTags={props.interestTags}
+                deleteInterestHandler={handleDeleteInterests}
+              />
             </tr>
           )}
         </tbody>
       </table>
-      <ActionButton
-        plusSymbol={true}
-        title="Add an interest"
-        classNames="Action-button__slim Add-Interests-Button-top-margin-buffer"
-      />
+      {props.interestTags && props.interestTags.length > 0 && (
+        <ActionButton
+          plusSymbol={true}
+          title="Add an interest"
+          classNames="Action-button__slim Add-Interests-Button-top-margin-buffer"
+          action={props.addInterestButtonClickHandler}
+        />
+      )}
     </div>
   );
 }

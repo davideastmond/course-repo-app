@@ -3,7 +3,10 @@ import OpenDoodle from "../../images/graphics/open-doodles.svg";
 import ActionButton from "../Buttons/ActionButton";
 
 import "./empty-interests-style.css";
-function EmptyInterestsSection() {
+interface IEmptyInterestSectionProps {
+  addInterestsButtonClickHandler: () => void;
+}
+function EmptyInterestsSection(props: IEmptyInterestSectionProps) {
   return (
     <div className="Empty-Interests__Main-body">
       <div className="Empty-Interests__graphic-section">
@@ -23,6 +26,7 @@ function EmptyInterestsSection() {
           title="Add an interest"
           plusSymbol={true}
           classNames="Action-button__slim"
+          action={props.addInterestsButtonClickHandler}
         />
       </div>
     </div>

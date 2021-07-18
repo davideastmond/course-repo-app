@@ -16,6 +16,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
         type="text"
         placeholder={props.placeholderText || ""}
         onChange={props.onTextChange}
+        id="textInput"
       ></input>
     </div>
   );

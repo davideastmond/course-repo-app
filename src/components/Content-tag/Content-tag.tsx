@@ -5,14 +5,14 @@ interface IContentTagProps {
   title: string;
   link?: string;
   hasCloseButton?: boolean;
-  closeButtonClicked?: () => void;
+  closeButtonClicked?: (titleString: string) => void;
 }
 
 const ContentTagWithCloseButton = ({
   closeButtonClickHandler,
   title,
 }: {
-  closeButtonClickHandler: () => void;
+  closeButtonClickHandler: (titleString: string) => void;
   title: string;
 }) => {
   return (
@@ -20,9 +20,9 @@ const ContentTagWithCloseButton = ({
       {title}
       <div
         className="Content-tag__main__Close-x-button"
-        onClick={closeButtonClickHandler}
+        onClick={() => closeButtonClickHandler(title)}
       >
-        <img src={XCloseDeleteIcon} alt="delete interest tag" />
+        <img src={XCloseDeleteIcon} alt={`delete ${title}`} />
       </div>
     </div>
   );

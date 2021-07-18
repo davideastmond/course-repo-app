@@ -25,9 +25,9 @@
 }
 
 .Add-interests-modal__Middle-section__main {
-  margin-left: 5%;
-  margin-right: 5%;
-  border-bottom: 1px solid var(--light-grey)
+  border-bottom: 1px solid var(--light-grey);
+  padding-left: 5%;
+  padding-right: 5%;
 }
 
 .open-sans-font-family {
@@ -47,3 +47,19 @@
   justify-content: space-between;
 }
 
+.Add-interests-modal__controls__footer__main {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Add-interests-footer-controls__container {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 3%;
+}
+
+.right-margin-buffer {
+  margin-right: 10px;
+}

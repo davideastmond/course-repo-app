@@ -7,11 +7,9 @@ interface IInterestsTableProps {
   classNames?: string;
   tableClassNames?: string;
   addInterestButtonClickHandler: () => void;
+  deleteInterestsHandler: (title: string) => void;
 }
 function InterestsTable(props: IInterestsTableProps) {
-  const handleDeleteInterests = (title: string) => {
-    console.log("not implemented", title);
-  };
   return (
     <div className={`Interests-section__Main-body ${props.classNames || ""}`}>
       <table
@@ -37,7 +35,7 @@ function InterestsTable(props: IInterestsTableProps) {
             <tr>
               <InterestsList
                 interestTags={props.interestTags}
-                deleteInterestHandler={handleDeleteInterests}
+                deleteInterestHandler={props.deleteInterestsHandler}
               />
             </tr>
           )}

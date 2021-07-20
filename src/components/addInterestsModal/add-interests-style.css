@@ -1,6 +1,6 @@
 .Add-interests-modal__Main-window-body {
   margin-left: 23%;
-  margin-right: 28%;
+  margin-right: 18%;
   margin-top: 5%;
   background-color: white;
   border-radius: 6px;
@@ -28,6 +28,7 @@
   border-bottom: 1px solid var(--light-grey);
   padding-left: 5%;
   padding-right: 5%;
+  padding-bottom: 1%;
 }
 
 .open-sans-font-family {
@@ -62,4 +63,10 @@
 
 .right-margin-buffer {
   margin-right: 10px;
+}
+
+@media only screen and (max-width: 420px) {
+  .Add-interests-modal__Main-window-body {
+    margin: unset;
+  }
 }

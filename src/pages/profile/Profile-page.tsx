@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../../components/header-bar";
 import ProfileIcon from "../../components/profile-icon";
 import {
   checkIsAuthedAsync,
+  deleteInterestTagsAsync,
+  getInterestTagsAsync,
   logOutAsync,
+  selectInterestTags,
   selectIsLoggedIn,
   selectLoggedInUser,
+  selectUserStatus,
+  updateInterestTagsAsync,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { IProcessedUser } from "../../types";
@@ -16,6 +21,7 @@ import "./profile-page-style.css";
 import "./table-styling.css";
 import InterestsTable from "../../components/interests-table";
 import AddInterestsModal from "../../components/addInterestsModal";
+import StatusModule from "../../components/StatusModule";
 
 function ProfilePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -27,7 +33,10 @@ function ProfilePage() {
   const [done, setDone] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [masterInterestTags, setMasterInterestTags] = useState<string[]>([]);
   const dispatch = useDispatch();
+  const fetchedInterests = useSelector(selectInterestTags, shallowEqual);
+  const status = useSelector(selectUserStatus, shallowEqual);
 
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
@@ -39,8 +48,34 @@ function ProfilePage() {
     dispatch(logOutAsync());
   };
 
+  const handleAddTags = (tags: string[]) => {
+    if (tags && tags.length > 0) {
+      const updatedTags = [...masterInterestTags, ...tags];
+      setMasterInterestTags(updatedTags);
+      dispatch(updateInterestTagsAsync({ id: "me", tags: updatedTags }));
+    }
+    setModalVisible(false);
+  };
+
+  const handleDeleteSingleTag = (title: string) => {
+    const tags = [title];
+    dispatch(deleteInterestTagsAsync({ id: "me", tags }));
+  };
+
+  useEffect(() => {
+    console.log("fetched interests", fetchedInterests);
+    if (fetchedInterests) {
+      setMasterInterestTags(fetchedInterests);
+    }
+  }, [fetchedInterests]);
+
+  useEffect(() => {
+    dispatch(getInterestTagsAsync("me"));
+  }, []);
+
   return (
     <div className="Profile-page__container">
+      <StatusModule status={status} />
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
         loggedIn={isLoggedIn}
@@ -110,13 +145,17 @@ function ProfilePage() {
           </table>
           <InterestsTable
             addInterestButtonClickHandler={() => setModalVisible(true)}
-            interestTags={[]}
+            interestTags={masterInterestTags}
+            deleteInterestsHandler={handleDeleteSingleTag}
           />
         </div>
       </div>
       {modalVisible && (
         <div className="Page-Modal">
-          <AddInterestsModal closeModalHandler={() => setModalVisible(false)} />
+          <AddInterestsModal
+            closeModalHandler={() => setModalVisible(false)}
+            addInterestTagsSubmitHandler={handleAddTags}
+          />
         </div>
       )}
     </div>

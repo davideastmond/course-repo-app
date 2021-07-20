@@ -7,11 +7,10 @@ import "./add-interests-style.css";
 
 interface IAddInterestModalProps {
   closeModalHandler: () => void;
+  addInterestTagsSubmitHandler: (tags: string[]) => void;
 }
 function AddInterestsModal(props: IAddInterestModalProps) {
-  const [interestsTags, setInterestTags] = useState<string[]>([
-    "first tag dummy",
-  ]);
+  const [interestsTags, setInterestTags] = useState<string[]>([]);
   const [currentInterestsString, setCurrentInterestsString] =
     useState<string>("");
 
@@ -28,14 +27,21 @@ function AddInterestsModal(props: IAddInterestModalProps) {
     const concatenatedTags = [...interestsTags, ...sanitizedTags];
     setInterestTags(Array.from(new Set(concatenatedTags)));
     setCurrentInterestsString("");
+    clearTextInput();
+  };
+
+  const clearTextInput = () => {
     const textInput = document.getElementById("textInput") as HTMLInputElement;
     if (textInput) {
       textInput.value = "";
     }
   };
-
   const handleDeleteInterestTag = (title: string) => {
     console.log("Interest to delete is", title);
+    const tags = interestsTags.filter((tag) => {
+      return tag !== title;
+    });
+    setInterestTags(tags);
   };
 
   useEffect(() => {
@@ -84,6 +90,7 @@ function AddInterestsModal(props: IAddInterestModalProps) {
             classNames="Action-button__slim"
             title="Save changes"
             plusSymbol={false}
+            action={() => props.addInterestTagsSubmitHandler(interestsTags)}
           />
         </div>
       </div>

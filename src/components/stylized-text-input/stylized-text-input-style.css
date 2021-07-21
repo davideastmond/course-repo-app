@@ -1,0 +1,9 @@
+.Styled-input-box__input {
+  height: 47px;
+  border: 1.5px solid var(--light-grey-2);
+  padding-left: 3%;
+}
+
+.width-400px {
+  width: 400px;
+}

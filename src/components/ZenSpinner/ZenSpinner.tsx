@@ -8,7 +8,7 @@ function ZenSpinner(props: ZenSpinnerProps) {
   return (
     <div className={`Spinner__Main ${props.classNames || ""}`}>
       <div className="Spinner__Body">
-        <img src={SpinnerLogo} alt={"loading..."} />
+        <img src={SpinnerLogo} alt={"loading"} />
       </div>
     </div>
   );

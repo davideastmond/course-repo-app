@@ -7,6 +7,7 @@ import { ContextMenuSeparator } from "../context-menu/Menu-divider";
 import { IProcessedUser } from "../../types";
 import { selectCourseRecommendationModalOpenState } from "../../reducers";
 import { shallowEqual, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -44,8 +45,9 @@ function HeaderBar(props: IHeaderBarProps) {
     selectCourseRecommendationModalOpenState,
     shallowEqual
   );
+  const history = useHistory();
   const handleShowProfile = () => {
-    console.log("Handle show profile");
+    history.push("/profile");
   };
 
   useEffect(() => {
@@ -84,7 +86,9 @@ function HeaderBar(props: IHeaderBarProps) {
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
         <div className="Nav__Header-bar__Zen-logo-section">
-          <img className="app-logo" src={ZenLogo} alt="zen logo"></img>
+          <Link to="/">
+            <img className="app-logo" src={ZenLogo} alt="zen logo"></img>
+          </Link>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
           <h3 className="app-title">Zen Learn</h3>

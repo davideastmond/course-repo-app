@@ -1,0 +1,72 @@
+.Add-interests-modal__Main-window-body {
+  margin-left: 23%;
+  margin-right: 18%;
+  margin-top: 5%;
+  background-color: white;
+  border-radius: 6px;
+}
+
+.large-header-text {
+  /* Add topics of interest */
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 52px;
+  line-height: 63px;
+  letter-spacing: -0.05em;
+
+  /* grey 500 */
+  color: #2E3841;
+}
+
+.Add-interest-modal__Header-Enclosure {
+  padding: 5%;
+  border-bottom: solid 1px var(--light-grey);
+}
+
+.Add-interests-modal__Middle-section__main {
+  border-bottom: 1px solid var(--light-grey);
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-bottom: 1%;
+}
+
+.open-sans-font-family {
+  font-family: Open Sans;
+}
+
+.font-size-16px {
+  font-size: 16px;
+}
+
+.Add-interests-modal__Middle-section__main__add-tags-prompt-text {
+  margin-top: 20px;
+}
+
+.Add-interests-modal__Middle-input-section__enclosure {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Add-interests-modal__controls__footer__main {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.Add-interests-footer-controls__container {
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 3%;
+}
+
+.right-margin-buffer {
+  margin-right: 10px;
+}
+
+@media only screen and (max-width: 420px) {
+  .Add-interests-modal__Main-window-body {
+    margin: unset;
+  }
+}

@@ -1,6 +1,7 @@
 // import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 import BodyHeader from "../../components/body-header";
 import SideBrowser from "../../components/Browser";
 import ActionButton from "../../components/Buttons/ActionButton";
@@ -8,6 +9,7 @@ import ActionButton from "../../components/Buttons/ActionButton";
 import CourseContainer from "../../components/course-container";
 import HeaderBar from "../../components/header-bar";
 import FormDialog from "../../components/modal";
+import StatusModule from "../../components/StatusModule";
 import TextInput from "../../components/Text-Input";
 import ZenSpinner from "../../components/ZenSpinner";
 import {
@@ -15,6 +17,7 @@ import {
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
+  selectAppStatus,
   selectIsLoggedIn,
   selectLoggedInUser,
   setCourseFilterOpen,
@@ -31,6 +34,7 @@ function HomePage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const userData = useSelector(selectLoggedInUser, shallowEqual);
+  const status = useSelector(selectAppStatus, shallowEqual);
 
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });

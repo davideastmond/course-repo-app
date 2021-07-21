@@ -11,6 +11,11 @@
 .Spinner__Main {
   display: flex;
   justify-content: center;
+  position: absolute;
+  width: 100vw;
+  opacity: .5;
+  background-color: silver;
+  height: 1000vh;
 }
 
 .Spinner__Body {

@@ -6,10 +6,11 @@ interface IProfileIconProps {
   classNames?: string;
   showProfileMenuHandler: () => void;
   genericUser: boolean;
+  parentClassNames?: string;
 }
 function ProfileIcon(props: IProfileIconProps) {
   return (
-    <div className="Profile-Icon__main">
+    <div className={`Profile-Icon__main ${props.parentClassNames || ""}`}>
       {props.genericUser && (
         <img
           onClick={props.showProfileMenuHandler}

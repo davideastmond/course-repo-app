@@ -12,6 +12,7 @@ import {
   selectLoggedInUser,
   selectUserStatus,
   updateInterestTagsAsync,
+  updateUserJobTitleDepartmentAsync,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { IProcessedUser } from "../../types";
@@ -22,6 +23,7 @@ import "./table-styling.css";
 import InterestsTable from "../../components/interests-table";
 import AddInterestsModal from "../../components/addInterestsModal";
 import StatusModule from "../../components/StatusModule";
+import StylizedTextInput from "../../components/stylized-text-input";
 
 function ProfilePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -34,6 +36,11 @@ function ProfilePage() {
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [masterInterestTags, setMasterInterestTags] = useState<string[]>([]);
+  const [isProfileEditMode, setIsProfileEditMode] = useState<boolean>(false);
+  const [jobTitle, setJobTitle] = useState<string>(userData.jobTitle || "");
+  const [department, setDepartment] = useState<string>(
+    userData.department || ""
+  );
   const dispatch = useDispatch();
   const fetchedInterests = useSelector(selectInterestTags, shallowEqual);
   const status = useSelector(selectUserStatus, shallowEqual);
@@ -63,7 +70,6 @@ function ProfilePage() {
   };
 
   useEffect(() => {
-    console.log("fetched interests", fetchedInterests);
     if (fetchedInterests) {
       setMasterInterestTags(fetchedInterests);
     }
@@ -72,6 +78,31 @@ function ProfilePage() {
   useEffect(() => {
     dispatch(getInterestTagsAsync("me"));
   }, []);
+
+  const handleJobTitleTextChanged = (e: any) => {
+    if (e.target.value) {
+      setJobTitle(e.target.value);
+    }
+  };
+
+  const handleDepartmentTextChanged = (e: any) => {
+    if (e.target.value) {
+      setDepartment(e.target.value);
+    }
+  };
+
+  const handleJobTitleInputEnterPressed = () => {
+    dispatch(
+      updateUserJobTitleDepartmentAsync({ id: "me", jobTitle, department })
+    );
+    setIsProfileEditMode(false);
+  };
+  const handleDepartmentInputEnterPressed = () => {
+    dispatch(
+      updateUserJobTitleDepartmentAsync({ id: "me", jobTitle, department })
+    );
+    setIsProfileEditMode(false);
+  };
 
   return (
     <div className="Profile-page__container">
@@ -126,18 +157,44 @@ function ProfilePage() {
                   JOB TITLE
                 </td>
                 <td className="bottom-border font-plain-text-cell-data">
-                  {userData.jobTitle || ""}
+                  {isProfileEditMode ? (
+                    <StylizedTextInput
+                      value={jobTitle || userData.jobTitle}
+                      id="jobTitleTextInput"
+                      onTextChange={handleJobTitleTextChanged}
+                      onEnterKeyPressed={handleJobTitleInputEnterPressed}
+                    />
+                  ) : (
+                    userData.jobTitle
+                  )}
                 </td>
                 <td className="bottom-border edit-text-icon-spacing">
-                  <img src={TextFieldUpdateIcon} alt="Update job title" />
+                  <img
+                    className="Profile-edit-icon"
+                    src={TextFieldUpdateIcon}
+                    alt="Update job title"
+                    onClick={() => setIsProfileEditMode(true)}
+                  />
                 </td>
               </tr>
-              <tr>
+              <tr
+                className="Department-row"
+                onClick={() => console.log("clicked department row")}
+              >
                 <td className="cell-padding label-category-width font-category-title">
                   DEPARTMENT
                 </td>
                 <td className="font-plain-text-cell-data">
-                  {userData.department || ""}
+                  {isProfileEditMode ? (
+                    <StylizedTextInput
+                      value={department || userData.department}
+                      id="departmentTextInput"
+                      onTextChange={handleDepartmentTextChanged}
+                      onEnterKeyPressed={handleDepartmentInputEnterPressed}
+                    />
+                  ) : (
+                    userData.department
+                  )}
                 </td>
                 <td className="empty"></td>
               </tr>

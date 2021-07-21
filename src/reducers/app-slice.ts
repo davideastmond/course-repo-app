@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import checkIsAuthed from "../services/auth/check-if-authorized";
 import logout from "../services/auth/log-out";
-import { getUserById } from "../services/users";
+import { getUserById, updateUserJobTitleDepartment } from "../services/users";
 import { IProcessedUser } from "../types";
 import stateStatus from "../utils/state-status";
 
@@ -40,6 +40,21 @@ export const logOutAsync = createAsyncThunk(
   "app/logout",
   async (): Promise<any> => {
     return logout();
+  }
+);
+
+export const updateUserJobTitleDepartmentAsync = createAsyncThunk(
+  "app/updateUserProfileJobTitleDepartment",
+  async ({
+    id,
+    jobTitle,
+    department,
+  }: {
+    id: string;
+    jobTitle: string;
+    department: string;
+  }): Promise<IProcessedUser> => {
+    return updateUserJobTitleDepartment(id, jobTitle, department);
   }
 );
 
@@ -84,6 +99,16 @@ export const appSlice = createSlice({
       .addCase(logOutAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
         state.isLoggedIn = false;
+      })
+      .addCase(updateUserJobTitleDepartmentAsync.pending, (state) => {
+        stateStatus.loading(state, "Updating user profile data");
+      })
+      .addCase(updateUserJobTitleDepartmentAsync.fulfilled, (state, action) => {
+        stateStatus.idle(state);
+        state.user = action.payload;
+      })
+      .addCase(updateUserJobTitleDepartmentAsync.rejected, (state) => {
+        stateStatus.error(state, "Unable to update user profile data");
       });
   },
 });

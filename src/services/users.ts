@@ -52,9 +52,28 @@ export const getUserInterests = async (id: string): Promise<string[]> => {
     method: "get",
     url: `${process.env.REACT_APP_API_URL}/api/users/${id}/interests`,
   });
-  console.log(req.data, "interests!!! ");
   if (req.status === 200) {
     return req.data as string[];
   }
   return Promise.reject("Unable to get interests");
+};
+
+export const updateUserJobTitleDepartment = async (
+  id: string,
+  jobTitle: string,
+  department: string
+): Promise<IProcessedUser> => {
+  const req = await axios({
+    withCredentials: true,
+    method: "patch",
+    url: `${process.env.REACT_APP_API_URL}/api/users/${id}/profile`,
+    data: {
+      jobTitle: jobTitle || "",
+      department: department || "",
+    },
+  });
+  if (req.status === 200) {
+    return req.data as IProcessedUser;
+  }
+  return Promise.reject("Unable to update user profile data");
 };

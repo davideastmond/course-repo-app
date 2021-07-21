@@ -65,6 +65,7 @@ function AddInterestsModal(props: IAddInterestModalProps) {
               "font-size-16px open-sans-font-family width-400px"
             }
             onTextChange={getCurrentInterestsStringFromInput}
+            id="textInput"
           />
           <ActionButton
             classNames="Action-button__color__plain Action-button__slim"

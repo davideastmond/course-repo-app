@@ -3,7 +3,7 @@
   margin-right: 18%;
   margin-top: 5%;
   background-color: white;
-  border-radius: 6px;
+  border-radius: var(--modal-radius)
 }
 
 .large-header-text {
@@ -29,10 +29,6 @@
   padding-left: 5%;
   padding-right: 5%;
   padding-bottom: 1%;
-}
-
-.open-sans-font-family {
-  font-family: Open Sans;
 }
 
 .font-size-16px {

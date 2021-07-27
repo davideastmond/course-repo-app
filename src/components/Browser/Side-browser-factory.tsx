@@ -9,6 +9,7 @@ export function getMenuOptions(props: {
   return props.titles.map((title, index) => (
     <SideBrowserMenuOption
       index={index}
+      key={index}
       selected={props.isSelected === index}
       onClickHandler={props.clickAction}
       optionLabel={title}

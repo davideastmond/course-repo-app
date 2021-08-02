@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./stylized-text-input-style.css";
-
+import ErrorAlertIconRed from "../../images/icons/error-alert-circle-red.svg";
 interface IStylizedTextInputProps {
   id: string;
   classNames?: string;
@@ -15,6 +15,9 @@ interface IStylizedTextInputProps {
   maxLength?: number;
   charCount?: boolean;
   multiLine?: boolean;
+  clearOnEnter?: boolean;
+  isError?: boolean;
+  errorMessages?: string[];
 }
 
 export const TEXT_INPUT_MAX_LENGTH: number = 524288;
@@ -31,12 +34,27 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
   const handleEnterKeyPressed = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       props.onEnterKeyPressed && props.onEnterKeyPressed(textValue);
+      if (props.clearOnEnter && props.clearOnEnter === true) {
+        setTextValue("");
+      }
     }
   };
 
   const handleLostFocus = (e: any) => {
     props.onBlur && props.onBlur(e);
   };
+
+  const renderErrors = () => {
+    return props.errorMessages?.map((msg) => (
+      <div className="Stylized-input-box__enclosure display-flex flex-wrap">
+        <img className="" src={ErrorAlertIconRed} alt="alert" />
+        <div className="Stylized-input-box__ErrorMessage__text open-sans-font-family font-size-12px left-margin-buffer-10px">
+          {msg}
+        </div>
+      </div>
+    ));
+  };
+
   return (
     <div className={`Styled-input-box__Main ${props.classNames || ""}`}>
       {props.label && props.label.length > 0 && (
@@ -57,7 +75,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
           <textarea
             className={`Styled-input-box__input Styled-input-box__multiline ${
               props.inputBoxClassNames || ""
-            }`}
+            } ${props.isError ? "text-error-border" : ""}`}
             placeholder={props.placeholderText}
             value={textValue}
             onChange={textValueChanged}
@@ -73,13 +91,20 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
               props.maxLength || TEXT_INPUT_MAX_LENGTH
             }`}</div>
           )}
+          {props.isError &&
+            props.errorMessages &&
+            props.errorMessages.length > 0 && (
+              <div className="Stylized-input-box__ErrorMessage_Enclosure">
+                {renderErrors()}
+              </div>
+            )}
         </div>
       ) : (
         <div className="TextInput-Main-Section">
           <input
             className={`Styled-input-box__input ${
               props.inputBoxClassNames || ""
-            }`}
+            } ${props.isError ? "text-error-border" : ""}`}
             type="text"
             placeholder={props.placeholderText}
             value={textValue}
@@ -96,6 +121,13 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
               props.maxLength || TEXT_INPUT_MAX_LENGTH
             }`}</div>
           )}
+          {props.isError &&
+            props.errorMessages &&
+            props.errorMessages.length > 0 && (
+              <div className="Stylized-input-box__ErrorMessage_Enclosure">
+                {renderErrors()}
+              </div>
+            )}
         </div>
       )}
     </div>

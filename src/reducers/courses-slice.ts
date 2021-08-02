@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllCourses, postCourseRecommendation } from "../services/courses";
-import { ICourse, ICourseRecommendationPost } from "../types";
+import {
+  ICourse,
+  ICourseRecommendationPost,
+  ICourseRecommendationSubmission,
+} from "../types";
 import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
@@ -25,7 +29,7 @@ export const getAllCoursesAsync = createAsyncThunk(
 
 export const postCourseRecommendationAsync = createAsyncThunk(
   "courses/postCourseRecommendation",
-  async (data: ICourseRecommendationPost) => {
+  async (data: ICourseRecommendationSubmission) => {
     const res = await postCourseRecommendation(data);
     return res;
   }

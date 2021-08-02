@@ -48,3 +48,8 @@
 .Action-button__plus-arrow {
   color: black;
 }
+
+.dark-grey-background-color {
+  background-color: var(--light-grey);
+  color: white;
+}

@@ -31,8 +31,7 @@
   color: #2E3841;
 }
 
-
-.Suggest-course__Main-about-section__header-section-text {
+.section-header-text {
   font-family: var(--main-font);
   font-size: 25px;
   font-weight: 600;
@@ -88,5 +87,22 @@
 
 .Add-take-away-footer {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+}
+
+.Suggest-course__Modal-Controls__footer-main {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.right-margin {
+  margin-right: 10%;
+}
+
+.Suggest-course__Modal-Controls__footer-main {
+  margin-right: 10%;
+}
+
+.align-text-center {
+  text-align: center;
 }

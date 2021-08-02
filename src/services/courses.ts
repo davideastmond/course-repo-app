@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ICourse, ICourseRecommendationPost } from "../types";
+import {
+  ICourse,
+  ICourseRecommendationPost,
+  ICourseRecommendationSubmission,
+} from "../types";
 
 export const getAllCourses = async () => {
   const req = await axios({
@@ -15,7 +19,7 @@ export const getAllCourses = async () => {
 };
 
 export const postCourseRecommendation = async (
-  data: ICourseRecommendationPost
+  data: ICourseRecommendationSubmission
 ) => {
   const { courseTitle, courseUrl, description, category, tags } = data;
   const req = await axios({

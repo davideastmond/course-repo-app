@@ -52,3 +52,27 @@ export interface ICourseRecommendationPost {
   category: string;
   tags: string[];
 }
+
+/* 
+(packageUpdate: { learningBlurb: string, takeAways: { [key in number]: {[_key in number]: string} }}) => void;
+*/
+
+export type ITakeAwayStripDataCollection = {
+  [key in number]: string;
+};
+export type ICourseRecommendationTakeAwayPackage = {
+  [key in number]: {
+    learningBlurb: string;
+    takeAways: ITakeAwayStripDataCollection;
+  };
+};
+
+export interface ICourseRecommendationSubmission {
+  courseRating: number;
+  courseTitle: string;
+  courseUrl: string;
+  description: string;
+  category: string;
+  tags: string[];
+  takeAwayPackages: ICourseRecommendationTakeAwayPackage;
+}

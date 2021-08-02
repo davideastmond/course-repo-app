@@ -97,3 +97,34 @@ h1, h2, h3, h4, h5, h5 {
 .pointer:hover {
   cursor: pointer;
 }
+
+.align-center {
+  align-self: center;
+}
+
+.font-size-20px {
+  font-size: 20px;
+}
+
+.font-size-10px {
+  font-size: 10px;
+}
+
+.font-size-12px {
+  font-size: 12px;
+}
+
+.display-flex {
+  display: flex;
+}  
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.left-margin-buffer-10px {
+  margin-left: 10px;
+}
+
+.color-red {
+  color: var(--error-color)
+}

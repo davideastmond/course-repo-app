@@ -1,22 +1,56 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import StylizedTextInput from "../../stylized-text-input";
 import TrashIcon from "../../../images/icons/trash.svg";
 import "./key-take-away-style.css";
 import AddPlusButtonIcon from "../../../images/icons/add-plus-arrow-black.svg";
 const MIN_TAKE_AWAY_STRIPS: number = 1;
 const MAX_TAKE_AWAY_STRIPS: number = 3;
-const TakeAwayStripRow = () => {
+
+interface ITakeAwayStripRowProps {
+  id: string;
+  index: number;
+  onStripTextDataChanged: (textForIndex: any[]) => void;
+}
+const TakeAwayStripRow = (props: ITakeAwayStripRowProps) => {
+  const handleStripTextDataChanged = (e: any) => {
+    props.onStripTextDataChanged([props.index, e.target.value]);
+  };
   return (
     <div className="TakeAwayStripRow__Main">
       <div className="Row-dot">•</div>
-      <StylizedTextInput id="" />
+      <StylizedTextInput
+        id={props.id}
+        onTextChange={handleStripTextDataChanged}
+      />
     </div>
   );
 };
 
-function KeyTakeAwayApplet() {
+interface IKeyTakeAwayAppletProps {
+  onStripDataPackageChange: (stripDataPackage: {}) => void;
+  index: number;
+}
+function KeyTakeAwayApplet(props: IKeyTakeAwayAppletProps) {
+  const takeAwayStripRef = useRef({});
+
+  const takeAwayStripDataHandler = (data: any[]) => {
+    takeAwayStripRef.current = {
+      ...takeAwayStripRef.current,
+      [`${data[0]}`]: data[1],
+    };
+
+    props.onStripDataPackageChange({
+      takeAway: takeAwayStripRef.current,
+    });
+  };
+
   const [takeAwayStrips, setTakeAwayStrips] = useState<any[]>([
-    <TakeAwayStripRow key="1-root" />,
+    <TakeAwayStripRow
+      key={`takeAwayStripRow0`}
+      id={`takeAwayStripRow0`}
+      index={0}
+      onStripTextDataChanged={takeAwayStripDataHandler}
+    />,
   ]);
   const handleDeleteTakeAwayStrip = () => {
     if (takeAwayStrips && takeAwayStrips.length > MIN_TAKE_AWAY_STRIPS) {
@@ -25,7 +59,15 @@ function KeyTakeAwayApplet() {
   };
   const handleAddTakeAwayStrip = () => {
     if (takeAwayStrips && takeAwayStrips.length < MAX_TAKE_AWAY_STRIPS) {
-      setTakeAwayStrips([...takeAwayStrips, <TakeAwayStripRow />]);
+      setTakeAwayStrips([
+        ...takeAwayStrips,
+        <TakeAwayStripRow
+          key={`takeAwayStripRow${takeAwayStrips.length}`}
+          id={`takeAwayStripRow${takeAwayStrips.length}`}
+          index={takeAwayStrips.length}
+          onStripTextDataChanged={takeAwayStripDataHandler}
+        />,
+      ]);
     }
   };
   return (

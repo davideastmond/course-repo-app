@@ -17,3 +17,11 @@
 .Char-Count__text  {
   color:  var(--light-grey);
 }
+
+.text-error-border {
+  border: 2px solid var(--error-color);
+}
+
+.Stylized-input-box__ErrorMessage__text {
+  color: var(--error-color);
+}

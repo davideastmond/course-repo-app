@@ -1,0 +1,5 @@
+.Star-div:hover {
+  cursor:pointer;
+  filter: brightness(0) saturate(100%) invert(82%) sepia(15%) saturate(1402%) hue-rotate(344deg) brightness(100%) contrast(104%);
+}
+

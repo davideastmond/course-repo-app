@@ -1,0 +1,17 @@
+.TagApplet__input-enclosure {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.longer-width {
+  width: 100%;
+}
+
+.TagApplet__Action-button__Main {
+  margin-left: 2%;
+}
+
+.TagApplet__Tags-display {
+  display: flex;
+  flex: wrap;
+}

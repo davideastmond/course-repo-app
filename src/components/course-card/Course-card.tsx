@@ -14,8 +14,8 @@ import { getUserById } from "../../services/users";
 interface ICourseCardProps {
   _id: string;
   postedByUserId: string;
-  courseTitle: string;
-  courseUrl: string;
+  title: string;
+  url: string;
   userName?: string;
   reviews?: {
     [keyof: string]: string;
@@ -52,9 +52,9 @@ function CourseCard(props: ICourseCardProps) {
           <a
             className="Course-card__external-link"
             target="_blank"
-            href={props.courseUrl}
+            href={props.url || "no url"}
           >
-            {props.courseTitle}
+            {props.title || "Untitled course"}
             <img
               className="external-link-icon"
               src={ExternalLinkIcon}

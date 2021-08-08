@@ -21,6 +21,9 @@
   --red-color-6: #FF7675;
   --green-color-6: #00CEC9;
   --error-color: #D63031;
+  --modal-radius: 6px;
+
+  --star-fill: #FDCB6E;
 }
 
 h1, h2, h3, h4, h5, h5 {
@@ -77,4 +80,56 @@ h1, h2, h3, h4, h5, h5 {
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0,0,0); /* Fallback color */
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.open-sans-font-family {
+  font-family: Open Sans;
+}
+
+.mont-font {
+  font-family: Montserrat;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.align-center {
+  align-self: center;
+}
+
+.font-size-20px {
+  font-size: 20px;
+}
+
+.font-size-10px {
+  font-size: 10px;
+}
+
+.font-size-12px {
+  font-size: 12px;
+}
+
+.display-flex {
+  display: flex;
+}  
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.left-margin-buffer-10px {
+  margin-left: 10px;
+}
+
+.color-red {
+  color: var(--error-color)
+}
+
+.error-text {
+  font-family: Montserrat;
+  color: var(--error-color);
 }

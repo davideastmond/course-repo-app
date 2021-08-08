@@ -1,14 +1,14 @@
 import { ICourseRecommendationSubmission } from "../../types";
 import { validateCourseRecommendation } from "./course-recommendation-validation";
 
-const MOCK_DATA = {
-  courseRating: 0,
-  courseTitle: "Course Title",
-  courseURL: "https://www.course.com",
-  courseDescription: "Desc",
-  courseCategory: "design",
-  courseTags: ["tag1", "tag2"],
-  takeAwayPackages: {
+const MOCK_DATA: ICourseRecommendationSubmission = {
+  rating: 0,
+  title: "Course Title",
+  url: "https://www.course.com",
+  description: "Desc",
+  category: "design",
+  tags: ["tag1", "tag2"],
+  notes: {
     0: {
       learningBlurb: "some blurb",
       takeAways: {
@@ -38,13 +38,19 @@ const MOCK_DATA = {
 describe("course recommendation validation tests", () => {
   test("Validates correctly - everything is valid", () => {
     const result = validateCourseRecommendation(MOCK_DATA);
+    console.log(result);
     expect(result.validated).toBe(true);
     expect(result.invalidFields).toEqual({});
     expect(result.output).toHaveProperty("courseRating");
     expect(result.output).toHaveProperty("courseTitle");
+    expect(result.output).toHaveProperty("notes");
     expect(
-      (result.output as ICourseRecommendationSubmission).courseTags
-    ).toEqual(["tag1", "tag2"]);
+      (result.output as ICourseRecommendationSubmission).notes[0].takeAways[1]
+    ).toBe("-sec");
+    expect((result.output as ICourseRecommendationSubmission).tags).toEqual([
+      "tag1",
+      "tag2",
+    ]);
   });
 
   test("validation error messages are correct", () => {

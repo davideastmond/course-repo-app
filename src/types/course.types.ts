@@ -1,8 +1,8 @@
 export interface ICourse {
   _id: string;
   postedByUserId: string;
-  courseTitle: string;
-  courseUrl: string;
+  title: string;
+  url: string;
   description: string;
   reviews: {
     [keyof: string]: string;
@@ -68,11 +68,11 @@ export type ICourseRecommendationTakeAwayPackage = {
 };
 
 export interface ICourseRecommendationSubmission {
-  courseRating: number;
-  courseTitle: string;
-  courseUrl: string;
+  rating: number;
+  title: string;
+  url: string;
   description: string;
   category: string;
   tags: string[];
-  takeAwayPackages: ICourseRecommendationTakeAwayPackage;
+  notes: ICourseRecommendationTakeAwayPackage;
 }

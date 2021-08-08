@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./stylized-text-input-style.css";
 import ErrorAlertIconRed from "../../images/icons/error-alert-circle-red.svg";
 interface IStylizedTextInputProps {
@@ -25,13 +25,18 @@ export const TEXT_INPUT_MAX_LENGTH: number = 524288;
 function StylizedTextInput(props: IStylizedTextInputProps) {
   const [textValue, setTextValue] = useState<string>(props.value || "");
   const [charCount, setCharCount] = useState<number>(0);
+  const [errorShouldClear, setErrorShouldClear] = useState<boolean>(false);
+
   const textValueChanged = (e: any) => {
     setTextValue(e.target.value);
     props.onTextChange && props.onTextChange(e);
     setCharCount(e.target.value.length);
+    if (props.isError) {
+      setErrorShouldClear(true);
+    }
   };
 
-  const handleEnterKeyPressed = (e: React.KeyboardEvent) => {
+  const handleKeyPressed = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       props.onEnterKeyPressed && props.onEnterKeyPressed(textValue);
       if (props.clearOnEnter && props.clearOnEnter === true) {
@@ -43,6 +48,12 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
   const handleLostFocus = (e: any) => {
     props.onBlur && props.onBlur(e);
   };
+
+  useEffect(() => {
+    if (props.isError) {
+      setErrorShouldClear(false);
+    }
+  });
 
   const renderErrors = () => {
     return props.errorMessages?.map((msg) => (
@@ -79,7 +90,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
             placeholder={props.placeholderText}
             value={textValue}
             onChange={textValueChanged}
-            onKeyPress={handleEnterKeyPressed}
+            onKeyPress={handleKeyPressed}
             id={props.id}
             onBlur={handleLostFocus}
             maxLength={
@@ -93,7 +104,8 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
           )}
           {props.isError &&
             props.errorMessages &&
-            props.errorMessages.length > 0 && (
+            props.errorMessages.length > 0 &&
+            !errorShouldClear && (
               <div className="Stylized-input-box__ErrorMessage_Enclosure">
                 {renderErrors()}
               </div>
@@ -109,7 +121,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
             placeholder={props.placeholderText}
             value={textValue}
             onChange={textValueChanged}
-            onKeyPress={handleEnterKeyPressed}
+            onKeyPress={handleKeyPressed}
             id={props.id}
             onBlur={handleLostFocus}
             maxLength={
@@ -123,7 +135,8 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
           )}
           {props.isError &&
             props.errorMessages &&
-            props.errorMessages.length > 0 && (
+            props.errorMessages.length > 0 &&
+            !errorShouldClear && (
               <div className="Stylized-input-box__ErrorMessage_Enclosure">
                 {renderErrors()}
               </div>

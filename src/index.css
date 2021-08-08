@@ -128,3 +128,8 @@ h1, h2, h3, h4, h5, h5 {
 .color-red {
   color: var(--error-color)
 }
+
+.error-text {
+  font-family: Montserrat;
+  color: var(--error-color);
+}

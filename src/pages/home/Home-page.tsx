@@ -34,7 +34,7 @@ function HomePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const status = useSelector(selectAppStatus, shallowEqual);
-  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
@@ -60,13 +60,14 @@ function HomePage() {
   }, [done]);
 
   const openModal = (isOpen: boolean) => {
-    if (isOpen === true) {
-      setOpen(true);
-      dispatch(setCourseFilterOpen(true));
-    } else {
-      setOpen(false);
-      dispatch(setCourseFilterOpen(false));
-    }
+    // if (isOpen === true) {
+    //   setOpen(true);
+    //   dispatch(setCourseFilterOpen(true));
+    // } else {
+    //   setOpen(false);
+    //   dispatch(setCourseFilterOpen(false));
+    // }
+    setModalVisible(true);
   };
 
   return (
@@ -120,7 +121,7 @@ function HomePage() {
       </footer>
       {modalVisible && (
         <div className="Page-Modal">
-          <SuggestCourseModal />
+          <SuggestCourseModal onModalClose={setModalVisible} />
         </div>
       )}
     </div>

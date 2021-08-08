@@ -1,5 +1,6 @@
 .TagApplet__input-enclosure {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .longer-width {

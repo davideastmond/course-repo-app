@@ -40,7 +40,7 @@ function KeyTakeAwayApplet(props: IKeyTakeAwayAppletProps) {
     };
 
     props.onStripDataPackageChange({
-      takeAway: takeAwayStripRef.current,
+      ...takeAwayStripRef.current,
     });
   };
 

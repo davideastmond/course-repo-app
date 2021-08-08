@@ -3,7 +3,7 @@ import {
   blurbAndTakeAwayValidator,
   courseDescriptionValidator,
   courseTitleValidator,
-  courseURLValidator,
+  courseUrlValidator,
 } from "./course-recommendation-validators";
 
 type RecommendationValidation = {
@@ -28,7 +28,7 @@ export function validateCourseRecommendation(
 
   for (const [property, value] of Object.entries(data)) {
     switch (property) {
-      case "courseTitle":
+      case "title":
         const titleValidatorMessages = courseTitleValidator(value);
         if (titleValidatorMessages.length > 0) {
           validationObj.validated = false;
@@ -39,8 +39,8 @@ export function validateCourseRecommendation(
           ].flat() as string[];
         }
         break;
-      case "courseURL":
-        const urlValidatorMessages = courseURLValidator(value);
+      case "url":
+        const urlValidatorMessages = courseUrlValidator(value);
         if (urlValidatorMessages.length > 0) {
           validationObj.validated = false;
           validationObj.invalidFields[property] = [];
@@ -50,7 +50,7 @@ export function validateCourseRecommendation(
           ].flat() as string[];
         }
         break;
-      case "courseDescription":
+      case "description":
         const descValidatorMessages = courseDescriptionValidator(value);
         if (descValidatorMessages.length > 0) {
           validationObj.validated = false;

@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllCourses, postCourseRecommendation } from "../services/courses";
-import {
-  ICourse,
-  ICourseRecommendationPost,
-  ICourseRecommendationSubmission,
-} from "../types";
+import { ICourse, ICourseRecommendationSubmission } from "../types";
 import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
@@ -29,8 +25,16 @@ export const getAllCoursesAsync = createAsyncThunk(
 
 export const postCourseRecommendationAsync = createAsyncThunk(
   "courses/postCourseRecommendation",
-  async (data: ICourseRecommendationSubmission) => {
-    const res = await postCourseRecommendation(data);
+  async ({
+    data,
+    setDone,
+    successHandler,
+  }: {
+    data: ICourseRecommendationSubmission;
+    setDone: (done: boolean) => void;
+    successHandler: (success: boolean) => void;
+  }) => {
+    const res = await postCourseRecommendation(data, setDone, successHandler);
     return res;
   }
 );
@@ -74,5 +78,6 @@ export const selectAllCourses = (state: any) => {
     (course: ICourse) => course.category === state.courses.filter
   );
 };
+
 export const { setCourseFilter } = coursesSlice.actions;
 export default coursesSlice.reducer;

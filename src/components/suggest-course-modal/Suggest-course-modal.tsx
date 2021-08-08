@@ -17,19 +17,27 @@ import { useDispatch } from "react-redux";
 import { validateCourseRecommendation } from "../../utils/course-recommendation";
 import ErrorAlertIconRed from "../../images/icons/error-alert-circle-red.svg";
 import ZenSpinner from "../ZenSpinner";
+import { postCourseRecommendationAsync } from "../../reducers";
+
 const [...COURSE_CATEGORIES] = Object.entries(
   COURSE_CATEGORY_FRIENDLY_DICTIONARY
 );
 
-function SuggestCourseModal() {
+interface ISuggestCourseModalProps {
+  onModalClose: (visible: boolean) => void;
+}
+function SuggestCourseModal(props: ISuggestCourseModalProps) {
   const [takeAways, setTakeAways] = useState<any[]>([]);
-  const [courseRating, setCourseRating] = useState<number>(0);
-  const [courseTitle, setCourseTitle] = useState<string>("");
-  const [courseUrl, setCourseURL] = useState<string>("");
+  const [rating, setCourseRating] = useState<number>(0);
+  const [title, setCourseTitle] = useState<string>("");
+  const [url, setCourseURL] = useState<string>("");
   const [description, setCourseDescription] = useState<string>("");
   const [category, setCourseCategory] = useState<string>("");
   const [courseTags, setCourseTags] = useState<string[]>([]);
-
+  const [submissionErrorState, setSubmissionErrorState] =
+    useState<boolean>(false);
+  const [submissionErrorMessageText, setSubmissionErrorMessageText] =
+    useState<string>("");
   const takeAwayPackages = useRef<ICourseRecommendationTakeAwayPackage | {}>(
     {}
   );
@@ -40,7 +48,8 @@ function SuggestCourseModal() {
     string[]
   >([]);
 
-  const [courseURLErrorState, setCourseURLErrorSate] = useState<boolean>(false);
+  const [courseURLErrorState, setCourseURLErrorState] =
+    useState<boolean>(false);
   const [courseURLErrorMessages, setCourseURLErrorMessages] = useState<
     string[]
   >([]);
@@ -82,72 +91,81 @@ function SuggestCourseModal() {
       ]);
     }
   };
-  console.log(
-    "takeAways",
-    courseRating,
-    courseTitle,
-    courseUrl,
-    description,
-    takeAwayPackages,
-    category,
-    courseTags
-  );
 
   const handleCategoryDropDownChange = (value: string) => {
     if (value) {
+      console.log(value);
       setCourseCategory(value);
     }
   };
   const clearAllErrors = () => {
     setCourseTitleErrorState(false);
-    setCourseURLErrorSate(false);
+    setCourseURLErrorState(false);
     setCourseDescriptionErrorSate(false);
     setCourseTakeAwayPackagesErrorSate(false);
   };
 
+  const handleSubmitResponse = (success: boolean) => {
+    if (!success) {
+      setSubmissionErrorMessageText(
+        "There was a problem completing this request."
+      );
+      setSubmissionInProgress(false);
+      setSubmissionErrorState(true);
+    } else {
+      // props.onModalClose(false);
+    }
+  };
   const handleSubmitRecommendation = () => {
-    // Need to validate and clean up
     const submissionBundle: ICourseRecommendationSubmission = {
-      courseRating,
-      courseTitle,
-      courseUrl,
+      rating,
+      title,
+      url,
       description,
       category,
       tags: courseTags,
-      takeAwayPackages: takeAwayPackages.current,
+      notes: takeAwayPackages.current,
     };
     const validationObject = validateCourseRecommendation(submissionBundle);
+    setSubmissionErrorState(false);
+
     if (validationObject.validated) {
+      console.log("SUBMISSION BUNDLE", submissionBundle);
       setSubmissionInProgress(true);
       clearAllErrors();
-      // dispatch(())
-    } else {
-      setCourseTitleErrorState(!!validationObject.invalidFields["courseTitle"]);
-      setCourseTitleErrorMessages(
-        (validationObject.invalidFields["courseTitle"] as string[]) || []
+      dispatch(
+        postCourseRecommendationAsync({
+          data: submissionBundle,
+          setDone: setSubmissionInProgress,
+          successHandler: handleSubmitResponse,
+        })
       );
-      setCourseURLErrorSate(!!validationObject.invalidFields["courseURL"]);
+    } else {
+      setCourseTitleErrorState(!!validationObject.invalidFields["title"]);
+      setCourseTitleErrorMessages(
+        (validationObject.invalidFields["title"] as string[]) || []
+      );
+      setCourseURLErrorState(!!validationObject.invalidFields["url"]);
       setCourseURLErrorMessages(
-        (validationObject.invalidFields["courseURL"] as string[]) || []
+        (validationObject.invalidFields["url"] as string[]) || []
       );
       setCourseDescriptionErrorSate(
-        !!validationObject.invalidFields["courseDescription"]
+        !!validationObject.invalidFields["description"]
       );
       setCourseDescriptionErrorMessages(
-        (validationObject.invalidFields["courseDescription"] as string[]) || []
+        (validationObject.invalidFields["description"] as string[]) || []
       );
       setCourseTakeAwayPackagesErrorSate(
-        !!validationObject.invalidFields["takeAwayPackages"]
+        !!validationObject.invalidFields["notes"]
       );
       setCourseTakeAwayPackagesErrorMessages(
-        (validationObject.invalidFields["takeAwayPackages"] as string[]) || []
+        (validationObject.invalidFields["notes"] as string[]) || []
       );
     }
   };
 
   const removeTakeAway = () => {
     if (takeAways.length === 0) {
-      console.log("Take away length is zero");
       return;
     }
     const currentTakeAwayCount = takeAways.length;
@@ -156,17 +174,30 @@ function SuggestCourseModal() {
     takeAwayPackages.current = currentTakeAwaysFromPackage;
     setTakeAways(takeAways.slice(0, -1));
   };
+
+  const handleCloseModal = () => {
+    props.onModalClose(false);
+  };
   return (
     <div className="Suggest-course__Main-body">
       {submissionInProgress && <ZenSpinner />}
       <div className="Suggest-course__margin-body">
         <div className="Suggest-course__Main-header-top-enclosure">
           <img
+            onClick={handleCloseModal}
             className="Suggest-course__windowClose"
             alt="close window"
             src={WindowCloseButton}
           />
         </div>
+        {submissionErrorState && (
+          <div className="Suggest-course__SubmissionErrors-enclosure">
+            <img src={ErrorAlertIconRed} alt="error" />
+            <div className="Suggest-course__SubmissionError-text error-text">
+              {submissionErrorMessageText}
+            </div>
+          </div>
+        )}
         <div className="Suggest-course__Window-title-Enclosure">
           <div className="Suggest-course__Window-title-Text suggest-course-left-margin">
             Suggest a course
@@ -276,25 +307,25 @@ function SuggestCourseModal() {
           <div className="line-separator"></div>
           <TagApplet onTagsChanged={setCourseTags} />
         </section>
+        <div className="line-separator"></div>
+        <footer className="Suggest-course__Modal-Controls__footer-main">
+          <div className="Suggest-course__Modal-Controls__close-window">
+            <ActionButton
+              title="Close window"
+              plusSymbol={false}
+              classNames="Action-button__color__plain right-margin"
+            />
+          </div>
+          <div className="Suggest-course__Modal-Controls__submit">
+            <ActionButton
+              title="Submit recommendation"
+              plusSymbol={false}
+              classNames="right-margin"
+              action={handleSubmitRecommendation}
+            />
+          </div>
+        </footer>
       </div>
-      <div className="line-separator"></div>
-      <footer className="Suggest-course__Modal-Controls__footer-main">
-        <div className="Suggest-course__Modal-Controls__close-window">
-          <ActionButton
-            title="Close window"
-            plusSymbol={false}
-            classNames="Action-button__color__plain right-margin"
-          />
-        </div>
-        <div className="Suggest-course__Modal-Controls__submit">
-          <ActionButton
-            title="Submit recommendation"
-            plusSymbol={false}
-            classNames="right-margin"
-            action={handleSubmitRecommendation}
-          />
-        </div>
-      </footer>
     </div>
   );
 }

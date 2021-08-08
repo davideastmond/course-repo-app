@@ -16,11 +16,6 @@
   cursor: pointer;
 }
 
-.Suggest-course__windowClose {
-  margin-right: 5%;
-}
-
-
 .Suggest-course__Window-title-Text {
   font-family: var(--main-font);
   font-style: normal;
@@ -93,16 +88,23 @@
 .Suggest-course__Modal-Controls__footer-main {
   display: flex;
   justify-content: flex-end;
+  margin-right: 10%;
+  flex-wrap: wrap;
+  padding-bottom: 5%;
 }
 
 .right-margin {
   margin-right: 10%;
 }
 
-.Suggest-course__Modal-Controls__footer-main {
-  margin-right: 10%;
-}
-
 .align-text-center {
   text-align: center;
+}
+
+.Suggest-course__margin-body {
+  margin: 5%;
+}
+
+.Suggest-course__SubmissionErrors-enclosure {
+  display: flex;
 }

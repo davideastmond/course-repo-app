@@ -24,6 +24,7 @@ interface ICourseCardProps {
   tags: Array<string>;
   category?: string;
   color?: string | CourseCategory;
+  courseCardClickHandler: (id: string) => void;
 }
 
 function CourseCard(props: ICourseCardProps) {
@@ -36,8 +37,13 @@ function CourseCard(props: ICourseCardProps) {
     getUsers();
   }, []);
 
+  const handleCourseCardClick = () => {
+    if (props.courseCardClickHandler) {
+      props.courseCardClickHandler(props._id);
+    }
+  };
   return (
-    <div className="Course-card__main">
+    <div className="Course-card__main" onClick={handleCourseCardClick}>
       <div
         className={`Course-card__category-header ${
           COURSE_CATEGORY_COLOR[props.category as CourseCategory]

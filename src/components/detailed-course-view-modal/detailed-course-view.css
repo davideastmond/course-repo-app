@@ -1,0 +1,48 @@
+.Detailed-Course-View__Main-body {
+  width:auto;
+  height: auto;
+  background-color: white;
+  margin: 5%;
+}
+
+.pale-lime-green {
+  background-color: var(--pale-lime-green);
+}
+
+.Detailed-Course-View__header {
+  display: flex;
+  border: 1px solid black;
+}
+
+.Detailed-Course-View__header-text {
+  width: 100%;
+  font-weight: bold;
+  font-size: 20px;
+  align-self: center;
+  padding-left: 5%;
+}
+
+.Detailed-Course-View__windowClose {
+  padding: 1%;
+}
+
+.Detailed-Course-View__section__about__body, 
+.Detailed-Course-View__section__about__learning-blurb_body {
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.Detailed-Course-View__section__header {
+  margin-top: 3%;
+  color: var(--light-grey);
+  margin-bottom: 2%;
+}
+
+.Detailed-Course-View__section__about {
+  border: 1px solid black;
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.Detailed-Course-View__about__blurb {
+  margin-bottom: 2%;
+}

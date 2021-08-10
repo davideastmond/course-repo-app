@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import StylizedTextInput from "../stylized-text-input";
 import "./course-take-away-style.css";
 import KeyTakeAwayApplet from "./key-take-away";
-
+import { v4 as uuidv4 } from "uuid";
 interface ICourseTakeAwayProps {
   id: string;
   index?: number;
   onUpdatePackage: (
     packageUpdate: {
       [key in number]: {
+        noteId: string;
         learningBlurb: string;
         takeAways: { [_key in number]: string };
       };
@@ -27,9 +28,15 @@ function CourseTakeAway(props: ICourseTakeAwayProps) {
     }
   };
 
+  const noteId = useRef(uuidv4());
+
   useEffect(() => {
     props.onUpdatePackage({
-      [`${props.index!}`]: { learningBlurb, takeAways: keyTakeAways },
+      [`${props.index!}`]: {
+        noteId: noteId.current,
+        learningBlurb,
+        takeAways: keyTakeAways,
+      },
     });
   }, [learningBlurb, keyTakeAways]);
 

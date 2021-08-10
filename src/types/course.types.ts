@@ -13,6 +13,10 @@ export interface ICourse {
   category: string | CourseCategory;
 }
 
+export interface IDetailedCourse extends ICourse {
+  notes: ICourseRecommendationTakeAwayPackage;
+}
+
 export enum CourseCategory {
   Design = "design",
   Engineering = "engineering",
@@ -62,6 +66,7 @@ export type ITakeAwayStripDataCollection = {
 };
 export type ICourseRecommendationTakeAwayPackage = {
   [key in number]: {
+    noteId: string;
     learningBlurb: string;
     takeAways: ITakeAwayStripDataCollection;
   };

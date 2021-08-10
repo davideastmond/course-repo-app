@@ -1,4 +1,3 @@
-// import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import BodyHeader from "../../components/body-header";
@@ -6,36 +5,44 @@ import SideBrowser from "../../components/Browser";
 import ActionButton from "../../components/Buttons/ActionButton";
 
 import CourseContainer from "../../components/course-container";
+import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 import HeaderBar from "../../components/header-bar";
-import FormDialog from "../../components/modal";
+
 import SuggestCourseModal from "../../components/suggest-course-modal";
 import TextInput from "../../components/Text-Input";
 import ZenSpinner from "../../components/ZenSpinner";
 import {
   checkIsAuthedAsync,
+  getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
-  selectAppStatus,
+  selectCurrentCourseContext,
   selectIsLoggedIn,
   selectLoggedInUser,
-  setCourseFilterOpen,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 
 import "./home-page-style.css";
+enum ModalType {
+  nullModal = -1,
+  SuggestCourse = 0,
+  DetailedCourseView = 1,
+}
 function HomePage() {
-  const [open, setOpen] = useState(false);
   const courses = useSelector(selectAllCourses, shallowEqual);
+  const currentCourseContext = useSelector(
+    selectCurrentCourseContext,
+    shallowEqual
+  );
   const [done, setDone] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [authInProgress, setAuthInProgress] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const userData = useSelector(selectLoggedInUser, shallowEqual);
-  const status = useSelector(selectAppStatus, shallowEqual);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
-
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -59,17 +66,25 @@ function HomePage() {
     }
   }, [done]);
 
-  const openModal = (isOpen: boolean) => {
-    // if (isOpen === true) {
-    //   setOpen(true);
-    //   dispatch(setCourseFilterOpen(true));
-    // } else {
-    //   setOpen(false);
-    //   dispatch(setCourseFilterOpen(false));
-    // }
+  useEffect(() => {
+    if (currentCourseContext) {
+      setModalType(ModalType.DetailedCourseView);
+      setModalVisible(true);
+    }
+  }, [currentCourseContext]);
+
+  // const openModal = (isOpen: boolean) => {
+  //   setModalVisible(true);
+  // };
+
+  const handleOpenCourseRecommendModal = () => {
+    setModalType(ModalType.SuggestCourse);
     setModalVisible(true);
   };
 
+  const handleCourseCardClickedHomePage = (id: string) => {
+    dispatch(getDetailedCourseByIdAsync({ id }));
+  };
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -79,8 +94,8 @@ function HomePage() {
       )}
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
-        loggedIn={isLoggedIn}
         logOutAction={handleLogOut}
+        loggedIn={isLoggedIn}
         userData={userData}
       />
       <div className="Home-Page__main-body">
@@ -99,17 +114,21 @@ function HomePage() {
             <div className="Home-Page__search-section">
               <TextInput placeHolderText="Search for a course..." />
             </div>
-            {courses && <CourseContainer courses={courses} />}
+            {courses && (
+              <CourseContainer
+                courses={courses}
+                courseCardClickHandler={handleCourseCardClickedHomePage}
+              />
+            )}
           </div>
           {isLoggedIn && (
             <ActionButton
               plusSymbol={true}
               title={"Recommend a course"}
               classNames={"recommend-course-button-size left-margin"}
-              action={() => openModal(true)}
+              action={handleOpenCourseRecommendModal}
             />
           )}
-          <FormDialog open={open} setOpen={openModal} />
         </div>
       </div>
       <footer className="Home-page__footer">
@@ -119,9 +138,17 @@ function HomePage() {
           classNames={"add-course-button-size"}
         />
       </footer>
-      {modalVisible && (
+      {modalVisible && modalType === ModalType.SuggestCourse && (
         <div className="Page-Modal">
           <SuggestCourseModal onModalClose={setModalVisible} />
+        </div>
+      )}
+      {modalVisible && modalType === ModalType.DetailedCourseView && (
+        <div className="Page-Modal">
+          <DetailedCourseViewModal
+            courseContext={currentCourseContext}
+            onModalClose={setModalVisible}
+          />
         </div>
       )}
     </div>

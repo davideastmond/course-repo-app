@@ -1,12 +1,21 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllCourses, postCourseRecommendation } from "../services/courses";
-import { ICourse, ICourseRecommendationSubmission } from "../types";
+import {
+  getAllCourses,
+  getDetailedCourseById,
+  postCourseRecommendation,
+} from "../services/courses";
+import {
+  ICourse,
+  ICourseRecommendationSubmission,
+  IDetailedCourse,
+} from "../types";
 import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
   courses: ICourse[];
   status: any;
   filter: string;
+  currentCourseContext: IDetailedCourse | null;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
@@ -14,6 +23,7 @@ const initialState: IInitialCoursesState = {
   status: {
     state: "idle",
   },
+  currentCourseContext: null,
 };
 
 export const getAllCoursesAsync = createAsyncThunk(
@@ -35,6 +45,14 @@ export const postCourseRecommendationAsync = createAsyncThunk(
     successHandler: (success: boolean) => void;
   }) => {
     const res = await postCourseRecommendation(data, setDone, successHandler);
+    return res;
+  }
+);
+
+export const getDetailedCourseByIdAsync = createAsyncThunk(
+  "courses/getCourseByIdAsync",
+  async ({ id }: { id: string }) => {
+    const res = await getDetailedCourseById(id);
     return res;
   }
 );
@@ -68,6 +86,16 @@ export const coursesSlice = createSlice({
       })
       .addCase(postCourseRecommendationAsync.rejected, (state) => {
         stateStatus.error(state, "unable to post courses");
+      })
+      .addCase(getDetailedCourseByIdAsync.pending, (state) => {
+        stateStatus.loading(state, "getting course...");
+      })
+      .addCase(getDetailedCourseByIdAsync.fulfilled, (state, action) => {
+        stateStatus.idle(state);
+        state.currentCourseContext = action.payload;
+      })
+      .addCase(getDetailedCourseByIdAsync.rejected, (state) => {
+        stateStatus.error(state, "Unable to retrieve course details");
       });
   },
 });
@@ -77,6 +105,10 @@ export const selectAllCourses = (state: any) => {
   return state.courses.courses.filter(
     (course: ICourse) => course.category === state.courses.filter
   );
+};
+
+export const selectCurrentCourseContext = (state: any) => {
+  return state.courses.currentCourseContext;
 };
 
 export const { setCourseFilter } = coursesSlice.actions;

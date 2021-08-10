@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ICourse, ICourseRecommendationSubmission } from "../types";
+import {
+  ICourse,
+  ICourseRecommendationSubmission,
+  IDetailedCourse,
+} from "../types";
 
 export const getAllCourses = async () => {
   const req = await axios({
@@ -12,6 +16,16 @@ export const getAllCourses = async () => {
       parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
       parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
   );
+};
+
+export const getDetailedCourseById = async (
+  courseId: string
+): Promise<IDetailedCourse> => {
+  const req = await axios({
+    method: "get",
+    url: `${process.env.REACT_APP_API_URL}/api/courses/${courseId}`,
+  });
+  return req.data as IDetailedCourse;
 };
 
 export const postCourseRecommendation = async (

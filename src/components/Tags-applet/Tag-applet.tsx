@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 import { getArrayOfInterestTagsFromString } from "../../utils/string-array/get-sanitized-tags-array";
 import ActionButton from "../Buttons/ActionButton";
 import ContentTag from "../Content-tag";
@@ -7,6 +8,8 @@ import "./tag-applet-style.css";
 
 interface ITagAppletProps {
   onTagsChanged?: (tags: string[]) => void;
+  tags?: string[];
+  readOnly: boolean;
 }
 
 function TagApplet(props: ITagAppletProps) {
@@ -42,37 +45,44 @@ function TagApplet(props: ITagAppletProps) {
       }
     }
   };
+  useEffect(() => {
+    if (props.readOnly && props.tags && props.tags.length > 0) {
+      setContentTags(props.tags);
+    }
+  }, []);
 
   return (
     <div className="TagApplet__Main-enclosure">
-      <div className="TagApplet__input-enclosure">
-        <div className="TagApplet__TextInput__Main">
-          <StylizedTextInput
-            id="modal-tags"
-            placeholderText="React, Adobe, Figma"
-            label="Add a comma between each tag. Example: sales,"
-            inputBoxClassNames="single-height-input-box-50px longer-width"
-            onTextChange={handleContentTagRawStringChange}
-            onEnterKeyPressed={handleContentTags}
-            clearOnEnter={true}
-          />
+      {!props.readOnly && (
+        <div className="TagApplet__input-enclosure">
+          <div className="TagApplet__TextInput__Main">
+            <StylizedTextInput
+              id="modal-tags"
+              placeholderText="React, Adobe, Figma"
+              label="Add a comma between each tag. Example: sales,"
+              inputBoxClassNames="single-height-input-box-50px longer-width"
+              onTextChange={handleContentTagRawStringChange}
+              onEnterKeyPressed={handleContentTags}
+              clearOnEnter={true}
+            />
+          </div>
+          <div className="TagApplet__Action-button__Main align-center">
+            <ActionButton
+              title="Add Tag"
+              plusSymbol={true}
+              classNames="Action-button__slim Action-button__color__plain Action-button__color__plain dark-grey-background-color"
+              action={handleContentTags}
+            />
+          </div>
         </div>
-        <div className="TagApplet__Action-button__Main align-center">
-          <ActionButton
-            title="Add Tag"
-            plusSymbol={true}
-            classNames="Action-button__slim Action-button__color__plain Action-button__color__plain dark-grey-background-color"
-            action={handleContentTags}
-          />
-        </div>
-      </div>
+      )}
       <div className="TagApplet__Tags-display">
         {contentTags &&
           contentTags.length > 0 &&
           contentTags.map((tag) => (
             <ContentTag
               title={tag}
-              hasCloseButton={true}
+              hasCloseButton={!props.readOnly}
               closeButtonClicked={handleDeleteTag}
             />
           ))}

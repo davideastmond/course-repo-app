@@ -304,7 +304,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
             </div>
           </header>
           <div className="line-separator"></div>
-          <TagApplet onTagsChanged={setCourseTags} />
+          <TagApplet onTagsChanged={setCourseTags} readOnly={false} />
         </section>
         <div className="line-separator"></div>
         <footer className="Suggest-course__Modal-Controls__footer-main">

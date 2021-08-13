@@ -8,7 +8,7 @@ interface IGenericIconProps {
 function GenericUserIcon(props: IGenericIconProps) {
   return (
     <div className={`Generic-Profile-Icon ${props.classNames || ""}`}>
-      {props.userName.split("")[0]}
+      {props.userName && props.userName.split("")[0]}
     </div>
   );
 }

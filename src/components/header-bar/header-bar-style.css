@@ -2,21 +2,9 @@
   background-color: white;
 }
 
-/* .Nav__Header-bar_body {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  grid-template-areas: "app-logo app-name profile-icon-section";
-  align-items: center;
-  margin-left: 15%;
-  margin-right: 15%;
-  height: 60px;
-} */
-
 .Nav__Header-bar_body {
   display: flex;
   justify-content: space-between;
-  margin-left: 15%;
-  margin-right: 15%;
 }
 
 .app-title {

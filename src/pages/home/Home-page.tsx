@@ -100,14 +100,6 @@ function HomePage() {
       />
       <div className="Home-Page__main-body">
         <BodyHeader />
-        {isLoggedIn && (
-          <div className="Home-Page__middle-section__header">
-            <div className="Middle-section__header-text">
-              Don’t see a course that you like? Add your own!
-            </div>
-          </div>
-        )}
-
         <div className="Home-Page__middle-section">
           <SideBrowser />
           <div className="Home-Page__center-column">
@@ -122,12 +114,17 @@ function HomePage() {
             )}
           </div>
           {isLoggedIn && (
-            <ActionButton
-              plusSymbol={true}
-              title={"Recommend a course"}
-              classNames={"recommend-course-button-size left-margin"}
-              action={handleOpenCourseRecommendModal}
-            />
+            <div className="Home-Page__middle-section__header">
+              <div className="Middle-section__header-text">
+                Don’t see a course that you like? Add your own!
+              </div>
+              <ActionButton
+                plusSymbol={true}
+                title={"Recommend a course"}
+                classNames={"recommend-course-button-size"}
+                action={handleOpenCourseRecommendModal}
+              />
+            </div>
           )}
         </div>
       </div>

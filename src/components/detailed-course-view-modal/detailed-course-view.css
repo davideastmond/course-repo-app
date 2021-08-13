@@ -46,3 +46,24 @@
 .Detailed-Course-View__about__blurb {
   margin-bottom: 2%;
 }
+
+.Detailed-Course-View__section__learning-blurb {
+  border-bottom: 1px solid var(--light-grey);
+}
+
+.Detailed-Course-View__section__tags-footer__container {
+  padding-left: 5%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.Detailed-Course-View__section__tags-footer {
+  padding: 1%;
+}
+.Detailed-Course-View__Footer-posted-by__container {
+  display: flex;
+}
+
+.Detailed-Course-View__Footer-recommended-by__text {
+  margin-left: 2%;
+}

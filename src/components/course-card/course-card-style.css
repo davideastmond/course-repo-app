@@ -56,3 +56,7 @@
 .Course-card__main {
   margin-top: 25px;
 }
+
+.Course-card__main:hover {
+  cursor: pointer;
+}

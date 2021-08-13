@@ -5,7 +5,10 @@ import ProfileIcon from "../profile-icon";
 import { ContextMenu, ContextMenuOption } from "../context-menu";
 import { ContextMenuSeparator } from "../context-menu/Menu-divider";
 import { IProcessedUser } from "../../types";
-import { selectCourseRecommendationModalOpenState } from "../../reducers";
+import {
+  selectCourseRecommendationModalOpenState,
+  selectIsLoggedIn,
+} from "../../reducers";
 import { shallowEqual, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 
@@ -50,6 +53,7 @@ function HeaderBar(props: IHeaderBarProps) {
     history.push("/profile");
   };
 
+  const isAppLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   useEffect(() => {
     if (courseRecommenderModalOpen && courseRecommenderModalOpen === true) {
       clickedInMenuRef.current = true;
@@ -94,7 +98,7 @@ function HeaderBar(props: IHeaderBarProps) {
           <h3 className="app-title">Zen Learn</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
-          {!props.loggedIn && (
+          {!isAppLoggedIn && (
             <>
               <p className="profile-name">Guest</p>
               <ProfileIcon
@@ -104,7 +108,7 @@ function HeaderBar(props: IHeaderBarProps) {
               />
             </>
           )}
-          {props.loggedIn && (
+          {isAppLoggedIn && (
             <>
               <p className="profile-name">{userName}</p>
               <ProfileIcon
@@ -118,7 +122,7 @@ function HeaderBar(props: IHeaderBarProps) {
             </>
           )}
           {profileMenuOpen &&
-            ProfileContextMenu(props.loggedIn, {
+            ProfileContextMenu(isAppLoggedIn, {
               googleLogInCallBack: props.googleLoginAction,
               logOutCallBack: props.logOutAction,
               showProfileCallBack: handleShowProfile,

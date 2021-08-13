@@ -6,6 +6,7 @@ import "./course-container-style.css";
 interface ICourseContainerProps {
   classNames?: string;
   courses: ICourse[];
+  courseCardClickHandler: (id: string) => void;
 }
 
 function CourseContainer(props: ICourseContainerProps) {
@@ -14,7 +15,13 @@ function CourseContainer(props: ICourseContainerProps) {
       {props.courses &&
         props.courses.length > 0 &&
         props.courses.map((course, index) => (
-          <CourseCard {...{ ...course }} key={course._id} />
+          <CourseCard
+            {...{
+              ...course,
+              courseCardClickHandler: props.courseCardClickHandler,
+            }}
+            key={course._id}
+          />
         ))}
       {props.courses.length === 0 && (
         <div className="Courses-Empty-list">Nothing to display</div>

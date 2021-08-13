@@ -7,7 +7,7 @@
   /* identical to box height */
 
   /* grey 500 */
-  color: #2E3841;
+  color: var(--charcoal);
 }
 
 .Context-menu-option__main-body {

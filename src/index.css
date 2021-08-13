@@ -10,12 +10,14 @@
   --light-grey: #7D7D7D;
   --light-grey-2: #D9D9D9;
   --page-ambient-color: #F8FBF9;
+  --charcoal: #2E3841;
 
   --pale-blue: #E2F2FF;
   --pale-light-green-color: #E9FBF4;
   --blush-color: #FFEEF6;
   --pale-yellow-color: #FDF6DF;
   --lime-green-0: #2ECC71;
+  --pale-lime-green: #E3FFD9;
 
   --blue-color-6: #74B9FF;
   --red-color-6: #FF7675;
@@ -132,4 +134,12 @@ h1, h2, h3, h4, h5, h5 {
 .error-text {
   font-family: Montserrat;
   color: var(--error-color);
+}
+
+.charcoal {
+  color: var(--charcoal);
+}
+
+.no-text-decoration {
+  text-decoration: none;
 }

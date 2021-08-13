@@ -16,7 +16,7 @@
   letter-spacing: -0.05em;
 
   /* grey 500 */
-  color: #2E3841;
+  color: var(--charcoal);
 }
 
 .Add-interest-modal__Header-Enclosure {

@@ -35,11 +35,6 @@ body {
   background-color: #2a8d85;
 }
 
-.Home-Page__middle-section__header {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .Home-Page__middle-section {
   display: flex;
   justify-content: space-between;
@@ -50,15 +45,13 @@ body {
   margin-left: 5%;
 }
 
-.Home-Page__main-body {
-  margin-left: 15%;
-  margin-right: 15%;
-}
-
 .left-margin {
   margin-left: 5%;
 }
 
+.Home-Page__middle-section__header {
+  margin-left: 5%;
+}
 @media only screen and (min-width: 2500px) {
   .Middle-section__header-text {
     margin-right: 70px;

@@ -108,12 +108,12 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
   const handleSubmitResponse = (success: boolean) => {
     if (!success) {
       setSubmissionErrorMessageText(
-        "There was a problem completing this request."
+        "There was a problem completing this request. Please try logging in again."
       );
       setSubmissionInProgress(false);
       setSubmissionErrorState(true);
     } else {
-      // props.onModalClose(false);
+      props.onModalClose(false);
     }
   };
   const handleSubmitRecommendation = () => {
@@ -130,7 +130,6 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
     setSubmissionErrorState(false);
 
     if (validationObject.validated) {
-      console.log("SUBMISSION BUNDLE", submissionBundle);
       setSubmissionInProgress(true);
       clearAllErrors();
       dispatch(
@@ -305,7 +304,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
             </div>
           </header>
           <div className="line-separator"></div>
-          <TagApplet onTagsChanged={setCourseTags} />
+          <TagApplet onTagsChanged={setCourseTags} readOnly={false} />
         </section>
         <div className="line-separator"></div>
         <footer className="Suggest-course__Modal-Controls__footer-main">

@@ -94,7 +94,6 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
 
   const handleCategoryDropDownChange = (value: string) => {
     if (value) {
-      console.log(value);
       setCourseCategory(value);
     }
   };
@@ -108,7 +107,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
   const handleSubmitResponse = (success: boolean) => {
     if (!success) {
       setSubmissionErrorMessageText(
-        "There was a problem completing this request. Please try logging in again."
+        "There was a problem completing this request. Please check your connection and try logging in again."
       );
       setSubmissionInProgress(false);
       setSubmissionErrorState(true);

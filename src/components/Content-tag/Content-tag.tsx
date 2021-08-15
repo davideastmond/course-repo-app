@@ -6,14 +6,17 @@ interface IContentTagProps {
   link?: string;
   hasCloseButton?: boolean;
   closeButtonClicked?: (titleString: string) => void;
+  key: string;
 }
 
 const ContentTagWithCloseButton = ({
   closeButtonClickHandler,
   title,
+  key,
 }: {
   closeButtonClickHandler: (titleString: string) => void;
   title: string;
+  key: string;
 }) => {
   return (
     <div className="Content-tag__main with-close-button">
@@ -21,6 +24,7 @@ const ContentTagWithCloseButton = ({
       <div
         className="Content-tag__main__Close-x-button"
         onClick={() => closeButtonClickHandler(title)}
+        key={key}
       >
         <img src={XCloseDeleteIcon} alt={`delete ${title}`} />
       </div>
@@ -37,6 +41,7 @@ function ContentTag(props: IContentTagProps) {
     ContentTagWithCloseButton({
       closeButtonClickHandler: props.closeButtonClicked || noOp,
       title: props.title,
+      key: props.key,
     })
   ) : (
     <div className="Content-tag__main">{props.title}</div>

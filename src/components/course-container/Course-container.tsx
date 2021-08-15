@@ -7,6 +7,7 @@ interface ICourseContainerProps {
   classNames?: string;
   courses: ICourse[];
   courseCardClickHandler: (id: string) => void;
+  genericUserProfileClickHandler: (id: string) => void;
 }
 
 function CourseContainer(props: ICourseContainerProps) {
@@ -19,6 +20,8 @@ function CourseContainer(props: ICourseContainerProps) {
             {...{
               ...course,
               courseCardClickHandler: props.courseCardClickHandler,
+              genericUserProfileClickHandler:
+                props.genericUserProfileClickHandler,
             }}
             key={course._id}
           />

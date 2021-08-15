@@ -23,3 +23,8 @@
 .round {
   border-radius: 50%;
 }
+
+.GenericUserRecommendation__Main {
+  display: flex;
+  align-items: center;
+}

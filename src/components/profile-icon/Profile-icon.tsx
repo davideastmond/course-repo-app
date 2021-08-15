@@ -11,15 +11,14 @@ interface IProfileIconProps {
 function ProfileIcon(props: IProfileIconProps) {
   return (
     <div className={`Profile-Icon__main ${props.parentClassNames || ""}`}>
-      {props.genericUser && (
+      {props.genericUser ? (
         <img
           onClick={props.showProfileMenuHandler}
           className={`profile-icon-image ${props.classNames || ""}`}
           src={GenericProfileIcon}
           alt="profile-icon"
         ></img>
-      )}
-      {!props.genericUser && (
+      ) : (
         <img
           onClick={props.showProfileMenuHandler}
           className={`profile-icon-image ${props.classNames || ""}`}

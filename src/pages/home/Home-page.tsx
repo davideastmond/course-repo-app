@@ -7,6 +7,7 @@ import ActionButton from "../../components/Buttons/ActionButton";
 import CourseContainer from "../../components/course-container";
 import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 import HeaderBar from "../../components/header-bar";
+import ProfileView from "../../components/Profile-view";
 
 import SuggestCourseModal from "../../components/suggest-course-modal";
 import TextInput from "../../components/Text-Input";
@@ -22,13 +23,10 @@ import {
   selectLoggedInUser,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
+import { ModalType } from "../../types/modal.types";
 
 import "./home-page-style.css";
-enum ModalType {
-  nullModal = -1,
-  SuggestCourse = 0,
-  DetailedCourseView = 1,
-}
+
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
   const currentCourseContext = useSelector(
@@ -43,6 +41,8 @@ function HomePage() {
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
+
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -70,20 +70,41 @@ function HomePage() {
     if (currentCourseContext) {
       setModalType(ModalType.DetailedCourseView);
       setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
     }
   }, [currentCourseContext]);
 
   // const openModal = (isOpen: boolean) => {
   //   setModalVisible(true);
   // };
-
+  useEffect(() => {
+    if (modalVisible) {
+      document.body.classList.add("no-body-scroll");
+    }
+  }, [modalVisible]);
   const handleOpenCourseRecommendModal = () => {
     setModalType(ModalType.SuggestCourse);
     setModalVisible(true);
+    document.body.classList.add("no-body-scroll");
   };
 
   const handleCourseCardClickedHomePage = (id: string) => {
     dispatch(getDetailedCourseByIdAsync({ id }));
+  };
+
+  const handleGenericUserProfileClick = (id: string) => {
+    if (id) {
+      setProfileDetailUserId(id);
+      setModalType(ModalType.ProfileDetailView);
+      setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
+    }
+  };
+
+  const handleModalClosed = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+    document.body.classList.remove("no-body-scroll");
   };
   return (
     <div className={`Home-Page__container`}>
@@ -110,6 +131,7 @@ function HomePage() {
               <CourseContainer
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
+                genericUserProfileClickHandler={handleGenericUserProfileClick}
               />
             )}
           </div>
@@ -137,14 +159,22 @@ function HomePage() {
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
         <div className="Page-Modal">
-          <SuggestCourseModal onModalClose={setModalVisible} />
+          <SuggestCourseModal onModalClose={handleModalClosed} />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
         <div className="Page-Modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
-            onModalClose={setModalVisible}
+            onModalClose={handleModalClosed}
+          />
+        </div>
+      )}
+      {modalVisible && modalType === ModalType.ProfileDetailView && (
+        <div className="Page-Modal">
+          <ProfileView
+            onModalClose={handleModalClosed}
+            userId={profileDetailUserId}
           />
         </div>
       )}

@@ -49,7 +49,7 @@ function TagApplet(props: ITagAppletProps) {
     if (props.readOnly && props.tags && props.tags.length > 0) {
       setContentTags(props.tags);
     }
-  }, []);
+  });
 
   return (
     <div className="TagApplet__Main-enclosure">
@@ -79,11 +79,12 @@ function TagApplet(props: ITagAppletProps) {
       <div className="TagApplet__Tags-display">
         {contentTags &&
           contentTags.length > 0 &&
-          contentTags.map((tag) => (
+          contentTags.map((tag, index) => (
             <ContentTag
               title={tag}
               hasCloseButton={!props.readOnly}
               closeButtonClicked={handleDeleteTag}
+              key={`${index}_${tag}`}
             />
           ))}
       </div>

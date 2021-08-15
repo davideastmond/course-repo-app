@@ -25,6 +25,13 @@ export enum CourseCategory {
   Marketing = "marketing",
   Product = "product",
   Sales = "sales",
+  SoftwareIT = "software",
+  OfficeProductivity = "office_productivity",
+  PhotographyVideo = "photography_video",
+  HealthFitness = "health_fitness",
+  PersonalDevelopment = "personal_development",
+  FinanceAccounting = "finance_accounting",
+  TeachingAcademics = "teaching_academics",
 }
 
 export const COURSE_CATEGORY_COLOR: { [key in CourseCategory]: string } = {
@@ -34,7 +41,14 @@ export const COURSE_CATEGORY_COLOR: { [key in CourseCategory]: string } = {
   [CourseCategory.Management]: "course-category-color-blue",
   [CourseCategory.Marketing]: "course-category-color-green",
   [CourseCategory.Product]: "course-category-color-rose",
-  [CourseCategory.Sales]: "course-category-color-yellow",
+  [CourseCategory.Sales]: "course-category-color-green",
+  [CourseCategory.SoftwareIT]: "course-category-color-yellow",
+  [CourseCategory.OfficeProductivity]: "course-category-color-blue",
+  [CourseCategory.PhotographyVideo]: "course-category-color-rose",
+  [CourseCategory.HealthFitness]: "course-category-color-yellow",
+  [CourseCategory.PersonalDevelopment]: "course-category-color-blue",
+  [CourseCategory.FinanceAccounting]: "course-category-color-green",
+  [CourseCategory.TeachingAcademics]: "course-category-color-rose",
 };
 
 export const COURSE_CATEGORY_FRIENDLY_DICTIONARY: {
@@ -47,6 +61,13 @@ export const COURSE_CATEGORY_FRIENDLY_DICTIONARY: {
   [CourseCategory.Marketing]: "Marketing",
   [CourseCategory.Product]: "Product",
   [CourseCategory.Sales]: "Sales",
+  [CourseCategory.SoftwareIT]: "Software/IT",
+  [CourseCategory.OfficeProductivity]: "Office Productivity",
+  [CourseCategory.PhotographyVideo]: "Photography/Video",
+  [CourseCategory.HealthFitness]: "Health & Fitness",
+  [CourseCategory.PersonalDevelopment]: "Personal Development",
+  [CourseCategory.FinanceAccounting]: "Finance & Accounting",
+  [CourseCategory.TeachingAcademics]: "Teaching & Academics",
 };
 
 export interface ICourseRecommendationPost {

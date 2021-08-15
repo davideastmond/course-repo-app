@@ -37,12 +37,11 @@ body {
 
 .Home-Page__middle-section {
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
 }
 
 .Home-Page__center-column {
   width: 800px;
-  margin-left: 5%;
 }
 
 .left-margin {

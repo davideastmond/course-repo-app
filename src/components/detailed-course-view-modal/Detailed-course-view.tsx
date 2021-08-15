@@ -5,6 +5,7 @@ import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
 import GenericUserIcon from "../profile-icon/Generic-User-Icon";
 import { getUserById } from "../../services/users";
+import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
   onModalClose: (visible: boolean) => void;
@@ -111,13 +112,19 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
         <div className="Detailed-Course-View__section__tags-footer__container">
           <TagApplet readOnly={true} tags={props.courseContext.tags} />
           <div className="Detailed-Course-View__Footer-posted-by__container">
-            <GenericUserIcon
+            {/* <GenericUserIcon
               userName={userName[props.courseContext.postedByUserId]}
               classNames="align-center"
             />
             <div className="Detailed-Course-View__Footer-recommended-by__text open-sans-font-family align-center">
               Recommended by {userName[props.courseContext.postedByUserId]}
-            </div>
+            </div> */}
+            <GenericUserRecommendationIcon
+              userName={userName[props.courseContext.postedByUserId]}
+              isRecommendation={true}
+              userId={props.courseContext.postedByUserId}
+              onIconClicked={() => {}}
+            />
           </div>
         </div>
       </section>

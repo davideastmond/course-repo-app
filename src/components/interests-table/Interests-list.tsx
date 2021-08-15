@@ -16,7 +16,7 @@ function InterestsList(props: IInterestsListProps) {
             title={interest}
             hasCloseButton={true}
             closeButtonClicked={props.deleteInterestHandler}
-            key={index}
+            key={`${index}_${interest}`}
           />
         ))}
     </div>

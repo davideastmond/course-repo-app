@@ -7,6 +7,7 @@ import ActionButton from "../../components/Buttons/ActionButton";
 import CourseContainer from "../../components/course-container";
 import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 import HeaderBar from "../../components/header-bar";
+import ProfileView from "../../components/Profile-view";
 
 import SuggestCourseModal from "../../components/suggest-course-modal";
 import TextInput from "../../components/Text-Input";
@@ -28,6 +29,7 @@ enum ModalType {
   nullModal = -1,
   SuggestCourse = 0,
   DetailedCourseView = 1,
+  ProfileDetailView = 2,
 }
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
@@ -41,8 +43,12 @@ function HomePage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const userData = useSelector(selectLoggedInUser, shallowEqual);
-  const [modalVisible, setModalVisible] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const [modalVisible, setModalVisible] = useState<boolean>(true);
+  const [modalType, setModalType] = useState<ModalType>(
+    ModalType.ProfileDetailView
+  );
+  const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
+
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -85,6 +91,14 @@ function HomePage() {
   const handleCourseCardClickedHomePage = (id: string) => {
     dispatch(getDetailedCourseByIdAsync({ id }));
   };
+
+  const handleGenericUserProfileClick = (id: string) => {
+    if (id) {
+      setProfileDetailUserId(id);
+      setModalType(ModalType.ProfileDetailView);
+      setModalVisible(true);
+    }
+  };
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -110,6 +124,7 @@ function HomePage() {
               <CourseContainer
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
+                genericUserProfileClickHandler={handleGenericUserProfileClick}
               />
             )}
           </div>
@@ -145,6 +160,14 @@ function HomePage() {
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={setModalVisible}
+          />
+        </div>
+      )}
+      {modalVisible && modalType === ModalType.ProfileDetailView && (
+        <div className="Page-Modal">
+          <ProfileView
+            onModalClose={setModalVisible}
+            userId={profileDetailUserId}
           />
         </div>
       )}

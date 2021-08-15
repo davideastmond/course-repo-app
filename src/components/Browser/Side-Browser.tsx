@@ -1,23 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setCourseFilter } from "../../reducers";
+import {
+  CourseCategory,
+  COURSE_CATEGORY_FRIENDLY_DICTIONARY,
+} from "../../types";
 import { getMenuOptions } from "./Side-browser-factory";
 
 import "./side-browser-style.css";
 
 function SideBrowser() {
   const dispatch = useDispatch();
-  const options: { [key in number]: string } = {
-    0: "all",
-    1: "design",
-    2: "engineering",
-    3: "human_resources",
-    4: "management",
-    5: "marketing",
-    6: "product",
-    7: "sales",
+
+  const getFriendlyNameMenuOptions = () => {
+    return ["All", ...Object.values(COURSE_CATEGORY_FRIENDLY_DICTIONARY)];
   };
 
+  const getIndexedCategories = () => {
+    const optionsObject: { [key in number]: string } = {};
+    Object.values(CourseCategory).forEach((category, index) => {
+      optionsObject[index + 1] = category;
+    });
+    optionsObject[0] = "all";
+    return optionsObject;
+  };
+  const options = getIndexedCategories();
   const [selectedOption, setSelectedOption] = useState<number>(0);
 
   useEffect(() => {
@@ -33,16 +40,7 @@ function SideBrowser() {
       </div>
       <div className="Side-browser__menu-body_main">
         {getMenuOptions({
-          titles: [
-            "All",
-            "Design",
-            "Engineering",
-            "Human Resources",
-            "Management",
-            "Marketing",
-            "Product",
-            "Sales",
-          ],
+          titles: getFriendlyNameMenuOptions(),
           isSelected: selectedOption,
           clickAction: setSelectedOption,
         })}

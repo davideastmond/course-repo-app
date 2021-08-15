@@ -22,12 +22,6 @@
   margin-bottom: 10px;
 }
 
-.Course-card__recommendation-section {
-  display: grid;
-  grid-template-columns: 32px auto;
-  grid-template-areas: "generic-circle-icon recommended-text";
-}
-
 .Recommended-by {
   grid-area: recommended-text;
   font-family: var(--main-font);
@@ -59,4 +53,7 @@
 
 .Course-card__main:hover {
   cursor: pointer;
+}
+.Course-Card__title-link_enclosure {
+  display: flex;
 }

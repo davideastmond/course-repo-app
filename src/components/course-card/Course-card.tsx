@@ -10,6 +10,7 @@ import {
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,
 } from "../../types";
 import { getUserById } from "../../services/users";
+import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 
 interface ICourseCardProps {
   _id: string;
@@ -25,6 +26,7 @@ interface ICourseCardProps {
   category?: string;
   color?: string | CourseCategory;
   courseCardClickHandler: (id: string) => void;
+  genericUserProfileClickHandler: (id: string) => void;
 }
 
 function CourseCard(props: ICourseCardProps) {
@@ -42,8 +44,13 @@ function CourseCard(props: ICourseCardProps) {
       props.courseCardClickHandler(props._id);
     }
   };
+
+  const handleGenericUserProfileIconClick = () => {
+    props.genericUserProfileClickHandler(props.postedByUserId);
+  };
+
   return (
-    <div className="Course-card__main" onClick={handleCourseCardClick}>
+    <div className="Course-card__main">
       <div
         className={`Course-card__category-header ${
           COURSE_CATEGORY_COLOR[props.category as CourseCategory]
@@ -54,35 +61,47 @@ function CourseCard(props: ICourseCardProps) {
         ] || "not categorized"}
       </div>
       <div className="Course-card__inner-body">
-        <div className="Course-card__course-title">
-          <a
-            className="Course-card__external-link"
-            target="_blank"
-            href={props.url || "no url"}
+        <div className="Course-Card__title-link_enclosure">
+          <div
+            className="Course-card__course-title"
+            onClick={handleCourseCardClick}
           >
             {props.title || "Untitled course"}
-            <img
-              className="external-link-icon"
-              src={ExternalLinkIcon}
-              alt="external link"
-            />
-          </a>
+          </div>
+          <div className="link-icon-enclosure">
+            <a
+              className="Course-card__external-link"
+              target="_blank"
+              href={props.url || "no url"}
+            >
+              <img
+                className="external-link-icon"
+                src={ExternalLinkIcon}
+                alt="external link"
+              />
+            </a>
+          </div>
         </div>
-
         <div className="Course-card__recommendation-section">
-          <GenericUserIcon
+          {/* <GenericUserIcon
             userName={userName[props.postedByUserId] || "Guest"}
           />
           <div className="Recommended-by">
             Recommended by {userName[props.postedByUserId]}
-          </div>
+          </div> */}
+          <GenericUserRecommendationIcon
+            onIconClicked={handleGenericUserProfileIconClick}
+            userId={props.postedByUserId}
+            isRecommendation={true}
+            userName={userName[props.postedByUserId] || "Guest"}
+          />
         </div>
         <div className="Course-card__synopsis-section">{props.description}</div>
         <div className="Course-card__tags-section">
           {props.tags &&
             props.tags.length > 0 &&
             props.tags.map((tag, index) => (
-              <ContentTag title={tag} key={index} />
+              <ContentTag title={tag} key={`${index}_${tag}`} />
             ))}
         </div>
       </div>

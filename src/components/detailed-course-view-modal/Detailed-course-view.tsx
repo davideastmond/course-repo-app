@@ -3,9 +3,10 @@ import { IDetailedCourse } from "../../types";
 import "./detailed-course-view.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-import GenericUserIcon from "../profile-icon/Generic-User-Icon";
 import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
+import { ModalType } from "../../types/modal.types";
+import ProfileView from "../Profile-view";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
   onModalClose: (visible: boolean) => void;
@@ -48,6 +49,8 @@ const ReadOnlyNote = ({ index, note }: { index: number; note: Note }) => {
 };
 
 function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const handleCloseModal = () => {
     props.onModalClose(false);
   };
@@ -61,6 +64,21 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
     getUsers();
   }, []);
 
+  useEffect(() => {
+    if (modalVisible) {
+      document.body.classList.add("no-body-scroll");
+    }
+  }, [modalVisible]);
+
+  const handleGenericIconClicked = () => {
+    setModalType(ModalType.ProfileDetailView);
+    setModalVisible(true);
+  };
+
+  const handleProfileViewModalClosed = () => {
+    setModalType(ModalType.nullModal);
+    setModalVisible(false);
+  };
   console.log(
     props.courseContext.notes && Object.values(props.courseContext.notes)
   );
@@ -112,22 +130,24 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
         <div className="Detailed-Course-View__section__tags-footer__container">
           <TagApplet readOnly={true} tags={props.courseContext.tags} />
           <div className="Detailed-Course-View__Footer-posted-by__container">
-            {/* <GenericUserIcon
-              userName={userName[props.courseContext.postedByUserId]}
-              classNames="align-center"
-            />
-            <div className="Detailed-Course-View__Footer-recommended-by__text open-sans-font-family align-center">
-              Recommended by {userName[props.courseContext.postedByUserId]}
-            </div> */}
             <GenericUserRecommendationIcon
               userName={userName[props.courseContext.postedByUserId]}
               isRecommendation={true}
               userId={props.courseContext.postedByUserId}
-              onIconClicked={() => {}}
+              onIconClicked={handleGenericIconClicked}
+              iconClassNames={"pointer"}
             />
           </div>
         </div>
       </section>
+      {modalVisible && modalType === ModalType.ProfileDetailView && (
+        <div className="Page-Modal">
+          <ProfileView
+            onModalClose={handleProfileViewModalClosed}
+            userId={props.courseContext.postedByUserId}
+          />
+        </div>
+      )}
     </div>
   );
 }

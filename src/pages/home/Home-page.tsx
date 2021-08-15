@@ -23,14 +23,10 @@ import {
   selectLoggedInUser,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
+import { ModalType } from "../../types/modal.types";
 
 import "./home-page-style.css";
-enum ModalType {
-  nullModal = -1,
-  SuggestCourse = 0,
-  DetailedCourseView = 1,
-  ProfileDetailView = 2,
-}
+
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
   const currentCourseContext = useSelector(
@@ -43,10 +39,8 @@ function HomePage() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const userData = useSelector(selectLoggedInUser, shallowEqual);
-  const [modalVisible, setModalVisible] = useState<boolean>(true);
-  const [modalType, setModalType] = useState<ModalType>(
-    ModalType.ProfileDetailView
-  );
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
 
   const handleGoogleLogin = () => {
@@ -76,16 +70,22 @@ function HomePage() {
     if (currentCourseContext) {
       setModalType(ModalType.DetailedCourseView);
       setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
     }
   }, [currentCourseContext]);
 
   // const openModal = (isOpen: boolean) => {
   //   setModalVisible(true);
   // };
-
+  useEffect(() => {
+    if (modalVisible) {
+      document.body.classList.add("no-body-scroll");
+    }
+  }, [modalVisible]);
   const handleOpenCourseRecommendModal = () => {
     setModalType(ModalType.SuggestCourse);
     setModalVisible(true);
+    document.body.classList.add("no-body-scroll");
   };
 
   const handleCourseCardClickedHomePage = (id: string) => {
@@ -97,7 +97,14 @@ function HomePage() {
       setProfileDetailUserId(id);
       setModalType(ModalType.ProfileDetailView);
       setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
     }
+  };
+
+  const handleModalClosed = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+    document.body.classList.remove("no-body-scroll");
   };
   return (
     <div className={`Home-Page__container`}>
@@ -152,21 +159,21 @@ function HomePage() {
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
         <div className="Page-Modal">
-          <SuggestCourseModal onModalClose={setModalVisible} />
+          <SuggestCourseModal onModalClose={handleModalClosed} />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
         <div className="Page-Modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
-            onModalClose={setModalVisible}
+            onModalClose={handleModalClosed}
           />
         </div>
       )}
       {modalVisible && modalType === ModalType.ProfileDetailView && (
         <div className="Page-Modal">
           <ProfileView
-            onModalClose={setModalVisible}
+            onModalClose={handleModalClosed}
             userId={profileDetailUserId}
           />
         </div>

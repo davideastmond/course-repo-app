@@ -6,6 +6,8 @@ interface IGenericUserRecommendationIconProps {
   isRecommendation: boolean;
   userId: string;
   onIconClicked: ({ userId }: { userId: string }) => void;
+  iconClassNames?: string;
+  recommendedTextClassNames?: string;
 }
 export default function GenericUserRecommendationIcon(
   props: IGenericUserRecommendationIconProps
@@ -18,9 +20,16 @@ export default function GenericUserRecommendationIcon(
       className="GenericUserRecommendation__Main"
       onClick={handleOnIconClicked}
     >
-      <GenericUserIcon userName={props.userName} />
+      <GenericUserIcon
+        userName={props.userName}
+        classNames={`${props.iconClassNames || ""}`}
+      />
       {props.isRecommendation && (
-        <div className="Recommended-by">Recommended by {props.userName}</div>
+        <div
+          className={`Recommended-by ${props.recommendedTextClassNames || ""}`}
+        >
+          Recommended by {props.userName}
+        </div>
       )}
     </div>
   );

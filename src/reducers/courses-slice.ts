@@ -16,6 +16,8 @@ interface IInitialCoursesState {
   status: any;
   filter: string;
   currentCourseContext: IDetailedCourse | null;
+  limit: number;
+  offset: number;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
@@ -24,6 +26,8 @@ const initialState: IInitialCoursesState = {
     state: "idle",
   },
   currentCourseContext: null,
+  limit: 5,
+  offset: 0,
 };
 
 export const getAllCoursesAsync = createAsyncThunk(
@@ -109,6 +113,14 @@ export const selectAllCourses = (state: any) => {
 
 export const selectCurrentCourseContext = (state: any) => {
   return state.courses.currentCourseContext;
+};
+
+export const selectCourseOffset = (state: any) => {
+  return state.courses.offset;
+};
+
+export const selectCourseLimit = (state: any) => {
+  return state.courses.limit;
 };
 
 export const { setCourseFilter } = coursesSlice.actions;

@@ -14,10 +14,14 @@ import TextInput from "../../components/Text-Input";
 import ZenSpinner from "../../components/ZenSpinner";
 import {
   checkIsAuthedAsync,
+  getAllCoursesAsync,
   getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
+  selectCourseLimit,
+  selectCourseQueryType,
+  selectCourseSkip,
   selectCurrentCourseContext,
   selectIsLoggedIn,
   selectLoggedInUser,
@@ -42,6 +46,10 @@ function HomePage() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
+
+  const limit = useSelector(selectCourseLimit, shallowEqual);
+  const skip = useSelector(selectCourseSkip, shallowEqual);
+  const queryType = useSelector(selectCourseQueryType, shallowEqual);
 
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
@@ -74,9 +82,6 @@ function HomePage() {
     }
   }, [currentCourseContext]);
 
-  // const openModal = (isOpen: boolean) => {
-  //   setModalVisible(true);
-  // };
   useEffect(() => {
     if (modalVisible) {
       document.body.classList.add("no-body-scroll");
@@ -106,6 +111,17 @@ function HomePage() {
     setModalType(ModalType.nullModal);
     document.body.classList.remove("no-body-scroll");
   };
+
+  const handleLoadMoreCourses = () => {
+    dispatch(getAllCoursesAsync({ limit, skip, queryType }));
+  };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 5000,
+      behavior: "smooth",
+    });
+  }, [courses]);
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -155,6 +171,7 @@ function HomePage() {
           plusSymbol={false}
           title={"Load more courses"}
           classNames={"add-course-button-size"}
+          action={handleLoadMoreCourses}
         />
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (

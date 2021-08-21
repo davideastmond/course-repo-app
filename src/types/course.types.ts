@@ -93,6 +93,11 @@ export type ICourseRecommendationTakeAwayPackage = {
   };
 };
 
+export enum CourseQueryType {
+  All = "all",
+  ByTags = "by_tags",
+}
+
 export interface ICourseRecommendationSubmission {
   rating: number;
   title: string;

@@ -8,24 +8,21 @@ import {
   checkIsAuthedAsync,
   getAllCoursesAsync,
   getLoggedInUserAsync,
-  selectCourseLimit,
-  selectCourseQueryType,
-  selectCourseSkip,
+  selectLimit,
 } from "./reducers";
 import ProfilePage from "./pages/profile";
 
 function App() {
-  const skip = useSelector(selectCourseSkip, shallowEqual);
-  const limit = useSelector(selectCourseLimit, shallowEqual);
-  const queryType = useSelector(selectCourseQueryType, shallowEqual);
-
   const dispatch = useDispatch();
+  const limit = useSelector(selectLimit, shallowEqual);
+  //const skip = useSelector(selectLimit, shallowEqual);
 
   useEffect(() => {
-    dispatch(getAllCoursesAsync({ skip, limit, queryType }));
     dispatch(checkIsAuthedAsync());
     dispatch(getLoggedInUserAsync());
+    dispatch(getAllCoursesAsync({ limit, skip: 0 }));
   }, [dispatch]);
+
   return (
     <Router>
       <Switch>

@@ -5,7 +5,6 @@ import {
   postCourseRecommendation,
 } from "../services/courses";
 import {
-  CourseQueryType,
   ICourse,
   ICourseRecommendationSubmission,
   IDetailedCourse,
@@ -14,35 +13,29 @@ import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
   courses: ICourse[];
+  coursesByTags: ICourse[];
   status: any;
   filter: string;
   currentCourseContext: IDetailedCourse | null;
   limit: number;
-  queryType: CourseQueryType;
+  skip: number;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
+  coursesByTags: [],
   filter: "all",
   status: {
     state: "idle",
   },
   currentCourseContext: null,
-  limit: 2,
-  queryType: CourseQueryType.All,
+  limit: 10,
+  skip: 0,
 };
 
 export const getAllCoursesAsync = createAsyncThunk(
   "courses/getAllCourses",
-  async ({
-    limit,
-    skip,
-    queryType,
-  }: {
-    limit: number;
-    skip: number;
-    queryType: CourseQueryType;
-  }) => {
-    return getAllCourses({ limit, skip, queryType });
+  async ({ limit, skip }: { limit: number; skip: number }) => {
+    return getAllCourses({ limit, skip });
   }
 );
 
@@ -77,9 +70,6 @@ export const coursesSlice = createSlice({
     setCourseFilter(state, action: { payload: string }) {
       state.filter = action.payload;
     },
-    setCourseQueryType(state, action: { payload: CourseQueryType }) {
-      state.queryType = action.payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -88,7 +78,11 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        state.courses = [...state.courses, ...action.payload];
+        state.courses = [...state.courses, ...action.payload].sort(
+          (a, b) =>
+            parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
+            parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
+        );
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");
@@ -127,17 +121,17 @@ export const selectCurrentCourseContext = (state: any) => {
   return state.courses.currentCourseContext;
 };
 
-export const selectCourseSkip = (state: any) => {
-  return state.courses.courses.length;
-};
-
-export const selectCourseLimit = (state: any) => {
-  return state.courses.limit;
-};
-
 export const selectCourseQueryType = (state: any) => {
   return state.courses.queryType;
 };
 
-export const { setCourseFilter, setCourseQueryType } = coursesSlice.actions;
+export const selectLimit = (state: any) => {
+  return state.courses.limit;
+};
+
+export const selectSkip = (state: any) => {
+  return state.courses.courses.length;
+};
+
+export const { setCourseFilter } = coursesSlice.actions;
 export default coursesSlice.reducer;

@@ -19,12 +19,11 @@ import {
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
-  selectCourseLimit,
-  selectCourseQueryType,
-  selectCourseSkip,
   selectCurrentCourseContext,
   selectIsLoggedIn,
+  selectLimit,
   selectLoggedInUser,
+  selectSkip,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
@@ -47,10 +46,8 @@ function HomePage() {
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
 
-  const limit = useSelector(selectCourseLimit, shallowEqual);
-  const skip = useSelector(selectCourseSkip, shallowEqual);
-  const queryType = useSelector(selectCourseQueryType, shallowEqual);
-
+  const limit = useSelector(selectLimit, shallowEqual);
+  const skip = useSelector(selectSkip, shallowEqual);
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -112,16 +109,16 @@ function HomePage() {
     document.body.classList.remove("no-body-scroll");
   };
 
-  const handleLoadMoreCourses = () => {
-    dispatch(getAllCoursesAsync({ limit, skip, queryType }));
-  };
-
   useEffect(() => {
     window.scrollTo({
       top: 5000,
       behavior: "smooth",
     });
   }, [courses]);
+
+  const handleLoadCourses = () => {
+    dispatch(getAllCoursesAsync({ limit, skip }));
+  };
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -171,7 +168,7 @@ function HomePage() {
           plusSymbol={false}
           title={"Load more courses"}
           classNames={"add-course-button-size"}
-          action={handleLoadMoreCourses}
+          action={handleLoadCourses}
         />
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (

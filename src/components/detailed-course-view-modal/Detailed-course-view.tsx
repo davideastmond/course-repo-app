@@ -79,9 +79,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
     setModalType(ModalType.nullModal);
     setModalVisible(false);
   };
-  console.log(
-    props.courseContext.notes && Object.values(props.courseContext.notes)
-  );
+
   return (
     <div className="Detailed-Course-View__Main-body">
       <header className="Detailed-Course-View__header pale-lime-green">

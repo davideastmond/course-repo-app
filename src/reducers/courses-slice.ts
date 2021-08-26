@@ -28,7 +28,7 @@ const initialState: IInitialCoursesState = {
     state: "idle",
   },
   currentCourseContext: null,
-  limit: 10,
+  limit: 2,
   skip: 0,
 };
 
@@ -78,11 +78,7 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        state.courses = [...state.courses, ...action.payload].sort(
-          (a, b) =>
-            parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
-            parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
-        );
+        state.courses = [...state.courses, ...action.payload];
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");

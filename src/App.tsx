@@ -8,6 +8,7 @@ import {
   checkIsAuthedAsync,
   getAllCoursesAsync,
   getLoggedInUserAsync,
+  selectIsLoggedIn,
   selectLimit,
 } from "./reducers";
 import ProfilePage from "./pages/profile";
@@ -15,6 +16,7 @@ import ProfilePage from "./pages/profile";
 function App() {
   const dispatch = useDispatch();
   const limit = useSelector(selectLimit, shallowEqual);
+  const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   //const skip = useSelector(selectLimit, shallowEqual);
 
   useEffect(() => {

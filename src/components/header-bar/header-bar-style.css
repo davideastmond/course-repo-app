@@ -1,0 +1,74 @@
+.Nav__Header-bar {
+  background-color: white;
+}
+
+.Nav__Header-bar_body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.app-title {
+  font-family: var(--main-font);
+  font-size: 25px;
+  font-weight: bold;
+  margin: unset;
+}
+
+.profile-name {
+  font-family: "Open Sans", "sans-serif";
+  font-size: 16px;
+  color: var(--light-grey);
+  grid-area: profile-name;
+  margin: unset;
+  margin-right: 20px;
+  align-self: center;
+}
+
+.Nav__Header-bar__Zen-logo-section {
+  grid-area: app-logo;
+}
+
+.Nav__Header-bar__Apple-title-section {
+  grid-area: app-name;
+  align-items: center;
+}
+
+.Nav__Header-bar__Profile-section {
+  grid-area: profile-icon-section;
+  display: grid;
+  grid-template-columns: auto 32px;
+  grid-template-areas: "profile-name avatar";
+  justify-content: right;
+}
+
+.Nav__Header-bar__profile-icon-image {
+  grid-area: avatar;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+}
+
+
+@media only screen and (min-width: 2030px) {
+  .Nav__Header-bar_body {
+    margin-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 2050px) {
+  .Nav__Header-bar_body {
+    margin-right: 15%;
+  }
+}
+
+@media only screen and (min-width: 2150px) {
+  .Nav__Header-bar_body {
+    margin-right: 17%;
+  }
+}
+
+@media only screen and (min-width: 2500px) {
+  .Nav__Header-bar_body {
+    margin-right: 20%;
+  }
+}

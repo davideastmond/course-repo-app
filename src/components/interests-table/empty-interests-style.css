@@ -1,0 +1,40 @@
+.Empty-Interests__Main-body {
+  width: 100%;
+}
+
+.Empty-Interests__graphic-section {
+  padding: 5%;
+  display: flex;
+  justify-content: center;
+}
+
+.font-no-interests-header-style {
+  font-weight: normal;
+  font-size: 25px;;
+}
+
+.font-no-interests-instructions-style {
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--light-grey);
+}
+
+.centered-text {
+  text-align: center;
+}
+
+.Empty-Interests__text-and-instructions__main {
+  margin-left: 31%;
+  margin-right: 31%;
+}
+
+.Empty-Interests__Add-Interests__Action-button__main {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5%;
+  margin-top: 2%;
+}
+
+.margin-bottom-15 {
+  margin-bottom: 15px;
+}

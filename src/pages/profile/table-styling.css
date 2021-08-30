@@ -1,0 +1,49 @@
+.table-font {
+  /* Profile */
+
+  font-family: Open Sans;
+  
+  color: #2E3841;
+}
+
+.Main-table-header-profile {
+  font-size: 25px;
+  font-weight: normal;
+  font-style: normal;
+}
+
+.profile-table {
+  border: 1px solid var(--light-grey-2);
+  border-radius: 5px;
+  width: 100%;
+  background-color: white;
+}
+
+.cell-padding {
+  padding: 2.5%;
+}
+
+.bottom-border {
+  border-bottom: 1px solid var(--light-grey-2)
+}
+
+.label-category-width {
+  width: 200px;
+}
+
+.font-category-title {
+  font-size: 11px;
+  font-weight: bold;
+  color: var(--light-grey);
+}
+
+.font-plain-text-cell-data {
+  font-size: 16px;
+  font-style: normal;
+  color: black;
+}
+
+.edit-text-icon-spacing {
+  text-align: right;
+  padding-right: 3%;
+}

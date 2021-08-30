@@ -1,0 +1,27 @@
+.Styled-input-box__input {
+  border: 1.5px solid var(--light-grey-2);
+}
+
+.width-400px {
+  width: 400px;
+}
+
+.Styled-input-box__multiline {
+  resize: none;
+}
+
+.StarRating__stars__enclosure {
+  display: flex;
+}
+
+.Char-Count__text  {
+  color:  var(--light-grey);
+}
+
+.text-error-border {
+  border: 2px solid var(--error-color);
+}
+
+.Stylized-input-box__ErrorMessage__text {
+  color: var(--error-color);
+}

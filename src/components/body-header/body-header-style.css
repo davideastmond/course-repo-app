@@ -1,0 +1,19 @@
+.Body-header__header, .Body-header__subtitle {
+  font-family: var(--main-font);
+  color: black;
+  font-weight: bold;
+}
+
+.Body-header__header {
+  font-size: 70px;
+}
+
+.Body-header__subtitle {
+  font-size: 20px;
+}
+
+.Home-Page__body-header {
+  height: 100px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}

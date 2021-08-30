@@ -1,0 +1,26 @@
+@keyframes spin {
+  from {
+    transform: rotateY(0deg)
+  }
+
+  to {
+    transform: rotateY(180deg)
+  }
+}
+
+.Spinner__Main {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  width: 100vw;
+  opacity: .5;
+  background-color: silver;
+  height: 1000vh;
+}
+
+.Spinner__Body {
+  animation-duration: 1s;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+  animation-name: spin;
+}

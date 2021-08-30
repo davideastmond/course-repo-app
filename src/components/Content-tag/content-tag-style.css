@@ -1,0 +1,22 @@
+.Content-tag__main {
+  border-radius: 16px;
+  border: 1px solid black;
+  font-family: var(--main-font);
+  font-size: 10px;
+  padding: 10px 20px;
+  text-align: center;
+  margin: 1%;
+}
+
+.with-close-button {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Content-tag__main__Close-x-button:hover {
+  cursor: pointer;
+}
+
+.Content-tag__main__Close-x-button {
+  margin-left: 15px;
+}

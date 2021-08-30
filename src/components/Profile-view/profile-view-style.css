@@ -1,0 +1,24 @@
+.Profile-view__Main__container{
+  width:auto;
+  height: auto;
+  background-color: white;
+  margin: 5%;
+}
+
+.Profile-view__Body {
+  margin: 5%;
+}
+
+.Modal-close-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Profile_view__interests-footer{
+  padding-bottom: 5%;
+}
+
+.Profile-view__Main-header {
+  display: flex;
+  align-items: center;
+}

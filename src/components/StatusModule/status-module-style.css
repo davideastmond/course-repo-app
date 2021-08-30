@@ -1,0 +1,11 @@
+.Status__error-strip__main {
+  background-color: var(--error-color);
+  color: white;
+  font-family: var(--main-font);
+  display: flex;
+  padding: 5px;
+}
+
+.Status__error-alert-text {
+  margin-left: 10px;
+}

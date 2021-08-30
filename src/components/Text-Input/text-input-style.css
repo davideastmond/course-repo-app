@@ -1,0 +1,14 @@
+.Text-input__text-box  {
+  height: 47px;
+  /* Search for a course... */
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  width: 100%;
+  padding-left: 15px;
+  /* identical to box height */
+
+  /* grey 400 */
+  color: #7D7D7D;
+}

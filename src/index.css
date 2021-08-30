@@ -1,13 +1,156 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:root {
+  --middle-green: #4b7f52ff;
+  --mantis: #7dd181ff;
+  --magic-mint: #96e8bcff;
+  --magic-mint-2: #b6f9c9ff;
+  --aero-blue: #c9ffe2ff;
+  --white: #ffffff;
+  --main-font: Montserrat,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Fira Sans,Droid Sans,Helvetica Neue,sans-serif;
+  --main-font-color: #000000;
+  --light-grey: #7D7D7D;
+  --light-grey-2: #D9D9D9;
+  --page-ambient-color: #F8FBF9;
+  --charcoal: #2E3841;
+
+  --pale-blue: #E2F2FF;
+  --pale-light-green-color: #E9FBF4;
+  --blush-color: #FFEEF6;
+  --pale-yellow-color: #FDF6DF;
+  --lime-green-0: #2ECC71;
+  --pale-lime-green: #E3FFD9;
+
+  --blue-color-6: #74B9FF;
+  --red-color-6: #FF7675;
+  --green-color-6: #00CEC9;
+  --error-color: #D63031;
+  --modal-radius: 6px;
+
+  --star-fill: #FDCB6E;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1, h2, h3, h4, h5, h5 {
+  margin: 0px;
+}
+
+.course-category-color-green {
+  background-color: var( --pale-light-green-color);
+  border-left-color: #2A8D85;
+}
+
+.course-category-color-rose {
+  background-color: var(--blush-color);
+  border-left-color: #E84393
+}
+
+.course-category-color-yellow {
+  background-color: var(--pale-yellow-color);
+  border-left-color: #FDCB6E;
+}
+
+.course-category-color-blue {
+  background-color: var(--pale-blue);
+  border-left-color: #0984E3;
+}
+
+.menu-separator {
+  border-bottom: 1px solid var(--light-grey-2);
+}
+
+.generic-profile-icon-color-red {
+  background-color: var(--red-color-6);
+}
+
+.generic-profile-icon-color-blue {
+  background-color: var(--blue-color-6);
+}
+
+.generic-profile-icon-color-green {
+  background-color: var(--green-color-6);
+}
+
+.cursor-pointer:hover {
+  cursor: pointer;
+}
+
+.Page-Modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1000;
+  left: 0px;
+  top: 0px;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+.open-sans-font-family {
+  font-family: Open Sans;
+}
+
+.mont-font {
+  font-family: Montserrat;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.pointer:hover {
+  cursor: pointer;
+}
+
+.align-center {
+  align-self: center;
+}
+
+.font-size-20px {
+  font-size: 20px;
+}
+
+.font-size-10px {
+  font-size: 10px;
+}
+
+.font-size-12px {
+  font-size: 12px;
+}
+
+.display-flex {
+  display: flex;
+}  
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.left-margin-buffer-10px {
+  margin-left: 10px;
+}
+
+.color-red {
+  color: var(--error-color)
+}
+
+.error-text {
+  font-family: Montserrat;
+  color: var(--error-color);
+}
+
+.color-light-grey {
+  color: var(--light-grey);
+}
+.charcoal {
+  color: var(--charcoal);
+}
+
+.no-text-decoration {
+  text-decoration: none;
+}
+
+.font-size-25px {
+  font-size: 25px;
+}
+
+.no-body-scroll {
+  overflow-y: hidden;
 }

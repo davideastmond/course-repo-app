@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
-import ZenLogo from "../../images/logos/zen-logo.svg";
+import AlternateAppLogo from "../../images/logos/alternate-app-logo.svg";
 import ProfileIcon from "../profile-icon";
 import { ContextMenu, ContextMenuOption } from "../context-menu";
 import { ContextMenuSeparator } from "../context-menu/Menu-divider";
@@ -91,11 +91,15 @@ function HeaderBar(props: IHeaderBarProps) {
       <div className="Nav__Header-bar_body">
         <div className="Nav__Header-bar__Zen-logo-section">
           <Link to="/">
-            <img className="app-logo" src={ZenLogo} alt="zen logo"></img>
+            <img
+              className="app-logo"
+              src={AlternateAppLogo}
+              alt="zen logo"
+            ></img>
           </Link>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
-          <h3 className="app-title">Zen Learn</h3>
+          <h3 className="app-title">Course Repo</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
           {!isAppLoggedIn && (

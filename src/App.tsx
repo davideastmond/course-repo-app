@@ -8,13 +8,16 @@ import {
   checkIsAuthedAsync,
   getAllCoursesAsync,
   getLoggedInUserAsync,
+  selectIsLoggedIn,
   selectLimit,
 } from "./reducers";
 import ProfilePage from "./pages/profile";
+import ProtectedRoute from "./components/protected-route";
 
 function App() {
   const dispatch = useDispatch();
   const limit = useSelector(selectLimit, shallowEqual);
+  const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   //const skip = useSelector(selectLimit, shallowEqual);
 
   useEffect(() => {
@@ -26,9 +29,13 @@ function App() {
   return (
     <Router>
       <Switch>
+        <ProtectedRoute
+          path="/profile"
+          component={ProfilePage}
+          allowed={isLoggedIn}
+          redirectTo="/"
+        />
         <Route path="/profile" component={ProfilePage} />
-      </Switch>
-      <Switch>
         <Route exact path="/" component={HomePage} />
       </Switch>
     </Router>

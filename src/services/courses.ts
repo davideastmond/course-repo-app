@@ -6,6 +6,7 @@ import {
 } from "../types";
 import { getUserInterests } from "./users";
 import { intersection, reject } from "lodash";
+import { API_URL } from "../utils/environment";
 
 export function getAllCourses({
   limit,
@@ -17,7 +18,7 @@ export function getAllCourses({
   return new Promise((resolve, reject) => {
     axios({
       method: "get",
-      url: `${process.env.REACT_APP_API_URL}/api/courses`,
+      url: `${API_URL}/api/courses`,
       params: {
         limit,
         skip,
@@ -80,7 +81,7 @@ export const getDetailedCourseById = async (
 ): Promise<IDetailedCourse> => {
   const req = await axios({
     method: "get",
-    url: `${process.env.REACT_APP_API_URL}/api/courses/${courseId}`,
+    url: `${API_URL}/api/courses/${courseId}`,
   });
   return req.data as IDetailedCourse;
 };

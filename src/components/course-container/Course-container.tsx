@@ -18,7 +18,7 @@ function CourseContainer(props: ICourseContainerProps) {
         props.courses.map((course, index) => (
           <CourseCard
             {...{
-              ...course,
+              course,
               courseCardClickHandler: props.courseCardClickHandler,
               genericUserProfileClickHandler:
                 props.genericUserProfileClickHandler,

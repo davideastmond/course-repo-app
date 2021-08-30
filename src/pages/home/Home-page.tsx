@@ -14,13 +14,16 @@ import TextInput from "../../components/Text-Input";
 import ZenSpinner from "../../components/ZenSpinner";
 import {
   checkIsAuthedAsync,
+  getAllCoursesAsync,
   getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
   selectCurrentCourseContext,
   selectIsLoggedIn,
+  selectLimit,
   selectLoggedInUser,
+  selectSkip,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
@@ -43,6 +46,8 @@ function HomePage() {
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
 
+  const limit = useSelector(selectLimit, shallowEqual);
+  const skip = useSelector(selectSkip, shallowEqual);
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -74,9 +79,6 @@ function HomePage() {
     }
   }, [currentCourseContext]);
 
-  // const openModal = (isOpen: boolean) => {
-  //   setModalVisible(true);
-  // };
   useEffect(() => {
     if (modalVisible) {
       document.body.classList.add("no-body-scroll");
@@ -106,6 +108,17 @@ function HomePage() {
     setModalType(ModalType.nullModal);
     document.body.classList.remove("no-body-scroll");
   };
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 5000,
+      behavior: "smooth",
+    });
+  }, [courses]);
+
+  const handleLoadCourses = () => {
+    dispatch(getAllCoursesAsync({ limit, skip }));
+  };
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -124,9 +137,9 @@ function HomePage() {
         <div className="Home-Page__middle-section">
           <SideBrowser />
           <div className="Home-Page__center-column">
-            <div className="Home-Page__search-section">
+            {/* <div className="Home-Page__search-section">
               <TextInput placeHolderText="Search for a course..." />
-            </div>
+            </div> */}
             {courses && (
               <CourseContainer
                 courses={courses}
@@ -155,6 +168,7 @@ function HomePage() {
           plusSymbol={false}
           title={"Load more courses"}
           classNames={"add-course-button-size"}
+          action={handleLoadCourses}
         />
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (

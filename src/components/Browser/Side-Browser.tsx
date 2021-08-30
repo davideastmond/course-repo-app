@@ -34,6 +34,9 @@ function SideBrowser() {
   return (
     <div className="Side-browser__Main">
       <div className="Side-browser__header">
+        <div className="Side-browser__header-text Side-browser__link-to-search pointer">
+          SEARCH
+        </div>
         <div className="Side-browser__header-text menu-separator">
           BROWSE BY TOPIC
         </div>

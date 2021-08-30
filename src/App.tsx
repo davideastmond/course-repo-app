@@ -3,21 +3,26 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./pages/home";
 
-import { useDispatch } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
   checkIsAuthedAsync,
   getAllCoursesAsync,
   getLoggedInUserAsync,
+  selectLimit,
 } from "./reducers";
 import ProfilePage from "./pages/profile";
 
 function App() {
   const dispatch = useDispatch();
+  const limit = useSelector(selectLimit, shallowEqual);
+  //const skip = useSelector(selectLimit, shallowEqual);
+
   useEffect(() => {
-    dispatch(getAllCoursesAsync());
     dispatch(checkIsAuthedAsync());
     dispatch(getLoggedInUserAsync());
+    dispatch(getAllCoursesAsync({ limit, skip: 0 }));
   }, [dispatch]);
+
   return (
     <Router>
       <Switch>

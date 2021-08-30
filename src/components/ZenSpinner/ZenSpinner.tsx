@@ -1,6 +1,6 @@
 import React from "react";
 import "./zen-spinner-style.css";
-import SpinnerLogo from "../../images/logos/zen-spinner-logo.svg";
+import SpinnerLogo from "../../images/logos/alternate-spinner.svg";
 interface ZenSpinnerProps {
   classNames?: string;
 }

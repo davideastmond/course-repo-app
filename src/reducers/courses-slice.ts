@@ -13,23 +13,29 @@ import stateStatus from "../utils/state-status";
 
 interface IInitialCoursesState {
   courses: ICourse[];
+  coursesByTags: ICourse[];
   status: any;
   filter: string;
   currentCourseContext: IDetailedCourse | null;
+  limit: number;
+  skip: number;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
+  coursesByTags: [],
   filter: "all",
   status: {
     state: "idle",
   },
   currentCourseContext: null,
+  limit: 2,
+  skip: 0,
 };
 
 export const getAllCoursesAsync = createAsyncThunk(
   "courses/getAllCourses",
-  async () => {
-    return getAllCourses();
+  async ({ limit, skip }: { limit: number; skip: number }) => {
+    return getAllCourses({ limit, skip });
   }
 );
 
@@ -72,7 +78,7 @@ export const coursesSlice = createSlice({
       })
       .addCase(getAllCoursesAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
-        state.courses = action.payload;
+        state.courses = [...state.courses, ...action.payload];
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
         stateStatus.error(state, "unable to get courses");
@@ -109,6 +115,18 @@ export const selectAllCourses = (state: any) => {
 
 export const selectCurrentCourseContext = (state: any) => {
   return state.courses.currentCourseContext;
+};
+
+export const selectCourseQueryType = (state: any) => {
+  return state.courses.queryType;
+};
+
+export const selectLimit = (state: any) => {
+  return state.courses.limit;
+};
+
+export const selectSkip = (state: any) => {
+  return state.courses.courses.length;
 };
 
 export const { setCourseFilter } = coursesSlice.actions;

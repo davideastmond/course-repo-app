@@ -1,4 +1,5 @@
 import axios from "axios";
+import { API_URL } from "../../utils/environment";
 
 interface IGoogleAuthProps {
   setDone:
@@ -9,20 +10,13 @@ interface IGoogleAuthProps {
     | ((msg: string) => void);
 }
 
-const isProduction = !(
-  process.env.NODE_ENV && process.env.NODE_ENV.match("development")
-);
-const apiURL = isProduction
-  ? process.env.REACT_APP_PRODUCTION_API_URL
-  : process.env.REACT_APP_API_URL;
-
 const doGoogleLogin = async ({
   setDone,
   setErrorMessage,
 }: IGoogleAuthProps) => {
   const requestAuth = async () => {
     try {
-      const res = await axios.get(`${apiURL}/api/auth`, {
+      const res = await axios.get(`${API_URL}/api/auth`, {
         withCredentials: true,
       });
       if (res.status === 200) {
@@ -42,7 +36,7 @@ const doGoogleLogin = async ({
     }
   };
   const googleAuthPage = window.open(
-    `${apiURL}/api/auth/google`,
+    `${API_URL}/api/auth/google`,
     "googleAuthPage",
     "onclose"
   );

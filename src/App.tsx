@@ -12,6 +12,7 @@ import {
   selectLimit,
 } from "./reducers";
 import ProfilePage from "./pages/profile";
+import ProtectedRoute from "./components/protected-route";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,9 +29,13 @@ function App() {
   return (
     <Router>
       <Switch>
+        <ProtectedRoute
+          path="/profile"
+          component={ProfilePage}
+          allowed={isLoggedIn}
+          redirectTo="/"
+        />
         <Route path="/profile" component={ProfilePage} />
-      </Switch>
-      <Switch>
         <Route exact path="/" component={HomePage} />
       </Switch>
     </Router>

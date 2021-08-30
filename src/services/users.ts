@@ -1,10 +1,11 @@
 import axios from "axios";
 import { IProcessedUser } from "../types";
+import { API_URL } from "../utils/environment";
 
 export const getUserById = async (id: string): Promise<IProcessedUser> => {
   const req = await axios({
     method: "get",
-    url: `${process.env.REACT_APP_API_URL}/api/users/${id}`,
+    url: `${API_URL}/api/users/${id}`,
     withCredentials: true,
   });
 
@@ -21,7 +22,7 @@ export const updateUserInterestTags = async (
   const req = await axios({
     withCredentials: true,
     method: "post",
-    url: `${process.env.REACT_APP_API_URL}/api/users/${id}/interests`,
+    url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
   });
   if (req.status === 200) {
@@ -37,7 +38,7 @@ export const deleteUserInterestTags = async (
   const req = await axios({
     withCredentials: true,
     method: "delete",
-    url: `${process.env.REACT_APP_API_URL}/api/users/${id}/interests`,
+    url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
   });
   if (req.status === 200) {
@@ -50,7 +51,7 @@ export const getUserInterests = async (id: string): Promise<string[]> => {
   const req = await axios({
     withCredentials: true,
     method: "get",
-    url: `${process.env.REACT_APP_API_URL}/api/users/${id}/interests`,
+    url: `${API_URL}/api/users/${id}/interests`,
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -66,7 +67,7 @@ export const updateUserJobTitleDepartment = async (
   const req = await axios({
     withCredentials: true,
     method: "patch",
-    url: `${process.env.REACT_APP_API_URL}/api/users/${id}/profile`,
+    url: `${API_URL}/api/users/${id}/profile`,
     data: {
       jobTitle: jobTitle || "",
       department: department || "",

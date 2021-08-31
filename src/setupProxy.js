@@ -19,10 +19,9 @@ module.exports = function (app) {
       changeOrigin: true,
     })
   );
-  if (process.env.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "/app/build")));
-    app.get("*", (req, res, next) => {
-      res.sendFile(path.join(__dirname + "/app/build/index.html"));
-    });
-  }
+
+  app.use(express.static(path.join(__dirname, "/app/build")));
+  app.get("*", (req, res, next) => {
+    res.sendFile(path.join(__dirname + "/app/build/index.html"));
+  });
 };

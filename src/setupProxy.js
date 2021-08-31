@@ -20,8 +20,8 @@ module.exports = function (app) {
     })
   );
 
-  app.use(express.static(path.join(__dirname, "/app/build")));
+  app.use(express.static(path.join(__dirname, "/build")));
   app.get("*", (req, res, next) => {
-    res.sendFile(path.join(__dirname + "/app/build/index.html"));
+    res.sendFile(path.join(__dirname + "/build/index.html"));
   });
 };

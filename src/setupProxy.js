@@ -7,11 +7,13 @@ const API_URL = isProduction
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 console.log("APIURL is", API_URL);
+console.log("NODE_ENV", process.env.NODE_ENV);
+console.log("PRODUCTION API", process.env.REACT_APP_PRODUCTION_API_URL);
 module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: API_URL,
+      target: process.env.REACT_APP_PRODUCTION_API_URL,
       changeOrigin: true,
     })
   );

@@ -12,7 +12,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "course-repo-api-m4id2.ondigitalocean.app:8080",
+      target: API_URL,
       changeOrigin: true,
     })
   );

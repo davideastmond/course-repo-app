@@ -32,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "homepage": "https://course-repo-api-m4id2.ondigitalocean.app/course-repo-app"
   },
   "eslintConfig": {
     "extends": [

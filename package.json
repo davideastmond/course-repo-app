@@ -30,6 +30,7 @@
     "start": "react-scripts start",
     "dev": "NODE_ENV=development npm run start",
     "build": "react-scripts build",
+    "serve": "npm install -g && serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prepare": "husky install"

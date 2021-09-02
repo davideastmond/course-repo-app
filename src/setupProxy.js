@@ -10,6 +10,16 @@ const API_URL = isProduction
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
 module.exports = function (app) {
+  if (isProduction) {
+    app.enable("trust proxy");
+    app.use(function (request, response, next) {
+      request.hostname.match("digitalocean") &&
+        response.redirect(301, process.env.APP_HOST_URL + request.path);
+      !request.secure &&
+        response.redirect("https://" + request.headers.host + request.url);
+      next();
+    });
+  }
   const corsOptions = {
     origin: API_URL,
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204,

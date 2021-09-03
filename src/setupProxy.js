@@ -14,7 +14,10 @@ module.exports = function (app) {
     app.enable("trust proxy");
     app.use(function (request, response, next) {
       request.hostname.match("digitalocean") &&
-        response.redirect(301, process.env.APP_HOST_URL + request.path);
+        response.redirect(
+          301,
+          process.env.REACT_APP_APP_HOST_URL + request.path
+        );
       !request.secure &&
         response.redirect("https://" + request.headers.host + request.url);
       next();

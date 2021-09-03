@@ -1,9 +1,12 @@
 import axios from "axios";
 import { setCookie } from "../../utils/cookie/cookie";
+import { API_URL } from "../../utils/environment";
 
 const checkIsAuthed = async (): Promise<boolean> => {
   try {
-    const res = await axios.get("/api/auth", { withCredentials: true });
+    const res = await axios.get(`${API_URL}/api/auth`, {
+      withCredentials: true,
+    });
     if (res.data.authed) {
       setCookie("has-existing-auth-cookie", "true", 90);
       return true;

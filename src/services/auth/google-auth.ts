@@ -32,6 +32,7 @@ const doGoogleLogin = async ({
         );
       }
     } catch (error) {
+      console.log("ERROR ON google auth request?", error);
       setDone(false);
       if (error.status === 401) {
         typeof error?.message === "string" &&

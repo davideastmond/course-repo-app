@@ -16,7 +16,7 @@ const doGoogleLogin = async ({
 }: IGoogleAuthProps) => {
   const requestAuth = async () => {
     try {
-      const res = await axios.get(`${API_URL}/api/auth`, {
+      const res = await axios.get(`/api/auth`, {
         withCredentials: true,
       });
       if (res.status === 200) {
@@ -36,7 +36,7 @@ const doGoogleLogin = async ({
     }
   };
   const googleAuthPage = window.open(
-    `${API_URL}/api/auth/google`,
+    `/api/auth/google`,
     "googleAuthPage",
     "onclose"
   );

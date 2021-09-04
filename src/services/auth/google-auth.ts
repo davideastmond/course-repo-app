@@ -36,7 +36,7 @@ const doGoogleLogin = async ({
     }
   };
   const googleAuthPage = window.open(
-    `/api/auth/google`,
+    `${API_URL}/api/auth/google`,
     "googleAuthPage",
     "onclose"
   );

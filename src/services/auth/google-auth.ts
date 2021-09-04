@@ -16,11 +16,20 @@ const doGoogleLogin = async ({
 }: IGoogleAuthProps) => {
   const requestAuth = async () => {
     try {
-      const res = await axios.get(`/api/auth`, {
+      const req = await axios({
+        method: `get`,
+        url: `${API_URL}/api/auth`,
         withCredentials: true,
       });
-      if (res.status === 200) {
+
+      console.log("RES STATUS after making request to /api/auth :", req.status);
+      if (req.status === 200) {
         setDone(true);
+      } else {
+        console.log("Some other status occured: ", req.status);
+        setErrorMessage(
+          ` Received ${req.status} ${req.statusText} Did not receive an OK (done) response`
+        );
       }
     } catch (error) {
       setDone(false);

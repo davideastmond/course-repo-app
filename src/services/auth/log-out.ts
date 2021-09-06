@@ -4,12 +4,15 @@ import { API_URL } from "../../utils/environment";
 
 const logout = async () => {
   try {
-    await axios({
+    const res = await axios({
       method: "post",
       url: `${API_URL}/api/auth/logout`,
+      withCredentials: true,
     });
-    setCookie("has-existing-auth-cookie", "false", 90);
-    sessionStorage.clear();
+    if (res.status === 200) {
+      setCookie("has-existing-auth-cookie", "false", 90);
+      sessionStorage.clear();
+    }
   } catch (error) {
     console.error(error);
   }

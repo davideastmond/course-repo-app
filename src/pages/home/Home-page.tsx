@@ -48,6 +48,7 @@ function HomePage() {
 
   const limit = useSelector(selectLimit, shallowEqual);
   const skip = useSelector(selectSkip, shallowEqual);
+
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -63,11 +64,12 @@ function HomePage() {
     if (isLoggedIn) {
       dispatch(getLoggedInUserAsync());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch]);
 
   useEffect(() => {
     if (done) {
       setAuthInProgress(false);
+      window.location.reload();
     }
   }, [done]);
 

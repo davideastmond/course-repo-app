@@ -91,13 +91,14 @@ export const appSlice = createSlice({
       })
       .addCase(getLoggedInUserAsync.rejected, (state) => {
         stateStatus.error(state, "Unable to get logged in user");
-        console.log("ERROR getting logged in user");
+        window?.sessionStorage.clear();
       })
       .addCase(logOutAsync.pending, (state) => {
         stateStatus.loading(state, "Logging out");
       })
       .addCase(logOutAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
+        state.user = {};
         state.isLoggedIn = false;
       })
       .addCase(updateUserJobTitleDepartmentAsync.pending, (state) => {

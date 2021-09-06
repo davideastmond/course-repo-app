@@ -7,7 +7,7 @@ const checkIsAuthed = async (): Promise<boolean> => {
     const res = await axios.get(`${API_URL}/api/auth`, {
       withCredentials: true,
     });
-    if (res.data.authed) {
+    if (res.data.authed && res.data.authed === true) {
       setCookie("has-existing-auth-cookie", "true", 90);
       return true;
     } else {

@@ -24,7 +24,7 @@ function App() {
     dispatch(checkIsAuthedAsync());
     dispatch(getLoggedInUserAsync());
     dispatch(getAllCoursesAsync({ limit, skip: 0 }));
-  }, [dispatch]);
+  }, []);
 
   return (
     <Router>

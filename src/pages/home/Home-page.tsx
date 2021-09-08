@@ -139,9 +139,6 @@ function HomePage() {
         <div className="Home-Page__middle-section">
           <SideBrowser />
           <div className="Home-Page__center-column">
-            {/* <div className="Home-Page__search-section">
-              <TextInput placeHolderText="Search for a course..." />
-            </div> */}
             {courses && (
               <CourseContainer
                 courses={courses}

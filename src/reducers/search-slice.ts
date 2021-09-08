@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ICourse } from "../types";
+import { ISearchResults } from "../types/search.types";
 
 interface ISearchState {
   status: {
     state: string;
   };
   searchString: string;
-  searchResults: ICourse[];
+  searchResults: ISearchResults | null;
 }
 
 const initialState: ISearchState = {
@@ -14,5 +14,5 @@ const initialState: ISearchState = {
     state: "idle",
   },
   searchString: "",
-  searchResults: [],
+  searchResults: null,
 };

@@ -5,8 +5,8 @@ import {
   IDetailedCourse,
 } from "../types";
 import { getUserInterests } from "./users";
-import { intersection, reject } from "lodash";
-import { API_URL } from "../utils/environment";
+import { intersection } from "lodash";
+import { API_TOKEN, API_URL } from "../utils/environment";
 
 export function getAllCourses({
   limit,
@@ -22,6 +22,9 @@ export function getAllCourses({
       params: {
         limit,
         skip,
+      },
+      headers: {
+        API_TOKEN: API_TOKEN,
       },
     })
       .then((req) => {
@@ -44,37 +47,6 @@ export function getAllCourses({
   });
 }
 // export const getAllCourses = async ({
-//   limit,
-//   skip,
-// }: {
-//   limit: number;
-//   skip: number;
-// }) => {
-//   const req = await axios({
-//     method: "get",
-//     url: `${process.env.REACT_APP_API_URL}/api/courses`,
-//     params: {
-//       limit,
-//       skip,
-//     },
-//   });
-//   const courses = req.data as ICourse[];
-
-//   const reqInterestTags  getUserInterests("me");
-//   if (reqInterestTags && reqInterestTags.length > 0) {
-//     // Sort by interest
-//     let maxIntersection = 0;
-//     return courses.sort((a, b) => {
-//       if (a.)
-//     })
-//   }
-
-//   return courses.sort(
-//     (a, b) =>
-//       parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
-//       parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
-//   );
-// };
 
 export const getDetailedCourseById = async (
   courseId: string
@@ -82,6 +54,9 @@ export const getDetailedCourseById = async (
   const req = await axios({
     method: "get",
     url: `${API_URL}/api/courses/${courseId}`,
+    headers: {
+      API_TOKEN: API_TOKEN,
+    },
   });
   return req.data as IDetailedCourse;
 };
@@ -105,6 +80,9 @@ export const postCourseRecommendation = async (
         category,
         notes,
         tags,
+      },
+      headers: {
+        API_TOKEN: API_TOKEN,
       },
     });
     if (req.status === 200) {

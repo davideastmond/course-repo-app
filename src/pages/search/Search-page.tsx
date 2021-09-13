@@ -1,8 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import "./search-page-style.css";
 import HeaderBar from "../../components/header-bar";
-import TextInput from "../../components/Text-Input";
 import {
   checkIsAuthedAsync,
   logOutAsync,
@@ -11,12 +10,27 @@ import {
   selectLoggedInUser,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
-import CourseContainer from "../../components/course-container";
+
+import RadioGroup from "../../components/radio-group";
+import { IRadioClicked } from "../../components/radio-group/Radio-toggle-set";
+import StylizedTextInput from "../../components/stylized-text-input";
+import { selectSearchResults } from "../../reducers/search-slice";
+import DataContainer from "../../components/course-container";
+
+enum SearchResultFilterSetting {
+  Courses = 0,
+  Users = 1,
+}
 function SearchPage() {
+  const [filterSetting, setFilterSetting] = useState<SearchResultFilterSetting>(
+    SearchResultFilterSetting.Courses
+  );
+
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const courses = useSelector(selectAllCourses, shallowEqual);
+  const searchResults = useSelector(selectSearchResults, shallowEqual);
   const handleGoogleLogin = () => {
     // doGoogleLogin({ setDone, setErrorMessage });
     // setAuthInProgress(true);
@@ -25,6 +39,17 @@ function SearchPage() {
   const handleLogOut = () => {
     dispatch(logOutAsync());
   };
+  const handleRadioFilterClicked = (e: IRadioClicked) => {
+    switch (e.label) {
+      case "Courses":
+        setFilterSetting(SearchResultFilterSetting.Courses);
+        break;
+      case "Users":
+        setFilterSetting(SearchResultFilterSetting.Users);
+        break;
+    }
+  };
+  const handleOnSearchSubmit = () => {};
   return (
     <div className="Search-Page__container">
       <HeaderBar
@@ -37,14 +62,36 @@ function SearchPage() {
         <div className="column-width-40vw"></div>
         <div className="Search-Page__search_inner-column column-width-40vw">
           <div className="Search-Page__search-section">
-            <TextInput placeHolderText="Search for a course..." />
+            <StylizedTextInput
+              id="SearchPageTextBox"
+              placeholderText="Search for a course..."
+              inputBoxClassNames="search-box-styling main-font"
+              onEnterKeyPressed={handleOnSearchSubmit}
+            />
+          </div>
+          <div className="Search-Page__filter-settings-container">
+            <RadioGroup
+              id="SearchPageResultsFilter"
+              header="Filter by"
+              options={["Courses", "Users"]}
+              onRadioClicked={handleRadioFilterClicked}
+            />
           </div>
           <div className="Search-Page__search-results-container">
-            <CourseContainer
-              courses={courses}
-              genericUserProfileClickHandler={() => {}}
-              courseCardClickHandler={() => {}}
-            />
+            {filterSetting === SearchResultFilterSetting.Courses && (
+              <DataContainer
+                courses={searchResults.courses ? searchResults.courses : []}
+                genericUserProfileClickHandler={() => {}}
+                courseCardClickHandler={() => {}}
+              />
+            )}
+            {filterSetting === SearchResultFilterSetting.Users && (
+              <DataContainer
+                users={searchResults.users ? searchResults.users : []}
+                genericUserProfileClickHandler={() => {}}
+                courseCardClickHandler={() => {}}
+              />
+            )}
           </div>
         </div>
         <div className="column-width-40vw"></div>

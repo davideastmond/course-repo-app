@@ -4,7 +4,7 @@ import BodyHeader from "../../components/body-header";
 import SideBrowser from "../../components/Browser";
 import ActionButton from "../../components/Buttons/ActionButton";
 
-import CourseContainer from "../../components/course-container";
+import DataContainer from "../../components/course-container";
 import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 import HeaderBar from "../../components/header-bar";
 import ProfileView from "../../components/Profile-view";
@@ -140,7 +140,7 @@ function HomePage() {
           <SideBrowser />
           <div className="Home-Page__center-column">
             {courses && (
-              <CourseContainer
+              <DataContainer
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}

@@ -1,16 +1,17 @@
 import React from "react";
-import { ICourse } from "../../types";
+import { ICourse, IProcessedUser } from "../../types";
 import CourseCard from "../course-card";
 import "./course-container-style.css";
 
-interface ICourseContainerProps {
+interface IDataContainerProps {
   classNames?: string;
-  courses: ICourse[];
+  courses?: ICourse[];
+  users?: IProcessedUser[];
   courseCardClickHandler: (id: string) => void;
   genericUserProfileClickHandler: (id: string) => void;
 }
 
-function CourseContainer(props: ICourseContainerProps) {
+function DataContainer(props: IDataContainerProps) {
   return (
     <div className={`${props.classNames || ""} Course-Container`}>
       {props.courses &&
@@ -26,11 +27,14 @@ function CourseContainer(props: ICourseContainerProps) {
             key={course._id}
           />
         ))}
-      {props.courses.length === 0 && (
-        <div className="Courses-Empty-list">Nothing to display</div>
+      {props.courses && props.courses.length === 0 && (
+        <div className="Courses-Empty-list">No courses to display</div>
+      )}
+      {props.users && props.users.length === 0 && (
+        <div className="Courses-Empty-list">No users to display</div>
       )}
     </div>
   );
 }
 
-export default CourseContainer;
+export default DataContainer;

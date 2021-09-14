@@ -1,6 +1,7 @@
 import React from "react";
 import { ICourse, IProcessedUser } from "../../types";
 import CourseCard from "../course-card";
+import ProfileView from "../Profile-view";
 import "./course-container-style.css";
 
 interface IDataContainerProps {
@@ -12,6 +13,7 @@ interface IDataContainerProps {
 }
 
 function DataContainer(props: IDataContainerProps) {
+  console.log("Data container", props.users);
   return (
     <div className={`${props.classNames || ""} Course-Container`}>
       {props.courses &&
@@ -33,6 +35,9 @@ function DataContainer(props: IDataContainerProps) {
       {props.users && props.users.length === 0 && (
         <div className="Courses-Empty-list">No users to display</div>
       )}
+      {props.users &&
+        props.users.length > 0 &&
+        props.users.map((user, index) => <ProfileView userId={user._id} />)}
     </div>
   );
 }

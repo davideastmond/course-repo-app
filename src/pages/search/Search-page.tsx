@@ -14,7 +14,10 @@ import doGoogleLogin from "../../services/auth";
 import RadioGroup from "../../components/radio-group";
 import { IRadioClicked } from "../../components/radio-group/Radio-toggle-set";
 import StylizedTextInput from "../../components/stylized-text-input";
-import { selectSearchResults } from "../../reducers/search-slice";
+import {
+  performSearchAsync,
+  selectSearchResults,
+} from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 
 enum SearchResultFilterSetting {
@@ -29,7 +32,6 @@ function SearchPage() {
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
-  const courses = useSelector(selectAllCourses, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
   const handleGoogleLogin = () => {
     // doGoogleLogin({ setDone, setErrorMessage });
@@ -49,7 +51,9 @@ function SearchPage() {
         break;
     }
   };
-  const handleOnSearchSubmit = () => {};
+  const handleOnSearchSubmit = (textInputValue: string) => {
+    dispatch(performSearchAsync({ searchQuery: textInputValue }));
+  };
   return (
     <div className="Search-Page__container">
       <HeaderBar
@@ -70,12 +74,14 @@ function SearchPage() {
             />
           </div>
           <div className="Search-Page__filter-settings-container">
-            <RadioGroup
-              id="SearchPageResultsFilter"
-              header="Filter by"
-              options={["Courses", "Users"]}
-              onRadioClicked={handleRadioFilterClicked}
-            />
+            {isLoggedIn && (
+              <RadioGroup
+                id="SearchPageResultsFilter"
+                header="Filter by"
+                options={["Courses", "Users"]}
+                onRadioClicked={handleRadioFilterClicked}
+              />
+            )}
           </div>
           <div className="Search-Page__search-results-container">
             {filterSetting === SearchResultFilterSetting.Courses && (

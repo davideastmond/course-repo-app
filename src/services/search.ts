@@ -23,6 +23,7 @@ export const doSearch = async ({
       throw new Error("Error searching");
     }
   } catch (exception) {
+    console.log(`Error in search ${exception}`);
     throw new Error("Error searching");
   }
 };

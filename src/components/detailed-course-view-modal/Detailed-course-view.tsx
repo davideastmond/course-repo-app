@@ -143,6 +143,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
           <ProfileView
             onModalClose={handleProfileViewModalClosed}
             userId={props.courseContext.postedByUserId}
+            closeButtonVisible={true}
           />
         </div>
       )}

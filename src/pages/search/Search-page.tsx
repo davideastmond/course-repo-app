@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import "./search-page-style.css";
 import HeaderBar from "../../components/header-bar";
@@ -17,6 +17,8 @@ import StylizedTextInput from "../../components/stylized-text-input";
 import {
   performSearchAsync,
   selectSearchResults,
+  selectSearchString,
+  setSearchString,
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 
@@ -33,6 +35,7 @@ function SearchPage() {
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
+  const searchString = useSelector(selectSearchString, shallowEqual);
   const handleGoogleLogin = () => {
     // doGoogleLogin({ setDone, setErrorMessage });
     // setAuthInProgress(true);
@@ -54,6 +57,17 @@ function SearchPage() {
   const handleOnSearchSubmit = (textInputValue: string) => {
     dispatch(performSearchAsync({ searchQuery: textInputValue }));
   };
+
+  const handleSearchTextBoxChange = (e: any) => {
+    const queryString = e.target.value;
+    if (queryString) {
+      dispatch(setSearchString(queryString));
+    }
+  };
+
+  useEffect(() => {
+    dispatch(performSearchAsync({ searchQuery: searchString }));
+  }, [searchString]);
   return (
     <div className="Search-Page__container">
       <HeaderBar
@@ -71,6 +85,7 @@ function SearchPage() {
               placeholderText="Search for a course..."
               inputBoxClassNames="search-box-styling main-font"
               onEnterKeyPressed={handleOnSearchSubmit}
+              onTextChange={handleSearchTextBoxChange}
             />
           </div>
           <div className="Search-Page__filter-settings-container">

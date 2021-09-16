@@ -188,6 +188,7 @@ function HomePage() {
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
+            closeButtonVisible={true}
           />
         </div>
       )}

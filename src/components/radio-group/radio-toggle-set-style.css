@@ -1,0 +1,20 @@
+.Radio-toggle-set__body, .Radio-toggle-set__main-enclosure {
+  background-color: white;
+}
+
+.Radio-Option__main {
+  display: flex;
+}
+
+.Radio-toggle-set__body {
+  display: flex;
+  justify-content: space-around;
+}
+
+.Radio-Option__label-text {
+  align-self: center;
+}
+
+.Radio-toggle-set__Header-enclosure {
+ text-align: center;
+}

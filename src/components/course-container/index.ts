@@ -1,2 +1,2 @@
-import CourseContainer from "./Course-container";
-export default CourseContainer;
+import DataContainer from "./Data-container";
+export default DataContainer;

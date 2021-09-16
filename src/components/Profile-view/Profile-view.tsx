@@ -6,9 +6,10 @@ import "./profile-view-style.css";
 import "../../pages/profile/profile-page-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-interface IProfileViewProps {
+export interface IProfileViewProps {
   userId: string;
-  onModalClose: (visible: boolean) => void;
+  closeButtonVisible: boolean;
+  onModalClose?: (visible: boolean) => void;
 }
 
 function ProfileView(props: IProfileViewProps) {
@@ -43,14 +44,16 @@ function ProfileView(props: IProfileViewProps) {
             {profileFetchErrorMessage}
           </div>
         )}
-        <div className="Modal-close-header">
-          <img
-            onClick={() => props.onModalClose(false)}
-            className="Detailed-Course-View__windowClose cursor-pointer"
-            alt="close window"
-            src={WindowCloseButton}
-          />
-        </div>
+        {props.closeButtonVisible && (
+          <div className="Modal-close-header">
+            <img
+              onClick={() => props.onModalClose && props.onModalClose(false)}
+              className="Detailed-Course-View__windowClose cursor-pointer"
+              alt="close window"
+              src={WindowCloseButton}
+            />
+          </div>
+        )}
         <div className="Profile-view__Body">
           <div className="Profile-view__Main-header">
             <div className="Profile-view__Profile-Icon__enclosure">

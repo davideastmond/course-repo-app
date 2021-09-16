@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 import { setCourseFilter } from "../../reducers";
 import {
   CourseCategory,
@@ -11,6 +12,7 @@ import "./side-browser-style.css";
 
 function SideBrowser() {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const getFriendlyNameMenuOptions = () => {
     return ["All", ...Object.values(COURSE_CATEGORY_FRIENDLY_DICTIONARY)];
@@ -31,10 +33,16 @@ function SideBrowser() {
     dispatch(setCourseFilter(options[selectedOption]));
   }, [selectedOption, dispatch]);
 
+  const handleSearchClick = () => {
+    history.push("/search");
+  };
   return (
     <div className="Side-browser__Main">
       <div className="Side-browser__header">
-        <div className="Side-browser__header-text Side-browser__link-to-search pointer">
+        <div
+          onClick={handleSearchClick}
+          className="Side-browser__header-text Side-browser__link-to-search pointer"
+        >
           SEARCH
         </div>
         <div className="Side-browser__header-text menu-separator">

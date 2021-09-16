@@ -1,12 +1,15 @@
 import axios from "axios";
 import { IProcessedUser } from "../types";
-import { API_URL } from "../utils/environment";
+import { API_TOKEN, API_URL } from "../utils/environment";
 
 export const getUserById = async (id: string): Promise<IProcessedUser> => {
   const req = await axios({
     method: "get",
     url: `${API_URL}/api/users/${id}`,
     withCredentials: true,
+    headers: {
+      API_TOKEN: API_TOKEN,
+    },
   });
 
   if (req.status === 200) {
@@ -24,6 +27,9 @@ export const updateUserInterestTags = async (
     method: "post",
     url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
+    headers: {
+      API_TOKEN: API_TOKEN,
+    },
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -40,6 +46,9 @@ export const deleteUserInterestTags = async (
     method: "delete",
     url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
+    headers: {
+      API_TOKEN: API_TOKEN,
+    },
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -52,6 +61,9 @@ export const getUserInterests = async (id: string): Promise<string[]> => {
     withCredentials: true,
     method: "get",
     url: `${API_URL}/api/users/${id}/interests`,
+    headers: {
+      API_TOKEN: API_TOKEN,
+    },
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -71,6 +83,9 @@ export const updateUserJobTitleDepartment = async (
     data: {
       jobTitle: jobTitle || "",
       department: department || "",
+    },
+    headers: {
+      API_TOKEN: API_TOKEN,
     },
   });
   if (req.status === 200) {

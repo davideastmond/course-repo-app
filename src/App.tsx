@@ -13,6 +13,7 @@ import {
 } from "./reducers";
 import ProfilePage from "./pages/profile";
 import ProtectedRoute from "./components/protected-route";
+import SearchPage from "./pages/search";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function App() {
           allowed={isLoggedIn}
           redirectTo="/"
         />
-        <Route path="/profile" component={ProfilePage} />
+        <Route exact path="/search" component={SearchPage} />
         <Route exact path="/" component={HomePage} />
       </Switch>
     </Router>

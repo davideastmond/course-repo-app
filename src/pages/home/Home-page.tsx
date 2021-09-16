@@ -4,13 +4,12 @@ import BodyHeader from "../../components/body-header";
 import SideBrowser from "../../components/Browser";
 import ActionButton from "../../components/Buttons/ActionButton";
 
-import CourseContainer from "../../components/course-container";
+import DataContainer from "../../components/course-container";
 import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 import HeaderBar from "../../components/header-bar";
 import ProfileView from "../../components/Profile-view";
 
 import SuggestCourseModal from "../../components/suggest-course-modal";
-import TextInput from "../../components/Text-Input";
 import ZenSpinner from "../../components/ZenSpinner";
 import {
   checkIsAuthedAsync,
@@ -37,7 +36,7 @@ function HomePage() {
     shallowEqual
   );
   const [done, setDone] = useState<boolean>(false);
-  const [errorMessage, setErrorMessage] = useState<string>("");
+  const [, setErrorMessage] = useState<string>("");
   const [authInProgress, setAuthInProgress] = useState<boolean>(false);
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -139,11 +138,8 @@ function HomePage() {
         <div className="Home-Page__middle-section">
           <SideBrowser />
           <div className="Home-Page__center-column">
-            {/* <div className="Home-Page__search-section">
-              <TextInput placeHolderText="Search for a course..." />
-            </div> */}
             {courses && (
-              <CourseContainer
+              <DataContainer
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
@@ -191,6 +187,7 @@ function HomePage() {
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
+            closeButtonVisible={true}
           />
         </div>
       )}

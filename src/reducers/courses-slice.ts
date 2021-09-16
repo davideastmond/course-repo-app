@@ -28,7 +28,7 @@ const initialState: IInitialCoursesState = {
     state: "idle",
   },
   currentCourseContext: null,
-  limit: 2,
+  limit: 1000,
   skip: 0,
 };
 

@@ -1,6 +1,7 @@
 import React from "react";
 import CourseBulletIcon from "./course-bullet.svg";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
+import "./profile-view-style.css";
 import {
   CourseCategory,
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,

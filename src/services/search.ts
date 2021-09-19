@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ISearchResults } from "../types/search.types";
-import { API_TOKEN, API_URL } from "../utils/environment";
+import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const doSearch = async ({
   query,
@@ -12,9 +12,7 @@ export const doSearch = async ({
       method: "GET",
       url: `${API_URL}/api/search`,
       params: { queryString: query.toLowerCase().trim() },
-      headers: {
-        API_TOKEN: API_TOKEN,
-      },
+      headers: AUTH_HEADER,
     });
 
     if (res.status === 200) {

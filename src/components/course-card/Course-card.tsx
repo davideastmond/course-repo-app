@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useEffect, useState } from "react";
 import ContentTag from "../Content-tag";
-import GenericUserIcon from "../profile-icon/Generic-User-Icon";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
 import "./course-card-style.css";
 import {
@@ -38,7 +37,9 @@ function CourseCard(props: ICourseCardProps) {
   };
 
   const handleGenericUserProfileIconClick = () => {
-    props.genericUserProfileClickHandler(props.course.postedByUserId);
+    if (userName && userName[props.course.postedByUserId]) {
+      props.genericUserProfileClickHandler(props.course.postedByUserId);
+    }
   };
 
   return (
@@ -84,7 +85,7 @@ function CourseCard(props: ICourseCardProps) {
             onIconClicked={handleGenericUserProfileIconClick}
             userId={props.course.postedByUserId}
             isRecommendation={true}
-            userName={userName[props.course.postedByUserId] || "Guest"}
+            userName={userName[props.course.postedByUserId] || "a colleague"}
           />
         </div>
         <div className="Course-card__synopsis-section">

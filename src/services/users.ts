@@ -1,15 +1,13 @@
 import axios from "axios";
-import { IProcessedUser } from "../types";
-import { API_TOKEN, API_URL } from "../utils/environment";
+import { ICourse, IProcessedUser } from "../types";
+import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const getUserById = async (id: string): Promise<IProcessedUser> => {
   const req = await axios({
     method: "get",
     url: `${API_URL}/api/users/${id}`,
     withCredentials: true,
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
 
   if (req.status === 200) {
@@ -27,9 +25,7 @@ export const updateUserInterestTags = async (
     method: "post",
     url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -46,9 +42,7 @@ export const deleteUserInterestTags = async (
     method: "delete",
     url: `${API_URL}/api/users/${id}/interests`,
     data: { interestTags: tags },
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -61,9 +55,7 @@ export const getUserInterests = async (id: string): Promise<string[]> => {
     withCredentials: true,
     method: "get",
     url: `${API_URL}/api/users/${id}/interests`,
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
   if (req.status === 200) {
     return req.data as string[];
@@ -84,12 +76,27 @@ export const updateUserJobTitleDepartment = async (
       jobTitle: jobTitle || "",
       department: department || "",
     },
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
   if (req.status === 200) {
     return req.data as IProcessedUser;
   }
   return Promise.reject("Unable to update user profile data");
+};
+
+export const getCourseRecommendationsByUser = async ({
+  id,
+}: {
+  id: string;
+}): Promise<ICourse[]> => {
+  const req = await axios({
+    withCredentials: true,
+    method: "GET",
+    url: `${API_URL}/api/users/${id}/courses`,
+    headers: AUTH_HEADER,
+  });
+  if (req.status === 200) {
+    return req.data as ICourse[];
+  }
+  return Promise.reject("Unable to get courses by postedByUserId");
 };

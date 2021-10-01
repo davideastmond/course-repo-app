@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import "./search-page-style.css";
+// import "./search-page-style.css";
 import HeaderBar from "../../components/header-bar";
 import {
   checkIsAuthedAsync,
   logOutAsync,
-  selectAllCourses,
   selectIsLoggedIn,
   selectLoggedInUser,
 } from "../../reducers";
-import doGoogleLogin from "../../services/auth";
 
 import RadioGroup from "../../components/radio-group";
 import { IRadioClicked } from "../../components/radio-group/Radio-toggle-set";
@@ -76,14 +74,14 @@ function SearchPage() {
         loggedIn={isLoggedIn}
         userData={userData}
       />
-      <div className="Search-Page__main-body display-flex">
-        <div className="column-width-40vw"></div>
-        <div className="Search-Page__search_inner-column column-width-40vw">
+      <div className="Search-Page__main-body middle-column">
+        {/* <div className="column-width-40vw"></div> */}
+        <div className="Search-Page__search_inner-column">
           <div className="Search-Page__search-section">
             <StylizedTextInput
               id="SearchPageTextBox"
               placeholderText="Search for a course..."
-              inputBoxClassNames="search-box-styling main-font"
+              inputBoxClassNames="search-box-styling main-font max-text-width text-padding"
               onEnterKeyPressed={handleOnSearchSubmit}
               onTextChange={handleSearchTextBoxChange}
             />
@@ -115,7 +113,7 @@ function SearchPage() {
             )}
           </div>
         </div>
-        <div className="column-width-40vw"></div>
+        {/* <div className="column-width-40vw"></div> */}
       </div>
     </div>
   );

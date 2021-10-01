@@ -72,6 +72,13 @@ h1, h2, h3, h4, h5, h5 {
   cursor: pointer;
 }
 
+.pale-blue {
+  background-color: var(--pale-blue);
+}
+
+.pale-grey {
+  background-color: var(--light-grey-2);
+}
 .Page-Modal {
   width: 100%;
   height: 100%;
@@ -107,6 +114,9 @@ h1, h2, h3, h4, h5, h5 {
   align-self: center;
 }
 
+.align-text-center, .center-text, .center, .text-center { 
+  text-align: center;
+}
 .font-size-20px {
   font-size: 20px;
 }
@@ -156,4 +166,60 @@ h1, h2, h3, h4, h5, h5 {
 
 .no-body-scroll {
   overflow-y: hidden;
+}
+
+.padding-right-5px {
+  padding-right: 5px;
+}
+
+.padding-left-5px {
+  padding-left: 5px;
+}
+.full-padding-5px {
+  padding: 5px;
+}
+
+.window-padding-1p {
+  padding: 1%;
+}
+
+.flex-control-box-right {
+  display: flex;
+  justify-content: right;
+}
+
+.max-text-width {
+  width: 98%;
+}
+
+.text-padding {
+  padding: 1%;
+}
+
+.middle-column {
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.hidden {
+  display: none;
+}
+
+@media only screen and (max-width: 1676px) {
+  .Profile-page__Welcome-message-enclosure {
+    display: none;
+  }
+
+  .Profile-page__Welcome-message-enclosure__mobile {
+    display: block;
+    margin-left: 24px;
+    align-self: center;
+    font-weight: normal;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .ContextMenu__root__main-body {
+    left: 80vw;
+  }
 }

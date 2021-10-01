@@ -3,4 +3,5 @@ export enum ModalType {
   SuggestCourse = 0,
   DetailedCourseView = 1,
   ProfileDetailView = 2,
+  FullUserCourseSummaryList = 3,
 }

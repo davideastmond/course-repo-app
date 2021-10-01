@@ -21,6 +21,7 @@ export interface IProcessedUser {
   lastName: string;
   jobTitle: string;
   avatar?: { url: string }[];
+  courses: string[];
   createdAt: Date;
   updatedAt: Date;
   department: string;

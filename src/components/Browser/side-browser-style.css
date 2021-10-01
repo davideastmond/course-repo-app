@@ -19,7 +19,7 @@
 }
 
 .Side-browser__Main {
-  height: 652px;
+  height: 100%;
   background-color: white;
   padding: 1%;
   width: 16%;

@@ -1,19 +1,18 @@
-export const statusStates = {
-  idle: "idle",
-  loading: "loading",
-  error: "error",
-};
-
+export enum StatusState {
+  Idle = "idle",
+  Loading = "loading",
+  Error = "error",
+}
 const setIdleStatus = (state: any, message: string = "") => {
-  state.status.state = statusStates.idle;
+  state.status.state = StatusState.Idle;
   state.status.idle = message;
 };
 const setLoadingStatus = (state: any, message: string = "") => {
-  state.status.state = statusStates.loading;
+  state.status.state = StatusState.Loading;
   state.status.loading = message;
 };
 const setErrorStatus = (state: any, message: string = "") => {
-  state.status.state = statusStates.error;
+  state.status.state = StatusState.Error;
   state.status.error = message;
 };
 

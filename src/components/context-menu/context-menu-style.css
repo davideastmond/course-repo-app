@@ -45,10 +45,3 @@
   border: 1px solid #F0F0F0;
 
 }
-
-
-@media only screen and (min-width: 769px) {
-  .ContextMenu__root__main-body {
-    left: 80vw;
-  }
-}

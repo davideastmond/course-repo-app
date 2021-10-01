@@ -204,3 +204,22 @@ h1, h2, h3, h4, h5, h5 {
 .hidden {
   display: none;
 }
+
+@media only screen and (max-width: 1676px) {
+  .Profile-page__Welcome-message-enclosure {
+    display: none;
+  }
+
+  .Profile-page__Welcome-message-enclosure__mobile {
+    display: block;
+    margin-left: 24px;
+    align-self: center;
+    font-weight: normal;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .ContextMenu__root__main-body {
+    left: 80vw;
+  }
+}

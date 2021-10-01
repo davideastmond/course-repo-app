@@ -57,15 +57,4 @@
 .Profile-edit-icon:hover {
   cursor: pointer;
 }
-@media only screen and (max-width: 1676px) {
-  .Profile-page__Welcome-message-enclosure {
-    display: none;
-  }
 
-  .Profile-page__Welcome-message-enclosure__mobile {
-    display: block;
-    margin-left: 24px;
-    align-self: center;
-    font-weight: normal;
-  }
-}

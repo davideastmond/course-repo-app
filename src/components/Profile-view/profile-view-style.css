@@ -27,3 +27,28 @@
   display: flex;
   justify-content: space-between;
 }
+
+.CourseTableRow > td {
+  padding-right: 20px;
+  width: 100%;
+}
+
+
+.CourseSummaryListModal__main {
+  background-color: white;
+  width: 50vw;
+  height: auto;
+  padding: 2%;
+  border-radius: 2%;
+  margin-left: 20vw;
+  margin-top: 20vh;
+}
+
+.scroll-limit {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.CourseSummaryListModal__header {
+  margin-bottom: 2%;
+}

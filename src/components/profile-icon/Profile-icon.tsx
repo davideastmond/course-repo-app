@@ -10,7 +10,9 @@ interface IProfileIconProps {
 }
 function ProfileIcon(props: IProfileIconProps) {
   return (
-    <div className={`Profile-Icon__main ${props.parentClassNames || ""}`}>
+    <div
+      className={`Profile-Icon__main pointer ${props.parentClassNames || ""}`}
+    >
       {props.genericUser ? (
         <img
           onClick={props.showProfileMenuHandler}

@@ -59,7 +59,9 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
   useEffect(() => {
     const getUsers = async () => {
       const user = await getUserById(props.courseContext.postedByUserId);
-      setUserNames({ [`${user._id}`]: `${user.firstName} ${user.lastName}` });
+      if (user) {
+        setUserNames({ [`${user._id}`]: `${user.firstName} ${user.lastName}` });
+      }
     };
     getUsers();
   }, []);

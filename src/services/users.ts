@@ -2,18 +2,19 @@ import axios from "axios";
 import { ICourse, IProcessedUser } from "../types";
 import { API_URL, AUTH_HEADER } from "../utils/environment";
 
-export const getUserById = async (id: string): Promise<IProcessedUser> => {
-  const req = await axios({
-    method: "get",
-    url: `${API_URL}/api/users/${id}`,
-    withCredentials: true,
-    headers: AUTH_HEADER,
-  });
+export const getUserById = async (
+  id: string
+): Promise<IProcessedUser | undefined> => {
+  try {
+    const req = await axios({
+      method: "get",
+      url: `${API_URL}/api/users/${id}`,
+      withCredentials: true,
+      headers: AUTH_HEADER,
+    });
 
-  if (req.status === 200) {
     return req.data as IProcessedUser;
-  }
-  return Promise.reject("Unable to retrieve user by id");
+  } catch (exception) {}
 };
 
 export const updateUserInterestTags = async (

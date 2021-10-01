@@ -25,7 +25,9 @@ function CourseCard(props: ICourseCardProps) {
   useEffect(() => {
     const getUsers = async () => {
       const user = await getUserById(props.course.postedByUserId);
-      setUserNames({ [`${user._id}`]: `${user.firstName} ${user.lastName}` });
+      if (user) {
+        setUserNames({ [`${user._id}`]: `${user.firstName} ${user.lastName}` });
+      }
     };
     getUsers();
   }, []);

@@ -25,6 +25,7 @@
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   top: 57px;
+  left: 47vw;
 }
 
 .Context-menu-option__main-body:hover {
@@ -43,4 +44,11 @@
   /* grey 200 */
   border: 1px solid #F0F0F0;
 
+}
+
+
+@media only screen and (min-width: 769px) {
+  .ContextMenu__root__main-body {
+    left: 80vw;
+  }
 }

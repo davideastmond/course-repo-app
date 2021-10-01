@@ -162,12 +162,12 @@ function HomePage() {
         </div>
       </div>
       <footer className="Home-page__footer">
-        <ActionButton
+        {/* <ActionButton
           plusSymbol={false}
           title={"Load more courses"}
           classNames={"add-course-button-size"}
           action={handleLoadCourses}
-        />
+        /> */}
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
         <div className="Page-Modal">

@@ -1,4 +1,3 @@
-import React from "react";
 import CourseBulletIcon from "./course-bullet.svg";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
 import "./profile-view-style.css";
@@ -6,84 +5,117 @@ import {
   CourseCategory,
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,
   ICourse,
+  IDetailedCourse,
 } from "../../types";
+import { useState } from "react";
+import { ModalType } from "../../types/modal.types";
+import DetailedCourseViewModal from "../detailed-course-view-modal";
+import { getDetailedCourseById } from "../../services/courses";
 
-const RecommendationSummaryStrip = ({
-  title,
-  url,
-  category,
-  color,
+const CourseRow = ({
+  idx,
+  course,
+  handleOpenDetails,
 }: {
-  title: string;
-  url: string;
-  category: CourseCategory;
-  color: number;
+  idx: number;
+  course: ICourse;
+  handleOpenDetails?: (courseId: string) => void;
 }) => {
   return (
-    <div
-      className={`RecommendationSummaryStrip__main full-padding-5px ${
-        color !== 1 ? "pale-blue" : ""
-      }`}
+    <tr
+      key={`Short-table_${idx}_${course.createdAt}`}
+      className={`main-font CourseTableRow`}
     >
-      <div className="RecommendationSummaryStrip__title-link main-font">
-        <img
-          className="padding-right-5px"
-          src={CourseBulletIcon}
-          alt="course-bullet"
-        />
-        <a
-          className="no-text-decoration"
-          target="_blank"
-          href={url}
-          rel="noreferrer"
-        >
-          {title}
+      <td className="">
+        <img src={CourseBulletIcon} alt="Course Icon" />
+        <a target="_blank" rel="noreferrer" href={course.url}>
+          {course.title}
+          <img
+            className="padding-left-5px"
+            src={ExternalLinkIcon}
+            alt="Course Icon"
+          />
         </a>
-        <img
-          className="padding-left-5px padding-right-5px"
-          src={ExternalLinkIcon}
-          alt="External link to course"
-        />
-      </div>
-      <div className="RecommendationSummaryStrip__link-to-course-details">
-        <p>Details</p>
-      </div>
-      <div className="RecommendationSummaryStrip__category main-font">
-        {COURSE_CATEGORY_FRIENDLY_DICTIONARY[category]}
-      </div>
-    </div>
+      </td>
+      <td onClick={() => handleOpenDetails && handleOpenDetails(course._id)}>
+        Details
+      </td>
+      <td>
+        {COURSE_CATEGORY_FRIENDLY_DICTIONARY[course.category as CourseCategory]}
+      </td>
+    </tr>
   );
 };
 
-export const UserCourseSummaryList = ({
+export const UserCourseSummaryTable = ({
   courseRecommendations,
+  size,
+  allowScrolling,
 }: {
+  allowScrolling?: boolean;
   courseRecommendations: ICourse[];
+  size?: number;
 }) => {
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const [courseContextData, setCourseContextData] = useState<
+    IDetailedCourse | undefined | null
+  >(undefined);
+
+  const handleOpenDetailedCourseViewModal = (courseId: string) => {
+    async function getCourseContext() {
+      try {
+        const courseContext = await getDetailedCourseById(courseId);
+        setCourseContextData(courseContext);
+        setModalType(ModalType.DetailedCourseView);
+        setModalVisible(true);
+      } catch (exception) {
+        console.log("Unable to get course data");
+      }
+    }
+    getCourseContext();
+  };
+
+  const handleDetailedCourseModalClose = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+    setCourseContextData(null);
+  };
   return (
-    <div className="Profile_view_top-three-course-recommendations-list__container">
-      {courseRecommendations && courseRecommendations.length >= 3
-        ? courseRecommendations
-            .slice(0, 3)
-            .map((rec, index) => (
-              <RecommendationSummaryStrip
-                title={rec.title}
-                url={rec.url}
-                category={rec.category as CourseCategory}
-                color={index % 2}
+    <div
+      className={`Profile_view_top-three-course-recommendations-list__container ${
+        allowScrolling ? "scroll-limit" : ""
+      }`}
+    >
+      <table className="Profile_view-CoursesTable">
+        {courseRecommendations && size && courseRecommendations.length >= size
+          ? courseRecommendations
+              .slice(0, 3)
+              .map((rec, index) => (
+                <CourseRow
+                  idx={index}
+                  course={rec}
+                  handleOpenDetails={handleOpenDetailedCourseViewModal}
+                />
+              ))
+          : courseRecommendations.map((rec, index) => (
+              <CourseRow
+                idx={index}
+                course={rec}
+                handleOpenDetails={handleOpenDetailedCourseViewModal}
               />
-            ))
-        : courseRecommendations.map((rec, index) => (
-            <RecommendationSummaryStrip
-              title={rec.title}
-              url={rec.url}
-              category={rec.category as CourseCategory}
-              color={index % 2}
-            />
-          ))}
-      {courseRecommendations && courseRecommendations.length >= 3 && (
-        <div className="Profile_view-ShowMoreRecommendations main-font align-text-center pointer">
-          Plus {courseRecommendations.length - 3} more
+            ))}
+      </table>
+      {modalVisible && modalType === ModalType.DetailedCourseView && (
+        <div className="Page-Modal">
+          <div className="Profile_view__DetailedCourseView__modal-body">
+            {courseContextData && (
+              <DetailedCourseViewModal
+                courseContext={courseContextData}
+                onModalClose={handleDetailedCourseModalClose}
+              />
+            )}
+          </div>
         </div>
       )}
     </div>

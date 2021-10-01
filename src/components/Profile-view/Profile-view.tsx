@@ -9,9 +9,9 @@ import "./profile-view-style.css";
 import "../../pages/profile/profile-page-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-import { CourseCategory, ICourse, IProcessedUser } from "../../types";
+import { ICourse, IProcessedUser } from "../../types";
 import { ModalType } from "../../types/modal.types";
-import { UserCourseSummaryList } from "./User-course-summary-list";
+import { UserCourseSummaryTable } from "./User-course-summary-list";
 export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
@@ -62,6 +62,19 @@ function ProfileView(props: IProfileViewProps) {
     getCourseRecommendations();
   }, []);
 
+  const handleFullSummaryShowModal = () => {
+    setModalType(ModalType.FullUserCourseSummaryList);
+    setModalVisible(true);
+  };
+
+  const handleShowCourseDetail = (courseId: string) => {
+    console.log("Course detail modal", courseId);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+  };
   return (
     <div className="Profile-view__Main__Window">
       <div className="Profile-view__Main__container window-padding-1p">
@@ -146,15 +159,46 @@ function ProfileView(props: IProfileViewProps) {
               <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
                 My Recommendations
               </div>
-              <UserCourseSummaryList
+              <UserCourseSummaryTable
                 courseRecommendations={courseRecommendations}
+                size={
+                  courseRecommendations.length > 3
+                    ? 3
+                    : courseRecommendations.length
+                }
               />
+              {courseRecommendations && courseRecommendations.length >= 3 && (
+                <div
+                  className="Profile_view-ShowMoreRecommendations main-font align-text-center pointer"
+                  onClick={handleFullSummaryShowModal}
+                >
+                  Plus {courseRecommendations.length - 3} more
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
-        <div className="Page-Modal">Place Holder</div>
+        <div className="Page-Modal">
+          <div className="CourseSummaryListModal__main">
+            <div className="CourseSummaryListModal__close-button flex-control-box-right">
+              <img
+                className="pointer"
+                src={WindowCloseButton}
+                alt="close"
+                onClick={handleCloseModal}
+              />
+            </div>
+            <div className="CourseSummaryListModal__header main-font center-text">
+              {`Courses recommended by ${userData?.firstName} ${userData?.lastName}`}
+            </div>
+            <UserCourseSummaryTable
+              courseRecommendations={courseRecommendations}
+              allowScrolling={courseRecommendations.length > 3}
+            />
+          </div>
+        </div>
       )}
     </div>
   );

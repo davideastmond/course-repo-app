@@ -47,6 +47,10 @@ h1, h2, h3, h4, h5, h5 {
   border-left-color: #FDCB6E;
 }
 
+.bkg-green {
+  background-color: var(--lime-green-0);
+  color: white;
+}
 .course-category-color-blue {
   background-color: var(--pale-blue);
   border-left-color: #0984E3;
@@ -205,21 +209,208 @@ h1, h2, h3, h4, h5, h5 {
   display: none;
 }
 
-@media only screen and (max-width: 1676px) {
-  .Profile-page__Welcome-message-enclosure {
-    display: none;
-  }
+.Profile-page__Welcome_header {
+  display: block;
+}
 
+.large-font-size {
+  font-size: 30px;
+}
+
+.responsive-link-text {
+  font-size: 12px;
+}
+
+.Content-tag__main {
+  padding: 5px 5px;
+}
+
+.CourseTableRow {
+  font-size: 12px;
+}
+
+.CourseSummarListModal-margin {
+  padding: 2%;
+  margin-top: 2%;
+}
+
+.flex-control-box-right {
+  margin-bottom: 5%;
+}
+
+.Profile-view__Main__Window {
+  margin-top: 10%;
+}
+.Home-Page__middle-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.Home-Page__center-column {
+  order: 1;
+}
+
+.Home-Page__middle-section__header {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.Middle-section__header-text {
+  display: none;
+}
+
+.Styled-input-box__input {
+  width: 100%;
+}
+
+.Suggest-course__Window-title-Text {
+  font-size: 45px;
+}
+
+.section-header-text {
+  font-size: 20px;
+}
+
+.global-text-font-size {
+  font-size: 14px;
+}
+
+.Suggest-course__Main-body {
+  padding: 5%;
+}
+
+.star-tag {
+  width: 35px;
+}
+
+#CourseCategories {
+  width: 102%;
+}
+
+.TagApplet__input-enclosure {
+  display: flex;
+}
+
+.TagApplet__Action-button__Main {
+  margin-left: 5%;
+}
+
+.align-base-end {
+  align-self: end;
+}
+@media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
     margin-left: 24px;
     align-self: center;
     font-weight: normal;
   }
+  .large-font-size {
+    font-size: 40px;
+  }
 }
 
 @media only screen and (min-width: 769px) {
   .ContextMenu__root__main-body {
     left: 80vw;
+  }
+  .large-font-size {
+    font-size: 70px;
+  }
+
+  .Profile-page__Welcome_header {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .responsive-link-text {
+    font-size: 18px;
+  }
+
+  .CourseSummarListModal-margin {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 5%;
+    padding: 1%;
+    border-radius: 2px;
+  }
+  .CourseTableRow {
+    font-size: 16px;
+  }
+  .flex-control-box-right {
+    margin-bottom: unset;
+  }
+
+  .Profile-view__Main__Window {
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 4%;
+  }
+
+  .Home-Page__middle-section {
+    justify-content: start;
+    flex-direction: row;
+  }
+  .Home-Page__center-column {
+    order: 0;
+  }
+
+  .Home-Page__middle-section__header {
+    margin-left: 5%;
+  }
+
+  .Middle-section__header-text {
+    display: block;
+  }
+  .Suggest-course__Window-title-Text {
+    font-size: 65px;
+  }
+
+  .section-header-text {
+    font-size: 32px;
+  }
+  .global-text-font-size {
+    font-size: 20px;
+  }
+
+  .desktop-flex-positioning {
+    display: flex;
+  }
+  .Suggest-course__body-main-enclosure {
+    margin-left: 10%;
+    margin-right: 10%;
+    padding-bottom: 5%;
+  }
+  .Suggest-course__Main-body {
+    padding: 1%;
+  }
+  .Suggest-course__text-input-responsive_spacing {
+    padding-right: 2%;
+  }
+
+  .full-space {
+    width: 38vw;
+  }
+  .Suggest-course-description-responsive {
+    width: 38vw;
+  }
+  .star-rating-left-margin {
+    margin-left: 2vw;
+  }
+
+  .title-margin-spacing {
+    margin-bottom: 1%;
+  }
+  #CourseCategories {
+    width: 38vw;
+  }
+
+  .TagApplet__Action-button__Main {
+    margin-left: 2%;
+  }
+
+  .Suggest-course__Modal-Controls__footer-main {
+    display: flex;
+    justify-content: end;
   }
 }

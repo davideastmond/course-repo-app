@@ -10,6 +10,8 @@ interface ITagAppletProps {
   onTagsChanged?: (tags: string[]) => void;
   tags?: string[];
   readOnly: boolean;
+  inputBoxClassnames?: string;
+  addButtonTitle?: string;
 }
 
 function TagApplet(props: ITagAppletProps) {
@@ -60,17 +62,19 @@ function TagApplet(props: ITagAppletProps) {
               id="modal-tags"
               placeholderText="React, Adobe, Figma"
               label="Add a comma between each tag. Example: sales,"
-              inputBoxClassNames="single-height-input-box-50px longer-width"
+              inputBoxClassNames={`single-height-input-box-50px ${
+                props.inputBoxClassnames ? props.inputBoxClassnames : ""
+              }`}
               onTextChange={handleContentTagRawStringChange}
               onEnterKeyPressed={handleContentTags}
               clearOnEnter={true}
             />
           </div>
-          <div className="TagApplet__Action-button__Main align-center">
+          <div className="TagApplet__Action-button__Main align-base-end">
             <ActionButton
-              title="Add Tag"
+              title={props.addButtonTitle || ""}
               plusSymbol={true}
-              classNames="Action-button__slim Action-button__color__plain Action-button__color__plain dark-grey-background-color"
+              classNames="bkg-green"
               action={handleContentTags}
             />
           </div>

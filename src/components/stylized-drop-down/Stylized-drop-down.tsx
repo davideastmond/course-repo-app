@@ -7,7 +7,7 @@ interface IStylizedDropDownProps {
   classNames?: string;
   dropDownClassNames?: string;
   labelText: string;
-  labelClassNames?: string;
+  labelClassnames?: string;
   optionClassNames?: string;
   handleOnChange: (value: string) => void;
 }
@@ -25,7 +25,7 @@ function StylizedDropDown(props: IStylizedDropDownProps) {
   return (
     <div className={`${props.classNames || ""} StylizedDropDown__Main`}>
       <div className="StylizedDropDown__Main__label-enclosure">
-        <label className={`${props.labelClassNames || ""}`} htmlFor={props.id}>
+        <label className={`${props.labelClassnames || ""}`} htmlFor={props.id}>
           {props.labelText}
         </label>
       </div>
@@ -33,7 +33,9 @@ function StylizedDropDown(props: IStylizedDropDownProps) {
         <select
           name={props.id}
           id={props.id}
-          className={`${props.dropDownClassNames || ""} font-size-20px`}
+          className={`${
+            props.dropDownClassNames || ""
+          } drop-down-selection-box-width`}
           onChange={handleDropDownChange}
         >
           <option

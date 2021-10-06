@@ -68,7 +68,7 @@ function AddInterestsModal(props: IAddInterestModalProps) {
             id="textInput"
           />
           <ActionButton
-            classNames="Action-button__color__plain Action-button__slim"
+            classNames="Action-button__slim"
             title="+ Add tags"
             plusSymbol={true}
             action={setTagsState}

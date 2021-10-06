@@ -196,133 +196,146 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
             </div>
           </div>
         )}
-        <div className="Suggest-course__Window-title-Enclosure">
-          <div className="Suggest-course__Window-title-Text suggest-course-left-margin">
-            Suggest a course
-          </div>
-        </div>
-        <section className="Suggest-course__Main-about-section">
-          <header className="Suggest-course__Main-about-section__header-section">
-            <div className="Suggest-course__Main-about-section__header-section-text section-header-text suggest-course-left-margin">
-              What is this course about?
-            </div>
-          </header>
-          <div className="line-separator"></div>
-          <div className="Course-data__Main-enclosure">
-            <div className="Course-data__section__title__URL">
-              <StylizedTextInput
-                label="Course Title"
-                id="courseTitle"
-                inputBoxClassNames="suggest-course-box-width single-height-input-box-50px left-padding-single-input"
-                onTextChange={(e: any) => setCourseTitle(e.target.value)}
-                isError={courseTitleErrorState}
-                errorMessages={courseTitleErrorMessages}
-              />
-              <StylizedTextInput
-                classNames="right-column-text-margin-left"
-                label="Course URL"
-                id="courseURL"
-                specialLabelIcon={UrlChainLinkIcon}
-                inputBoxClassNames="single-height-input-box-50px left-padding-single-input"
-                onTextChange={(e: any) => setCourseURL(e.target.value)}
-                isError={courseURLErrorState}
-                errorMessages={courseURLErrorMessages}
-              />
-            </div>
-            <div className="Course-data__section__description__rating left-column-text-margin-left">
-              <StylizedTextInput
-                multiLine={true}
-                label="Description"
-                id="description"
-                inputBoxClassNames="suggest-course-box-width double-height-input-box-130px top-left-padding"
-                onTextChange={(e: any) => setCourseDescription(e.target.value)}
-                isError={courseDescriptionErrorState}
-                errorMessages={courseDescriptionErrorMessages}
-              />
-              <StarRating
-                editable={true}
-                headerText="Your rating(Optional)"
-                classNames="Star-rating-margin-left-spacing"
-                onRatingChanged={(e: number) => setCourseRating(e)}
-              />
-            </div>
-            <div className="Course-data__section__category left-column-text-margin-left">
-              <StylizedDropDown
-                items={COURSE_CATEGORIES}
-                id="CourseCategories"
-                labelText="Topic"
-                dropDownClassNames="single-height-input-box-50px open-sans-font-family"
-                labelClassNames="open-sans-font-family"
-                handleOnChange={handleCategoryDropDownChange}
-              />
+        <div className="Suggest-course__body-main-enclosure">
+          <div className="Suggest-course__Window-title-Enclosure">
+            <div className="Suggest-course__Window-title-Text suggest-course-left-margin title-margin-spacing">
+              Suggest a course
             </div>
           </div>
-        </section>
-        <section className="Suggest-course__LearningSection top-margin-buffer">
-          <header className="Suggest-course__LearningSection__header-section">
-            <div className="Suggest-course__LearningSection__header-section-text section-header-text Suggest-course__Main-about-section__header-section-text suggest-course-left-margin">
-              What did you learn?
-            </div>
-            {courseTakeAwayPackagesErrorState &&
-              courseTakeAwayPackagesErrorMessages.map((errorMessage) => (
-                <div className="TakeAwaySection__error-container display-flex flex-wrap">
-                  <img className="" src={ErrorAlertIconRed} alt="alert" />
-                  <div className="TakeAwaySection__ErrorMessage__text open-sans-font-family font-size-12px left-margin-buffer-10px">
-                    {errorMessage}
-                  </div>
-                </div>
-              ))}
-          </header>
-          <div className="line-separator"></div>
-          <div className="Course-Take-away-Container">
-            {takeAways &&
-              takeAways.length > 0 &&
-              takeAways.map((takeAway) => takeAway)}
-          </div>
-          <footer className="Add-take-away-footer">
-            <div
-              className="Add-take-away-text mont-font bold pointer align-text-center"
-              onClick={addTakeAway}
-            >
-              + Add another takeaway
-            </div>
-            {takeAways.length > 0 && (
-              <div
-                className="remove-take-away mont-font bold pointer color-red align-text-center"
-                onClick={removeTakeAway}
-              >
-                Remove takeaway
+          <section className="Suggest-course__Main-about-section">
+            <header className="Suggest-course__Main-about-section__header-section">
+              <div className="Suggest-course__Main-about-section__header-section-text section-header-text suggest-course-left-margin">
+                What is this course about?
               </div>
-            )}
-          </footer>
-        </section>
-        <section className="Suggest-course__TagsSection top-margin-buffer">
-          <header className="Suggest-course__TagsSection__header-section">
-            <div className="Suggest-course__TagsSection__header-section section-header-text">
-              Tags
+            </header>
+            <div className="line-separator"></div>
+            <div className="Course-data__Main-enclosure">
+              <div className="Course-data__section__title__URL desktop-flex-positioning">
+                <StylizedTextInput
+                  label="Course Title"
+                  labelClassnames="bold"
+                  id="courseTitle"
+                  inputBoxClassNames="open-sans-font-family full-space"
+                  onTextChange={(e: any) => setCourseTitle(e.target.value)}
+                  isError={courseTitleErrorState}
+                  errorMessages={courseTitleErrorMessages}
+                  specialDivClassnames="Suggest-course__text-input-responsive_spacing"
+                />
+                <StylizedTextInput
+                  classNames="right-column-text-margin-left"
+                  label="Course URL"
+                  labelClassnames="bold"
+                  id="courseURL"
+                  specialLabelIcon={UrlChainLinkIcon}
+                  inputBoxClassNames="open-sans-font-family full-space full-space"
+                  onTextChange={(e: any) => setCourseURL(e.target.value)}
+                  isError={courseURLErrorState}
+                  errorMessages={courseURLErrorMessages}
+                />
+              </div>
+              <div className="Course-data__section__description__rating left-column-text-margin-left desktop-flex-positioning">
+                <StylizedTextInput
+                  multiLine={true}
+                  label="Description"
+                  labelClassnames="bold"
+                  id="description"
+                  inputBoxClassNames="open-sans-font-family"
+                  onTextChange={(e: any) =>
+                    setCourseDescription(e.target.value)
+                  }
+                  isError={courseDescriptionErrorState}
+                  errorMessages={courseDescriptionErrorMessages}
+                  specialDivClassnames="Suggest-course-description-responsive"
+                />
+                <StarRating
+                  editable={true}
+                  headerText="Your rating (Optional)"
+                  classNames="Star-rating-margin-left-spacing Suggest-course__text-input-responsive_spacing star-rating-left-margin"
+                  onRatingChanged={(e: number) => setCourseRating(e)}
+                />
+              </div>
+              <div className="Course-data__section__category left-column-text-margin-left">
+                <StylizedDropDown
+                  items={COURSE_CATEGORIES}
+                  id="CourseCategories"
+                  labelText="Topic"
+                  labelClassnames="bold open-sans-font-family"
+                  dropDownClassNames="global-text-font-size"
+                  handleOnChange={handleCategoryDropDownChange}
+                />
+              </div>
             </div>
-          </header>
+          </section>
+          <section className="Suggest-course__LearningSection top-margin-buffer">
+            <header className="Suggest-course__LearningSection__header-section">
+              <div className="Suggest-course__LearningSection__header-section-text section-header-text Suggest-course__Main-about-section__header-section-text suggest-course-left-margin">
+                What did you learn?
+              </div>
+              {courseTakeAwayPackagesErrorState &&
+                courseTakeAwayPackagesErrorMessages.map((errorMessage) => (
+                  <div className="TakeAwaySection__error-container display-flex flex-wrap">
+                    <img className="" src={ErrorAlertIconRed} alt="alert" />
+                    <div className="TakeAwaySection__ErrorMessage__text open-sans-font-family font-size-12px left-margin-buffer-10px">
+                      {errorMessage}
+                    </div>
+                  </div>
+                ))}
+            </header>
+            <div className="line-separator"></div>
+            <div className="Course-Take-away-Container">
+              {takeAways &&
+                takeAways.length > 0 &&
+                takeAways.map((takeAway) => takeAway)}
+            </div>
+            <footer className="Add-take-away-footer">
+              <div
+                className="Add-take-away-text mont-font bold pointer align-text-center"
+                onClick={addTakeAway}
+              >
+                + Add another takeaway
+              </div>
+              {takeAways.length > 0 && (
+                <div
+                  className="remove-take-away mont-font bold pointer color-red align-text-center"
+                  onClick={removeTakeAway}
+                >
+                  Remove takeaway
+                </div>
+              )}
+            </footer>
+          </section>
+          <section className="Suggest-course__TagsSection top-margin-buffer">
+            <header className="Suggest-course__TagsSection__header-section">
+              <div className="Suggest-course__TagsSection__header-section section-header-text">
+                Tags
+              </div>
+            </header>
+            <div className="line-separator"></div>
+            <TagApplet
+              onTagsChanged={setCourseTags}
+              readOnly={false}
+              inputBoxClassnames="open-sans-font-family"
+            />
+          </section>
           <div className="line-separator"></div>
-          <TagApplet onTagsChanged={setCourseTags} readOnly={false} />
-        </section>
-        <div className="line-separator"></div>
-        <footer className="Suggest-course__Modal-Controls__footer-main">
-          <div className="Suggest-course__Modal-Controls__close-window">
-            <ActionButton
-              title="Close window"
-              plusSymbol={false}
-              classNames="Action-button__color__plain right-margin"
-            />
-          </div>
-          <div className="Suggest-course__Modal-Controls__submit">
-            <ActionButton
-              title="Submit recommendation"
-              plusSymbol={false}
-              classNames="right-margin"
-              action={handleSubmitRecommendation}
-            />
-          </div>
-        </footer>
+          <footer className="Suggest-course__Modal-Controls__footer-main">
+            <div className="Suggest-course__Modal-Controls__close-window">
+              <ActionButton
+                title="Close window"
+                plusSymbol={false}
+                classNames="Action-button__color__plain"
+              />
+            </div>
+            <div className="Suggest-course__Modal-Controls__submit">
+              <ActionButton
+                title="Submit recommendation"
+                plusSymbol={false}
+                classNames=""
+                action={handleSubmitRecommendation}
+              />
+            </div>
+          </footer>
+        </div>
       </div>
     </div>
   );

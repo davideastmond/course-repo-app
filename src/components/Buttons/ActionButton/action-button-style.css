@@ -1,7 +1,5 @@
 /* Recommend a course */
 .Action-button__text {
-  width: 171px;
-  height: 22px;  
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -14,7 +12,6 @@
   display: flex;
   padding: 20px;
   justify-content: center;
-  border-radius: 8px;
 }
 
 .Action-button__color__green {
@@ -31,7 +28,6 @@
 
 .center-buttons {
   align-self: center;
-  margin-right: 10px;
 }
 
 .Action-button__main:hover {
@@ -39,8 +35,6 @@
 }
 
 .Action-button__slim {
-  width: 174px;
-  height: 38px;
   padding: unset;
   padding-left: 17px;
 }

@@ -2,7 +2,6 @@
   width:auto;
   height: auto;
   background-color: white;
-  margin: 5%;
 }
 
 .Profile-view__Body {
@@ -21,6 +20,7 @@
 .Profile-view__Main-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .RecommendationSummaryStrip__main {
@@ -36,12 +36,6 @@
 
 .CourseSummaryListModal__main {
   background-color: white;
-  width: 50vw;
-  height: auto;
-  padding: 2%;
-  border-radius: 2%;
-  margin-left: 20vw;
-  margin-top: 20vh;
 }
 
 .scroll-limit {

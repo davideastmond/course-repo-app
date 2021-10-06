@@ -69,9 +69,9 @@ function StarIcon({
   return (
     <div className="Star-div" onClick={() => setRating(idx)}>
       {filled && filled === true ? (
-        <img src={StarIconFilled} alt="rating" />
+        <img src={StarIconFilled} alt="rating" className="star-tag" />
       ) : (
-        <img src={StarIconImg} alt="rating" />
+        <img src={StarIconImg} alt="rating" className="star-tag" />
       )}
     </div>
   );

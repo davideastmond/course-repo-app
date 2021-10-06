@@ -154,7 +154,7 @@ function HomePage() {
               <ActionButton
                 plusSymbol={true}
                 title={"Recommend a course"}
-                classNames={"recommend-course-button-size"}
+                classNames={"recommend-course-button-size bkg-green"}
                 action={handleOpenCourseRecommendModal}
               />
             </div>

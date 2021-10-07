@@ -264,7 +264,7 @@ h1, h2, h3, h4, h5, h5 {
 }
 
 .Suggest-course__Window-title-Text {
-  font-size: 45px;
+  font-size: 35px;
 }
 
 .section-header-text {
@@ -297,6 +297,10 @@ h1, h2, h3, h4, h5, h5 {
 
 .align-base-end {
   align-self: end;
+}
+
+.Body-header__header {
+  font-size: 40px;
 }
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
@@ -383,6 +387,9 @@ h1, h2, h3, h4, h5, h5 {
   }
   .Suggest-course__Main-body {
     padding: 1%;
+    margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
   }
   .Suggest-course__text-input-responsive_spacing {
     padding-right: 2%;
@@ -390,6 +397,10 @@ h1, h2, h3, h4, h5, h5 {
 
   .full-space {
     width: 38vw;
+  }
+
+  .url-text-full-space {
+    width: 22vw;
   }
   .Suggest-course-description-responsive {
     width: 38vw;
@@ -412,5 +423,9 @@ h1, h2, h3, h4, h5, h5 {
   .Suggest-course__Modal-Controls__footer-main {
     display: flex;
     justify-content: end;
+  }
+
+  .Body-header__header {
+    font-size: 70px;
   }
 }

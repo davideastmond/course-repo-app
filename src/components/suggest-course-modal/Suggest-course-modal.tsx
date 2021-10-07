@@ -227,7 +227,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
                   labelClassnames="bold"
                   id="courseURL"
                   specialLabelIcon={UrlChainLinkIcon}
-                  inputBoxClassNames="open-sans-font-family full-space full-space"
+                  inputBoxClassNames="open-sans-font-family url-text-full-space"
                   onTextChange={(e: any) => setCourseURL(e.target.value)}
                   isError={courseURLErrorState}
                   errorMessages={courseURLErrorMessages}
@@ -322,6 +322,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
             <div className="Suggest-course__Modal-Controls__close-window">
               <ActionButton
                 title="Close window"
+                action={handleCloseModal}
                 plusSymbol={false}
                 classNames="Action-button__color__plain"
               />

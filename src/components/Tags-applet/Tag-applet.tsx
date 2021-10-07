@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getArrayOfInterestTagsFromString } from "../../utils/string-array/get-sanitized-tags-array";
 import ActionButton from "../Buttons/ActionButton";
 import ContentTag from "../Content-tag";
@@ -18,12 +17,13 @@ function TagApplet(props: ITagAppletProps) {
   const [contentTags, setContentTags] = useState<string[]>([]);
   const [contentTagRawString, setContentTagRawString] = useState<string>("");
 
-  const handleContentTags = () => {
+  const handleContentTags = (e?: any) => {
     if (contentTagRawString) {
       const splitTags = getArrayOfInterestTagsFromString(contentTagRawString);
       const newTags = Array.from(new Set([...contentTags, ...splitTags]));
       setContentTags(newTags);
       setContentTagRawString("");
+
       if (props.onTagsChanged) {
         props.onTagsChanged(newTags);
       }
@@ -53,6 +53,11 @@ function TagApplet(props: ITagAppletProps) {
     }
   });
 
+  useEffect(() => {
+    const input = document.getElementById("modal-tags") as HTMLInputElement;
+    input.value = "";
+  }, [contentTagRawString]);
+
   return (
     <div className="TagApplet__Main-enclosure">
       {!props.readOnly && (
@@ -68,6 +73,7 @@ function TagApplet(props: ITagAppletProps) {
               onTextChange={handleContentTagRawStringChange}
               onEnterKeyPressed={handleContentTags}
               clearOnEnter={true}
+              value={contentTagRawString}
             />
           </div>
           <div className="TagApplet__Action-button__Main align-base-end">

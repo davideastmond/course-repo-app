@@ -5,7 +5,6 @@
 
 .Suggest-course__Main-header-top-enclosure {
   display: flex;
-  padding: 10px;
   justify-content: flex-end;
 }
 
@@ -17,7 +16,6 @@
   font-family: var(--main-font);
   font-style: normal;
   font-weight: bold;
-  line-height: 63px;
   letter-spacing: -0.05em;
   color: var(--charcoal);
 }

@@ -4,5 +4,6 @@
 
 .Course-Take-away-Container__Footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  padding-top: 5px;
 }

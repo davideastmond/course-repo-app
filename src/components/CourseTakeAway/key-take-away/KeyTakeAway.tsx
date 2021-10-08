@@ -16,7 +16,7 @@ const TakeAwayStripRow = (props: ITakeAwayStripRowProps) => {
     props.onStripTextDataChanged([props.index, e.target.value]);
   };
   return (
-    <div className="TakeAwayStripRow__Main">
+    <div className="TakeAwayStripRow__Main strip-row-responsive-width">
       <div className="Row-dot">•</div>
       <StylizedTextInput
         id={props.id}

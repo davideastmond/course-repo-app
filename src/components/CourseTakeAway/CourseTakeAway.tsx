@@ -51,6 +51,7 @@ function CourseTakeAway(props: ICourseTakeAwayProps) {
             charCount={true}
             multiLine={true}
             onTextChange={handleLearningBlurbTextChanged}
+            inputBoxClassNames="full-space"
           />
         </div>
         <div className="CourseTakeAway__right-col">

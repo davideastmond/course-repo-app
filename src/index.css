@@ -302,6 +302,15 @@ h1, h2, h3, h4, h5, h5 {
 .Body-header__header {
   font-size: 40px;
 }
+
+.CourseTakeAway__Main-body {
+  justify-content: space-between;
+}
+
+.Row-dot {
+  align-self: center;
+}
+
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -427,5 +436,9 @@ h1, h2, h3, h4, h5, h5 {
 
   .Body-header__header {
     font-size: 70px;
+  }
+  .strip-row-responsive-width .Styled-input-box__input {
+    width: 22vw;
+    height: 30px;
   }
 }

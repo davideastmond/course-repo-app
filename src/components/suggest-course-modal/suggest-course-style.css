@@ -69,3 +69,8 @@
 .Suggest-course__SubmissionErrors-enclosure {
   display: flex;
 }
+
+.Add-take-away-text {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

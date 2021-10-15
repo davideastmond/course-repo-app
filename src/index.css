@@ -310,7 +310,14 @@ h1, h2, h3, h4, h5, h5 {
 .Row-dot {
   align-self: center;
 }
+.Profile-view__Body {
+  margin: unset;
+}
 
+.middle-column {
+  margin-left: unset;
+  margin-right: unset;
+}
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -440,5 +447,9 @@ h1, h2, h3, h4, h5, h5 {
   .strip-row-responsive-width .Styled-input-box__input {
     width: 22vw;
     height: 30px;
+  }
+
+  .Profile-view__Body {
+    margin: 5%;
   }
 }

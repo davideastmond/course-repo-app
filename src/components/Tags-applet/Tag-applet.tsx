@@ -55,7 +55,9 @@ function TagApplet(props: ITagAppletProps) {
 
   useEffect(() => {
     const input = document.getElementById("modal-tags") as HTMLInputElement;
-    input.value = "";
+    if (input) {
+      input.value = "";
+    }
   }, [contentTagRawString]);
 
   return (

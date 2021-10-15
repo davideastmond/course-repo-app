@@ -19,6 +19,7 @@ import {
   setSearchString,
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
+import doGoogleLogin from "../../services/auth";
 
 enum SearchResultFilterSetting {
   Courses = 0,
@@ -34,9 +35,10 @@ function SearchPage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
   const searchString = useSelector(selectSearchString, shallowEqual);
+
   const handleGoogleLogin = () => {
-    // doGoogleLogin({ setDone, setErrorMessage });
-    // setAuthInProgress(true);
+    doGoogleLogin({ setDone, setErrorMessage });
+    setAuthInProgress(true);
     dispatch(checkIsAuthedAsync());
   };
   const handleLogOut = () => {
@@ -120,3 +122,6 @@ function SearchPage() {
 }
 
 export default SearchPage;
+function setAuthInProgress(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}

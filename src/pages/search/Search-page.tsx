@@ -4,6 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../../components/header-bar";
 import {
   checkIsAuthedAsync,
+  getLoggedInUserAsync,
   logOutAsync,
   selectIsLoggedIn,
   selectLoggedInUser,
@@ -29,7 +30,8 @@ function SearchPage() {
   const [filterSetting, setFilterSetting] = useState<SearchResultFilterSetting>(
     SearchResultFilterSetting.Courses
   );
-
+  const [done, setDone] = useState<boolean>(false);
+  const [, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -68,6 +70,21 @@ function SearchPage() {
   useEffect(() => {
     dispatch(performSearchAsync({ searchQuery: searchString }));
   }, [searchString]);
+
+  useEffect(() => {
+    dispatch(checkIsAuthedAsync());
+    if (isLoggedIn) {
+      dispatch(getLoggedInUserAsync());
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (done) {
+      setAuthInProgress(false);
+      window.location.reload();
+    }
+  }, [done]);
+
   return (
     <div className="Search-Page__container">
       <HeaderBar
@@ -123,5 +140,5 @@ function SearchPage() {
 
 export default SearchPage;
 function setAuthInProgress(arg0: boolean) {
-  throw new Error("Function not implemented.");
+  //throw new Error("Function not implemented.");
 }

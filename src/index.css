@@ -318,6 +318,10 @@ h1, h2, h3, h4, h5, h5 {
   margin-left: unset;
   margin-right: unset;
 }
+
+.Search-Page__container .large-monteserrat-bold-font {
+  font-size: 20px;
+}
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -451,5 +455,8 @@ h1, h2, h3, h4, h5, h5 {
 
   .Profile-view__Body {
     margin: 5%;
+  }
+  .Search-Page__container .large-monteserrat-bold-font {
+    font-size: 40px;
   }
 }

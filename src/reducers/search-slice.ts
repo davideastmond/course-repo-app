@@ -24,8 +24,17 @@ const initialState: ISearchState = {
 
 export const performSearchAsync = createAsyncThunk(
   "search/performSearch",
-  async ({ searchQuery }: { searchQuery: string }): Promise<ISearchResults> => {
-    const res = await doSearch({ query: searchQuery });
+  async ({
+    searchQuery,
+    onCompleted,
+  }: {
+    searchQuery: string;
+    onCompleted: (completed: boolean) => void;
+  }): Promise<ISearchResults> => {
+    const res = await doSearch({
+      query: searchQuery,
+      onCompleted: onCompleted,
+    });
     return res;
   }
 );

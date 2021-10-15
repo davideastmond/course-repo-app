@@ -21,6 +21,7 @@ import {
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 import doGoogleLogin from "../../services/auth";
+import ZenSpinner from "../../components/ZenSpinner";
 
 enum SearchResultFilterSetting {
   Courses = 0,
@@ -31,13 +32,14 @@ function SearchPage() {
     SearchResultFilterSetting.Courses
   );
   const [done, setDone] = useState<boolean>(false);
+
+  const [spinnerOn, setSpinnerOn] = useState<boolean>(false);
   const [, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
   const searchString = useSelector(selectSearchString, shallowEqual);
-
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -56,19 +58,36 @@ function SearchPage() {
         break;
     }
   };
+
+  const handleOnCompleted = (completionData: boolean) => {
+    if (completionData === true) setSpinnerOn(false);
+  };
   const handleOnSearchSubmit = (textInputValue: string) => {
-    dispatch(performSearchAsync({ searchQuery: textInputValue }));
+    dispatch(
+      performSearchAsync({
+        searchQuery: textInputValue,
+        onCompleted: handleOnCompleted,
+      })
+    );
+    setSpinnerOn(true);
   };
 
   const handleSearchTextBoxChange = (e: any) => {
     const queryString = e.target.value;
     if (queryString) {
       dispatch(setSearchString(queryString));
+      setSpinnerOn(true);
     }
   };
 
   useEffect(() => {
-    dispatch(performSearchAsync({ searchQuery: searchString }));
+    dispatch(
+      performSearchAsync({
+        searchQuery: searchString,
+        onCompleted: handleOnCompleted,
+      })
+    );
+    setSpinnerOn(true);
   }, [searchString]);
 
   useEffect(() => {
@@ -87,6 +106,11 @@ function SearchPage() {
 
   return (
     <div className="Search-Page__container">
+      {spinnerOn && (
+        <div className="Home-Page__Spinner-Overlay">
+          <ZenSpinner />
+        </div>
+      )}
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
         logOutAction={handleLogOut}

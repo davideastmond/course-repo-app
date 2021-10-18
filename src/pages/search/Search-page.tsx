@@ -60,8 +60,12 @@ function SearchPage() {
   };
 
   const handleOnCompleted = (completionData: boolean) => {
-    if (completionData === true) setSpinnerOn(false);
+    if (completionData === true) {
+      setSpinnerOn(false);
+      setTimer(false);
+    }
   };
+
   const handleOnSearchSubmit = (textInputValue: string) => {
     dispatch(
       performSearchAsync({
@@ -70,6 +74,7 @@ function SearchPage() {
       })
     );
     setSpinnerOn(true);
+    setTimer(true);
   };
 
   const handleSearchTextBoxChange = (e: any) => {
@@ -77,6 +82,20 @@ function SearchPage() {
     if (queryString) {
       dispatch(setSearchString(queryString));
       setSpinnerOn(true);
+      setTimer(true);
+    }
+  };
+
+  const setTimer = (start: boolean) => {
+    let seconds = 0;
+    const timer = setInterval(() => {
+      seconds += 1;
+      console.log("Timer seconds", seconds);
+      if (seconds >= 5) clearInterval(timer);
+    }, 500);
+
+    if (!start) {
+      clearInterval(timer);
     }
   };
 
@@ -88,6 +107,7 @@ function SearchPage() {
       })
     );
     setSpinnerOn(true);
+    setTimer(true);
   }, [searchString]);
 
   useEffect(() => {
@@ -127,6 +147,7 @@ function SearchPage() {
               inputBoxClassNames="search-box-styling main-font max-text-width text-padding"
               onEnterKeyPressed={handleOnSearchSubmit}
               onTextChange={handleSearchTextBoxChange}
+              maxLength={255}
             />
           </div>
           <div className="Search-Page__filter-settings-container">

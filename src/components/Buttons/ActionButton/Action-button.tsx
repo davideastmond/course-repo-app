@@ -17,7 +17,9 @@ function ActionButton(props: IActionButtonProps) {
       <div className={`Action-button__plus-arrow center-buttons`}>
         {props.plusSymbol && <img alt="add button" src={AddPlusArrow}></img>}
       </div>
-      <div className="Action-button__text center-buttons">{props.title}</div>
+      <div className="Action-button__text center-buttons button-padding">
+        {props.title}
+      </div>
     </div>
   );
 }

@@ -36,7 +36,6 @@
 
 .Action-button__slim {
   padding: unset;
-  padding-left: 17px;
 }
 
 .Action-button__plus-arrow {
@@ -46,4 +45,8 @@
 .dark-grey-background-color {
   background-color: var(--light-grey);
   color: white;
+}
+
+.button-padding {
+  padding: 5px;
 }

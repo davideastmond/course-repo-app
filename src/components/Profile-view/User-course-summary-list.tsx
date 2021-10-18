@@ -42,7 +42,10 @@ const CourseRow = ({
           />
         </a>
       </td>
-      <td onClick={() => handleOpenDetails && handleOpenDetails(course._id)}>
+      <td
+        className="cursor-pointer"
+        onClick={() => handleOpenDetails && handleOpenDetails(course._id)}
+      >
         Details
       </td>
       <td>

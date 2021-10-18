@@ -6,7 +6,7 @@ import {
 } from "../types";
 import { getUserInterests } from "./users";
 import { intersection } from "lodash";
-import { API_TOKEN, API_URL } from "../utils/environment";
+import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export function getAllCourses({
   limit,
@@ -23,9 +23,7 @@ export function getAllCourses({
         limit,
         skip,
       },
-      headers: {
-        API_TOKEN: API_TOKEN,
-      },
+      headers: AUTH_HEADER,
     })
       .then((req) => {
         const courses = req.data as ICourse[];
@@ -54,9 +52,7 @@ export const getDetailedCourseById = async (
   const req = await axios({
     method: "get",
     url: `${API_URL}/api/courses/${courseId}`,
-    headers: {
-      API_TOKEN: API_TOKEN,
-    },
+    headers: AUTH_HEADER,
   });
   return req.data as IDetailedCourse;
 };
@@ -81,9 +77,7 @@ export const postCourseRecommendation = async (
         notes,
         tags,
       },
-      headers: {
-        API_TOKEN: API_TOKEN,
-      },
+      headers: AUTH_HEADER,
     });
     if (req.status === 200) {
       const courses = req.data as ICourse[];

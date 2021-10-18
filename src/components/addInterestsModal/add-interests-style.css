@@ -1,7 +1,7 @@
 .Add-interests-modal__Main-window-body {
-  margin-left: 23%;
+  /* margin-left: 23%;
   margin-right: 18%;
-  margin-top: 5%;
+  margin-top: 5%; */
   background-color: white;
   border-radius: var(--modal-radius)
 }
@@ -41,7 +41,7 @@
 
 .Add-interests-modal__Middle-input-section__enclosure {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .Add-interests-modal__controls__footer__main {

@@ -11,15 +11,15 @@ interface IActionButtonProps {
 function ActionButton(props: IActionButtonProps) {
   return (
     <div
-      className={`Action-button__main Action-button__color__green ${
-        props.classNames || ""
-      }`}
+      className={`Action-button__main ${props.classNames || ""}`}
       onClick={props.action}
     >
       <div className={`Action-button__plus-arrow center-buttons`}>
         {props.plusSymbol && <img alt="add button" src={AddPlusArrow}></img>}
       </div>
-      <div className="Action-button__text center-buttons">{props.title}</div>
+      <div className="Action-button__text center-buttons button-padding">
+        {props.title}
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { setCourseFilter } from "../../reducers";
 import {
   CourseCategory,
@@ -28,13 +28,22 @@ function SideBrowser() {
   };
   const options = getIndexedCategories();
   const [selectedOption, setSelectedOption] = useState<number>(0);
+  const [filterMenuOpen, setFilterMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatch(setCourseFilter(options[selectedOption]));
+    if (filterMenuOpen) {
+      setFilterMenuOpen(false);
+    }
+    //setFilterMenuOpen(!filterMenuOpen)
   }, [selectedOption, dispatch]);
 
   const handleSearchClick = () => {
     history.push("/search");
+  };
+
+  const toggleSideMenu = () => {
+    setFilterMenuOpen(!filterMenuOpen);
   };
   return (
     <div className="Side-browser__Main">
@@ -46,16 +55,45 @@ function SideBrowser() {
           SEARCH
         </div>
         <div className="Side-browser__header-text menu-separator">
-          BROWSE BY TOPIC
+          {filterMenuOpen ? (
+            <div
+              className="Side-browser__header__toggle-button mobile-only"
+              onClick={toggleSideMenu}
+            >
+              ▼ FILTER BY TOPIC
+            </div>
+          ) : (
+            <div
+              className="Side-browser__header__toggle-button mobile-only"
+              onClick={toggleSideMenu}
+            >
+              ▶ FILTER BY TOPIC
+            </div>
+          )}
+          <div className="Side-browser__header__toggle-button desktop-only">
+            FILTER BY TOPIC
+          </div>
         </div>
       </div>
-      <div className="Side-browser__menu-body_main">
-        {getMenuOptions({
-          titles: getFriendlyNameMenuOptions(),
-          isSelected: selectedOption,
-          clickAction: setSelectedOption,
-        })}
-      </div>
+      {filterMenuOpen && (
+        <div className="Side-browser__menu-body_main side-browser-overlay">
+          {getMenuOptions({
+            titles: getFriendlyNameMenuOptions(),
+            isSelected: selectedOption,
+            clickAction: setSelectedOption,
+            classNames: "side-menu-option-mobile-styling",
+          })}
+        </div>
+      )}
+      {!filterMenuOpen && (
+        <div className="Side-browser__menu-body_main desktop-only">
+          {getMenuOptions({
+            titles: getFriendlyNameMenuOptions(),
+            isSelected: selectedOption,
+            clickAction: setSelectedOption,
+          })}
+        </div>
+      )}
     </div>
   );
 }

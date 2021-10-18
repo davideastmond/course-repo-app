@@ -1,25 +1,12 @@
-.Profile-page__Main-body {
-  margin-left: 23%;
-  margin-right: 28%;
-  font-family: Montserrat;
-}
-
 .Profile-icon-change-button {
   position: relative;
   top: -33px;
   right: -89px;
 }
 
-.Profile-page__Welcome_header {
-  margin-top: 64px;
-  display: inline-flex;
-  width: 100%;
-}
-
 .large-monteserrat-bold-font {
   font-style: normal;
   font-weight: bold;
-  font-size: 52px;
   line-height: 63px;
   letter-spacing: -0.05em;
 }
@@ -32,16 +19,6 @@
   letter-spacing: -0.05em;
 }
 
-.Profile-page__Welcome_header-welcome-back_name {
-  margin-left: 5px;
-}
-
-.Profile-page__Welcome-message-enclosure {
-  display: inline-flex;
-  height: 128px;
-  margin-left: 24px;
-}
-
 .title-text-vertically-centered {
   align-self: center;
 }
@@ -50,22 +27,11 @@
   margin-top: 5%;
 }
 
-.Profile-page__Welcome-message-enclosure__mobile {
-  display: none;
-}
 
 .Profile-edit-icon:hover {
   cursor: pointer;
 }
-@media only screen and (max-width: 1676px) {
-  .Profile-page__Welcome-message-enclosure {
-    display: none;
-  }
 
-  .Profile-page__Welcome-message-enclosure__mobile {
-    display: block;
-    margin-left: 24px;
-    align-self: center;
-    font-weight: normal;
-  }
+.Profile-page__Welcome-message-enclosure {
+  margin-left: 2%;
 }

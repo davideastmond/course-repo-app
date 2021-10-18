@@ -52,7 +52,9 @@ const RadioButton = (props: IRadioButtonProps) => {
           onClick={handleRadioButtonClicked}
         />
       )}
-      <div className="Radio-Option__label-text">{props.label}</div>
+      <div className="Radio-Option__label-text open-sans-font-family left-padding-5px">
+        {props.label}
+      </div>
     </div>
   );
 };

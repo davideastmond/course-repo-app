@@ -2,12 +2,9 @@
   width:auto;
   height: auto;
   background-color: white;
-  margin: 5%;
+  box-shadow: -1px 0px 11px grey;
 }
 
-.Profile-view__Body {
-  margin: 5%;
-}
 
 .Modal-close-header {
   display: flex;
@@ -21,4 +18,29 @@
 .Profile-view__Main-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.RecommendationSummaryStrip__main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.CourseTableRow > td {
+  padding-right: 20px;
+  width: 100%;
+}
+
+
+.CourseSummaryListModal__main {
+  background-color: white;
+}
+
+.scroll-limit {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+
+.CourseSummaryListModal__header {
+  margin-bottom: 2%;
 }

@@ -154,7 +154,7 @@ function HomePage() {
               <ActionButton
                 plusSymbol={true}
                 title={"Recommend a course"}
-                classNames={"recommend-course-button-size"}
+                classNames={"recommend-course-button-size bkg-green"}
                 action={handleOpenCourseRecommendModal}
               />
             </div>
@@ -162,12 +162,12 @@ function HomePage() {
         </div>
       </div>
       <footer className="Home-page__footer">
-        <ActionButton
+        {/* <ActionButton
           plusSymbol={false}
           title={"Load more courses"}
           classNames={"add-course-button-size"}
           action={handleLoadCourses}
-        />
+        /> */}
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
         <div className="Page-Modal">

@@ -127,16 +127,8 @@ function ProfilePage() {
             </div>
           </div>
           <div className="Profile-page__Welcome-message-enclosure">
-            <div className="Profile-page__Welcome_header-welcome-back large-monteserrat-bold-font title-text-vertically-centered">
-              Welcome back,
-            </div>
-            <div className="Profile-page__Welcome_header-welcome-back_name large-monteserrat-medium-font title-text-vertically-centered">
-              {userData.firstName}
-            </div>
-          </div>
-          <div className="Profile-page__Welcome-message-enclosure__mobile">
-            <div className="Profile-page__Welcome-message-text__mobile__sm large-monteserrat-bold-font title-text-vertically-centered">
-              Welcome back, {userData.firstName}
+            <div className="Profile-page__Welcome_header-welcome-back mont-font bold title-text-vertically-centered large-font-size">
+              {`Welcome back, ${userData.firstName}`}
             </div>
           </div>
         </div>

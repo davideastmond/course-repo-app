@@ -7,6 +7,8 @@ interface IStylizedTextInputProps {
   placeholderText?: string;
   value?: string;
   inputBoxClassNames?: string;
+  labelClassnames?: string;
+  specialDivClassnames?: string;
   onEnterKeyPressed?: (textInputValue: string) => void;
   onTextChange?: (e: any) => void;
   onBlur?: (e: any) => void;
@@ -67,14 +69,20 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
   };
 
   return (
-    <div className={`Styled-input-box__Main ${props.classNames || ""}`}>
+    <div
+      className={`Styled-input-box__Main ${props.classNames || ""} ${
+        props.specialDivClassnames ? props.specialDivClassnames : ""
+      }`}
+    >
       {props.label && props.label.length > 0 && (
         <div className="Styled-input-box-Label-enclosure">
           {props.specialLabelIcon && (
             <img src={props.specialLabelIcon} alt="link" />
           )}
           <label
-            className="Styled-input-box-label-text open-sans-font-family"
+            className={`Styled-input-box-label-text open-sans-font-family ${
+              props.labelClassnames ? props.labelClassnames : ""
+            }`}
             htmlFor={props.id}
           >
             {props.label}
@@ -112,7 +120,11 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
             )}
         </div>
       ) : (
-        <div className="TextInput-Main-Section">
+        <div
+          className={`TextInput-Main-Section ${
+            props.specialDivClassnames ? props.specialDivClassnames : ""
+          }`}
+        >
           <input
             className={`Styled-input-box__input ${
               props.inputBoxClassNames || ""

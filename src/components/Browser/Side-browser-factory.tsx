@@ -5,6 +5,7 @@ export function getMenuOptions(props: {
   titles: string[];
   isSelected: number;
   clickAction: (index: number) => void;
+  classNames?: string;
 }) {
   return props.titles.map((title, index) => (
     <SideBrowserMenuOption
@@ -13,6 +14,7 @@ export function getMenuOptions(props: {
       selected={props.isSelected === index}
       onClickHandler={props.clickAction}
       optionLabel={title}
+      classNames={props.classNames}
     />
   ));
 }

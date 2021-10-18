@@ -104,7 +104,7 @@ function ProfileView(props: IProfileViewProps) {
               />
             </div>
             <div className="Profile-view__Profile-Name__enclosure">
-              <div className="Profile-view__Profile-Name__text mont-font large-monteserrat-bold-font title-text-vertically-centered">
+              <div className="Profile-view__Profile-Name__text mont-font large-monteserrat-bold-font title-text-vertically-centered large-font-size">
                 {userData
                   ? `${userData.firstName || ""} ${userData.lastName || ""}`
                   : ""}
@@ -181,7 +181,7 @@ function ProfileView(props: IProfileViewProps) {
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
         <div className="Page-Modal">
-          <div className="CourseSummaryListModal__main">
+          <div className="CourseSummaryListModal__main CourseSummarListModal-margin">
             <div className="CourseSummaryListModal__close-button flex-control-box-right">
               <img
                 className="pointer"

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { getArrayOfInterestTagsFromString } from "../../utils/string-array/get-sanitized-tags-array";
 import ActionButton from "../Buttons/ActionButton";
 import ContentTag from "../Content-tag";
@@ -10,18 +9,21 @@ interface ITagAppletProps {
   onTagsChanged?: (tags: string[]) => void;
   tags?: string[];
   readOnly: boolean;
+  inputBoxClassnames?: string;
+  addButtonTitle?: string;
 }
 
 function TagApplet(props: ITagAppletProps) {
   const [contentTags, setContentTags] = useState<string[]>([]);
   const [contentTagRawString, setContentTagRawString] = useState<string>("");
 
-  const handleContentTags = () => {
+  const handleContentTags = (e?: any) => {
     if (contentTagRawString) {
       const splitTags = getArrayOfInterestTagsFromString(contentTagRawString);
       const newTags = Array.from(new Set([...contentTags, ...splitTags]));
       setContentTags(newTags);
       setContentTagRawString("");
+
       if (props.onTagsChanged) {
         props.onTagsChanged(newTags);
       }
@@ -51,6 +53,13 @@ function TagApplet(props: ITagAppletProps) {
     }
   });
 
+  useEffect(() => {
+    const input = document.getElementById("modal-tags") as HTMLInputElement;
+    if (input) {
+      input.value = "";
+    }
+  }, [contentTagRawString]);
+
   return (
     <div className="TagApplet__Main-enclosure">
       {!props.readOnly && (
@@ -60,17 +69,20 @@ function TagApplet(props: ITagAppletProps) {
               id="modal-tags"
               placeholderText="React, Adobe, Figma"
               label="Add a comma between each tag. Example: sales,"
-              inputBoxClassNames="single-height-input-box-50px longer-width"
+              inputBoxClassNames={`single-height-input-box-50px ${
+                props.inputBoxClassnames ? props.inputBoxClassnames : ""
+              }`}
               onTextChange={handleContentTagRawStringChange}
               onEnterKeyPressed={handleContentTags}
               clearOnEnter={true}
+              value={contentTagRawString}
             />
           </div>
-          <div className="TagApplet__Action-button__Main align-center">
+          <div className="TagApplet__Action-button__Main align-base-end">
             <ActionButton
-              title="Add Tag"
+              title={props.addButtonTitle || ""}
               plusSymbol={true}
-              classNames="Action-button__slim Action-button__color__plain Action-button__color__plain dark-grey-background-color"
+              classNames="bkg-green"
               action={handleContentTags}
             />
           </div>

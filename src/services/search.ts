@@ -4,8 +4,10 @@ import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const doSearch = async ({
   query,
+  onCompleted,
 }: {
   query: string;
+  onCompleted: (completed: boolean) => void;
 }): Promise<ISearchResults> => {
   try {
     const res = await axios({
@@ -16,12 +18,15 @@ export const doSearch = async ({
     });
 
     if (res.status === 200) {
+      onCompleted(true);
       return res.data as ISearchResults;
     } else {
+      onCompleted(true);
       throw new Error("Error searching");
     }
   } catch (exception) {
     console.log(`Error in search ${exception}`);
+    onCompleted(true);
     throw new Error("Error searching");
   }
 };

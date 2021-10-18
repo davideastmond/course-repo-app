@@ -35,11 +35,6 @@ body {
   background-color: #2a8d85;
 }
 
-.Home-Page__middle-section {
-  display: flex;
-  justify-content: start;
-}
-
 .Home-Page__center-column {
   width: 800px;
   max-height: 80vh;
@@ -50,19 +45,11 @@ body {
   margin-left: 5%;
 }
 
-.Home-Page__middle-section__header {
-  margin-left: 5%;
-}
-
 .mobile-only {
   display: none;
 }
 
 @media only screen and (max-width: 967px) {
-  .Home-Page__middle-section {
-    display: block;
-  }
-
   .Home-Page__center-column {
     width: auto;
   }
@@ -102,10 +89,3 @@ body {
   }
 }
 
-.Home-Page__Spinner-Overlay {
-  position: absolute;
-  width: 100vw;
-  opacity: .5;
-  background-color: silver;
-  height: 1000vh;
-}

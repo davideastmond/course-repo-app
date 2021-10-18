@@ -4,6 +4,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../../components/header-bar";
 import {
   checkIsAuthedAsync,
+  getLoggedInUserAsync,
   logOutAsync,
   selectIsLoggedIn,
   selectLoggedInUser,
@@ -19,6 +20,8 @@ import {
   setSearchString,
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
+import doGoogleLogin from "../../services/auth";
+import ZenSpinner from "../../components/ZenSpinner";
 
 enum SearchResultFilterSetting {
   Courses = 0,
@@ -28,15 +31,18 @@ function SearchPage() {
   const [filterSetting, setFilterSetting] = useState<SearchResultFilterSetting>(
     SearchResultFilterSetting.Courses
   );
+  const [done, setDone] = useState<boolean>(false);
 
+  const [spinnerOn, setSpinnerOn] = useState<boolean>(false);
+  const [, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
   const searchString = useSelector(selectSearchString, shallowEqual);
   const handleGoogleLogin = () => {
-    // doGoogleLogin({ setDone, setErrorMessage });
-    // setAuthInProgress(true);
+    doGoogleLogin({ setDone, setErrorMessage });
+    setAuthInProgress(true);
     dispatch(checkIsAuthedAsync());
   };
   const handleLogOut = () => {
@@ -52,22 +58,79 @@ function SearchPage() {
         break;
     }
   };
+
+  const handleOnCompleted = (completionData: boolean) => {
+    if (completionData === true) {
+      setSpinnerOn(false);
+      setTimer(false);
+    }
+  };
+
   const handleOnSearchSubmit = (textInputValue: string) => {
-    dispatch(performSearchAsync({ searchQuery: textInputValue }));
+    dispatch(
+      performSearchAsync({
+        searchQuery: textInputValue,
+        onCompleted: handleOnCompleted,
+      })
+    );
+    setSpinnerOn(true);
+    setTimer(true);
   };
 
   const handleSearchTextBoxChange = (e: any) => {
     const queryString = e.target.value;
     if (queryString) {
       dispatch(setSearchString(queryString));
+      setSpinnerOn(true);
+      setTimer(true);
+    }
+  };
+
+  const setTimer = (start: boolean) => {
+    let seconds = 0;
+    const timer = setInterval(() => {
+      seconds += 1;
+      console.log("Timer seconds", seconds);
+      if (seconds >= 5) clearInterval(timer);
+    }, 500);
+
+    if (!start) {
+      clearInterval(timer);
     }
   };
 
   useEffect(() => {
-    dispatch(performSearchAsync({ searchQuery: searchString }));
+    dispatch(
+      performSearchAsync({
+        searchQuery: searchString,
+        onCompleted: handleOnCompleted,
+      })
+    );
+    setSpinnerOn(true);
+    setTimer(true);
   }, [searchString]);
+
+  useEffect(() => {
+    dispatch(checkIsAuthedAsync());
+    if (isLoggedIn) {
+      dispatch(getLoggedInUserAsync());
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (done) {
+      setAuthInProgress(false);
+      window.location.reload();
+    }
+  }, [done]);
+
   return (
     <div className="Search-Page__container">
+      {spinnerOn && (
+        <div className="Home-Page__Spinner-Overlay">
+          <ZenSpinner />
+        </div>
+      )}
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
         logOutAction={handleLogOut}
@@ -84,6 +147,7 @@ function SearchPage() {
               inputBoxClassNames="search-box-styling main-font max-text-width text-padding"
               onEnterKeyPressed={handleOnSearchSubmit}
               onTextChange={handleSearchTextBoxChange}
+              maxLength={255}
             />
           </div>
           <div className="Search-Page__filter-settings-container">
@@ -120,3 +184,6 @@ function SearchPage() {
 }
 
 export default SearchPage;
+function setAuthInProgress(arg0: boolean) {
+  //throw new Error("Function not implemented.");
+}

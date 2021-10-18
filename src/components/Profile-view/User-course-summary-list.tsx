@@ -28,7 +28,12 @@ const CourseRow = ({
     >
       <td className="">
         <img src={CourseBulletIcon} alt="Course Icon" />
-        <a target="_blank" rel="noreferrer" href={course.url}>
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href={course.url}
+          className="responsive-link-text no-text-decoration"
+        >
           {course.title}
           <img
             className="padding-left-5px"
@@ -37,7 +42,10 @@ const CourseRow = ({
           />
         </a>
       </td>
-      <td onClick={() => handleOpenDetails && handleOpenDetails(course._id)}>
+      <td
+        className="cursor-pointer"
+        onClick={() => handleOpenDetails && handleOpenDetails(course._id)}
+      >
         Details
       </td>
       <td>

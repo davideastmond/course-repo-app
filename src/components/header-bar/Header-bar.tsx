@@ -14,6 +14,7 @@ import { Link, useHistory } from "react-router-dom";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
+  onMenuOptionClicked: (option: string) => void,
   actions: {
     googleLogInCallBack: () => void;
     logOutCallBack: () => void;
@@ -22,15 +23,24 @@ const ProfileContextMenu = (
 ) => {
   return loggedInStatus ? (
     <ContextMenu>
-      <ContextMenuOption title="Profile" action={actions.showProfileCallBack} />
+      <ContextMenuOption
+        title="Profile"
+        action={actions.showProfileCallBack}
+        onActionClicked={() => onMenuOptionClicked("profile")}
+      />
       {ContextMenuSeparator()}
-      <ContextMenuOption title="Logout" action={actions.logOutCallBack} />
+      <ContextMenuOption
+        title="Logout"
+        action={actions.logOutCallBack}
+        onActionClicked={() => onMenuOptionClicked("logout")}
+      />
     </ContextMenu>
   ) : (
     <ContextMenu>
       <ContextMenuOption
         title="Sign in with Google"
         action={actions.googleLogInCallBack}
+        onActionClicked={() => onMenuOptionClicked("login")}
       />
     </ContextMenu>
   );
@@ -86,6 +96,10 @@ function HeaderBar(props: IHeaderBarProps) {
     setProfileMenuOpen(true);
     clickedInMenuRef.current = true;
   };
+
+  const handleMenuOptionClicked = () => {
+    setProfileMenuOpen(false);
+  };
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
@@ -126,7 +140,7 @@ function HeaderBar(props: IHeaderBarProps) {
             </>
           )}
           {profileMenuOpen &&
-            ProfileContextMenu(isAppLoggedIn, {
+            ProfileContextMenu(isAppLoggedIn, handleMenuOptionClicked, {
               googleLogInCallBack: props.googleLoginAction,
               logOutCallBack: props.logOutAction,
               showProfileCallBack: handleShowProfile,

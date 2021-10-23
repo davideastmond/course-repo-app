@@ -21,7 +21,7 @@ import {
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 import doGoogleLogin from "../../services/auth";
-import ZenSpinner from "../../components/ZenSpinner";
+import ZenSpinner from "../../components/Spinner";
 
 enum SearchResultFilterSetting {
   Courses = 0,

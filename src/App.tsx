@@ -36,7 +36,7 @@ function App() {
           allowed={isLoggedIn}
           redirectTo="/"
         />
-        <Route exact path="/search" component={SearchPage} />
+        <Route path="/search" component={SearchPage} />
         <Route exact path="/" component={HomePage} />
       </Switch>
     </Router>

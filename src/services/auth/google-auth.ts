@@ -31,7 +31,7 @@ const doGoogleLogin = async ({
           ` Received ${req.status} ${req.statusText} Did not receive an OK (done) response`
         );
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log("ERROR ON google auth request?", error);
       setDone(false);
       if (error.status === 401) {

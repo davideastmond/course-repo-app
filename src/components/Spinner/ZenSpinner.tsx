@@ -1,10 +1,10 @@
 import React from "react";
 import "./zen-spinner-style.css";
 import SpinnerLogo from "../../images/logos/alternate-spinner.svg";
-interface ZenSpinnerProps {
+interface ISpinnerProps {
   classNames?: string;
 }
-function ZenSpinner(props: ZenSpinnerProps) {
+function Spinner(props: ISpinnerProps) {
   return (
     <div className={`Spinner__Main ${props.classNames || ""}`}>
       <div className="Spinner__Body">
@@ -14,4 +14,4 @@ function ZenSpinner(props: ZenSpinnerProps) {
   );
 }
 
-export default ZenSpinner;
+export default Spinner;

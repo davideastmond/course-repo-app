@@ -16,7 +16,7 @@ import {
 import { useDispatch } from "react-redux";
 import { validateCourseRecommendation } from "../../utils/course-recommendation";
 import ErrorAlertIconRed from "../../images/icons/error-alert-circle-red.svg";
-import ZenSpinner from "../ZenSpinner";
+import ZenSpinner from "../Spinner";
 import { postCourseRecommendationAsync } from "../../reducers";
 
 const [...COURSE_CATEGORIES] = Object.entries(

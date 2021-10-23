@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusState } from "../../utils/state-status";
-import ZenSpinner from "../ZenSpinner";
+import ZenSpinner from "../Spinner";
 import ErrorAlertIcon from "../../images/icons/error-alert-circle.svg";
 import "./status-module-style.css";
 

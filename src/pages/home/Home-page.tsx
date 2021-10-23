@@ -10,7 +10,7 @@ import HeaderBar from "../../components/header-bar";
 import ProfileView from "../../components/Profile-view";
 
 import SuggestCourseModal from "../../components/suggest-course-modal";
-import ZenSpinner from "../../components/ZenSpinner";
+import ZenSpinner from "../../components/Spinner";
 import {
   checkIsAuthedAsync,
   getAllCoursesAsync,

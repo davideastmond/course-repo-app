@@ -9,14 +9,12 @@ import stateStatus from "../utils/state-status";
 interface IUserState {
   status: any;
   interests: string[];
-  courses: string[];
 }
 const initialState: IUserState = {
   status: {
     state: "idle",
   },
   interests: [],
-  courses: [],
 };
 
 export const getInterestTagsAsync = createAsyncThunk(
@@ -51,7 +49,7 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getInterestTagsAsync.pending, (state) => {
-        stateStatus.loading(state, "getting courses");
+        stateStatus.loading(state, "getting interest tags");
       })
       .addCase(getInterestTagsAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);

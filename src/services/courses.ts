@@ -88,10 +88,51 @@ export const postCourseRecommendation = async (
       successHandler(false);
       return [];
     }
-  } catch (err) {
+  } catch (err: any) {
     successHandler(false);
     throw new Error(err);
   }
+};
+
+export const deleteCourseRecommendation = ({
+  courseIds,
+  onSuccess,
+  onFail,
+}: {
+  courseIds: string[];
+  onSuccess: () => void;
+  onFail: (errorMessage: string) => void;
+}) => {
+  // try {
+  //   const req = await axios({
+  //     method: "delete",
+  //     withCredentials: true,
+  //     url: `${process.env.REACT_APP_API_URL}/api/courses`,
+  //     data: courseIds,
+  //     headers: AUTH_HEADER
+  //   })
+
+  //   if (req.status === 200) {
+  //     return req.data as ICourse[];
+  //   }
+  // } catch (err: any) {
+  //  throw new Error(err);
+  // }
+  axios({
+    method: "delete",
+    url: `${process.env.REACT_APP_API_URL}/api/courses`,
+    data: { courseIds: courseIds },
+    withCredentials: true,
+    headers: AUTH_HEADER,
+  })
+    .then((data) => {
+      if (data) {
+        onSuccess();
+      }
+    })
+    .catch((error) => {
+      onFail(error);
+    });
 };
 
 const sortCoursesByDate = (courses: ICourse[]): ICourse[] => {

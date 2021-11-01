@@ -1,0 +1,20 @@
+
+.EditRack__flex-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.edit-option-delete {
+  color: var(--error-color);
+  animation-name: rack-menu-open;
+  animation-duration: 0.1s;
+}
+.edit-option:hover {
+  cursor: pointer;
+}
+
+@keyframes rack-menu-open {
+  from { transform: scaleY(0.0);}
+  to { transform: scaleY(1.0);}
+}

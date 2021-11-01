@@ -12,6 +12,9 @@ import TagApplet from "../Tags-applet";
 import { ICourse, IProcessedUser } from "../../types";
 import { ModalType } from "../../types/modal.types";
 import { UserCourseSummaryTable } from "./User-course-summary-list";
+import CourseSummaryListModal from "../CourseSummaryListModal";
+import { shallowEqual, useSelector } from "react-redux";
+import { selectLoggedInUser } from "../../reducers";
 export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
@@ -31,33 +34,40 @@ function ProfileView(props: IProfileViewProps) {
     useState<string>("");
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
+
+  const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+  const getUser = async () => {
+    try {
+      if (props.userId && props.userId !== "") {
+        const user = await getUserById(props.userId);
+        setUserData(user);
+        if (loggedInUser && loggedInUser._id === props.userId) {
+          setIsLoggedInUser(true);
+        } else {
+          setIsLoggedInUser(false);
+        }
+      }
+    } catch (exception) {
+      setHasProfileFetchError(true);
+      setProfileFetchErrorMessage(
+        "There was an error fetching data. Try to log in or check your connection"
+      );
+    }
+  };
+  const getCourseRecommendations = async () => {
+    try {
+      if (props.userId && props.userId !== "") {
+        const fetchedRecommendations = await getCourseRecommendationsByUser({
+          id: props.userId,
+        });
+        setCourseRecommendations(fetchedRecommendations);
+      }
+    } catch (exception) {
+      // POIJ handle some exception
+    }
+  };
   useEffect(() => {
-    const getUser = async () => {
-      try {
-        if (props.userId && props.userId !== "") {
-          const user = await getUserById(props.userId);
-          setUserData(user);
-        }
-      } catch (exception) {
-        setHasProfileFetchError(true);
-        setProfileFetchErrorMessage(
-          "There was an error fetching data. Try to log in or check your connection"
-        );
-      }
-    };
-    const getCourseRecommendations = async () => {
-      try {
-        if (props.userId && props.userId !== "") {
-          const fetchedRecommendations = await getCourseRecommendationsByUser({
-            id: props.userId,
-          });
-          console.log("Fetched recommendations", fetchedRecommendations);
-          setCourseRecommendations(fetchedRecommendations);
-        }
-      } catch (exception) {
-        // POIJ handle some exception
-      }
-    };
     getUser();
     getCourseRecommendations();
   }, []);
@@ -65,10 +75,6 @@ function ProfileView(props: IProfileViewProps) {
   const handleFullSummaryShowModal = () => {
     setModalType(ModalType.FullUserCourseSummaryList);
     setModalVisible(true);
-  };
-
-  const handleShowCourseDetail = (courseId: string) => {
-    console.log("Course detail modal", courseId);
   };
 
   const handleCloseModal = () => {
@@ -160,6 +166,8 @@ function ProfileView(props: IProfileViewProps) {
                 My Recommendations
               </div>
               <UserCourseSummaryTable
+                sourceId="Profile view"
+                canEdit={isLoggedInUser}
                 courseRecommendations={courseRecommendations}
                 size={
                   courseRecommendations.length > 3
@@ -181,23 +189,12 @@ function ProfileView(props: IProfileViewProps) {
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
         <div className="Page-Modal">
-          <div className="CourseSummaryListModal__main CourseSummarListModal-margin">
-            <div className="CourseSummaryListModal__close-button flex-control-box-right">
-              <img
-                className="pointer"
-                src={WindowCloseButton}
-                alt="close"
-                onClick={handleCloseModal}
-              />
-            </div>
-            <div className="CourseSummaryListModal__header main-font center-text">
-              {`Courses recommended by ${userData?.firstName} ${userData?.lastName}`}
-            </div>
-            <UserCourseSummaryTable
-              courseRecommendations={courseRecommendations}
-              allowScrolling={courseRecommendations.length > 3}
-            />
-          </div>
+          <CourseSummaryListModal
+            handleCloseModal={handleCloseModal}
+            courseRecommendations={courseRecommendations}
+            userData={userData}
+            editable={isLoggedInUser}
+          />
         </div>
       )}
     </div>

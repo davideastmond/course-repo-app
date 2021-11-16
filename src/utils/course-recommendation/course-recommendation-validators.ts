@@ -32,7 +32,6 @@ export function blurbAndTakeAwayValidator(value: TakeAwayObject[]): string[] {
     return Object.values(items.takeAways);
   });
   const flattened = takeAways.flat();
-  console.log("Flattened", flattened, "length", flattened.length);
   /* 
     [{0: "some string", 1: "someString2", 2: "anotherString"}, 
     {0: "", 1: ""}

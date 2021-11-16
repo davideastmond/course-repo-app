@@ -15,7 +15,7 @@ import {
   updateUserJobTitleDepartmentAsync,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
-import { IProcessedUser } from "../../types";
+import { ICourse, IProcessedUser } from "../../types";
 import ProfileChangeIcon from "../../images/icons/add-photo.svg";
 import TextFieldUpdateIcon from "../../images/icons/text-field-update-icon.svg";
 import "./profile-page-style.css";
@@ -24,6 +24,10 @@ import InterestsTable from "../../components/interests-table";
 import AddInterestsModal from "../../components/addInterestsModal";
 import StatusModule from "../../components/StatusModule";
 import StylizedTextInput from "../../components/stylized-text-input";
+import { UserCourseSummaryTable } from "../../components/Profile-view/User-course-summary-list";
+import { getCourseRecommendationsByUser } from "../../services/users";
+import { ModalType } from "../../types/modal.types";
+import CourseSummaryListModal from "../../components/CourseSummaryListModal";
 
 function ProfilePage() {
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
@@ -44,7 +48,10 @@ function ProfilePage() {
   const dispatch = useDispatch();
   const fetchedInterests = useSelector(selectInterestTags, shallowEqual);
   const status = useSelector(selectUserStatus, shallowEqual);
-
+  const [courseRecommendations, setCourseRecommendations] = useState<ICourse[]>(
+    []
+  );
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -68,6 +75,10 @@ function ProfilePage() {
     const tags = [title];
     dispatch(deleteInterestTagsAsync({ id: "me", tags }));
   };
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+  };
 
   useEffect(() => {
     if (fetchedInterests) {
@@ -84,6 +95,21 @@ function ProfilePage() {
       setJobTitle(e.target.value);
     }
   };
+  const getCourseRecommendations = async () => {
+    try {
+      if (userData) {
+        const fetchedRecommendations = await getCourseRecommendationsByUser({
+          id: userData._id,
+        });
+        setCourseRecommendations(fetchedRecommendations);
+      }
+    } catch (exception) {
+      // POIJ handle some exception
+    }
+  };
+  useEffect(() => {
+    getCourseRecommendations();
+  }, []);
 
   const handleDepartmentTextChanged = (e: any) => {
     if (e.target.value) {
@@ -102,6 +128,19 @@ function ProfilePage() {
       updateUserJobTitleDepartmentAsync({ id: "me", jobTitle, department })
     );
     setIsProfileEditMode(false);
+  };
+  const handleFullSummaryShowModal = () => {
+    setModalType(ModalType.FullUserCourseSummaryList);
+    setModalVisible(true);
+  };
+
+  const handleShowInterestsModal = () => {
+    setModalType(ModalType.AddInterestsModal);
+    setModalVisible(true);
+  };
+
+  const handleUserCourseSummaryTableCoursesChanged = () => {
+    getCourseRecommendations();
   };
 
   return (
@@ -192,18 +231,56 @@ function ProfilePage() {
               </tr>
             </tbody>
           </table>
+          <div className="Profile_view__my-recommendations-footer">
+            <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
+              My Recommendations
+            </div>
+            <UserCourseSummaryTable
+              sourceId="Actual full profile page"
+              canEdit={false}
+              courseRecommendations={courseRecommendations}
+              size={
+                courseRecommendations.length > 3
+                  ? 3
+                  : courseRecommendations.length
+              }
+              onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+            />
+            {courseRecommendations && courseRecommendations.length >= 4 && (
+              <>Plus {courseRecommendations.length - 3} more</>
+            )}
+            {courseRecommendations && courseRecommendations.length > 0 && (
+              <div
+                className="Profile_view-ShowMoreRecommendations main-font align-text-center pointer"
+                onClick={handleFullSummaryShowModal}
+              >
+                Edit
+              </div>
+            )}
+          </div>
           <InterestsTable
-            addInterestButtonClickHandler={() => setModalVisible(true)}
+            addInterestButtonClickHandler={handleShowInterestsModal}
             interestTags={masterInterestTags}
             deleteInterestsHandler={handleDeleteSingleTag}
           />
         </div>
       </div>
-      {modalVisible && (
+      {modalVisible && modalType === ModalType.AddInterestsModal && (
         <div className="Page-Modal">
           <AddInterestsModal
             closeModalHandler={() => setModalVisible(false)}
             addInterestTagsSubmitHandler={handleAddTags}
+          />
+        </div>
+      )}
+      {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
+        <div className="Page-Modal">
+          <CourseSummaryListModal
+            handleCloseModal={handleCloseModal}
+            courseRecommendations={courseRecommendations}
+            userData={userData}
+            editable={true}
+            onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
           />
         </div>
       )}

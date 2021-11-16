@@ -24,7 +24,7 @@
   --green-color-6: #00CEC9;
   --error-color: #D63031;
   --modal-radius: 6px;
-
+  --green-500: #2A8D85;
   --star-fill: #FDCB6E;
 }
 
@@ -34,7 +34,7 @@ h1, h2, h3, h4, h5, h5 {
 
 .course-category-color-green {
   background-color: var( --pale-light-green-color);
-  border-left-color: #2A8D85;
+  border-left-color: var(--green-500);
 }
 
 .course-category-color-rose {
@@ -95,6 +95,9 @@ h1, h2, h3, h4, h5, h5 {
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.fixed-position {
+  position: fixed;
+}
 .open-sans-font-family {
   font-family: Open Sans;
 }
@@ -344,6 +347,10 @@ h1, h2, h3, h4, h5, h5 {
   padding-left: 5px;
 }
 
+.Detailed-Course-View__Main-body {
+  margin: unset;
+}
+
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -501,5 +508,9 @@ h1, h2, h3, h4, h5, h5 {
   .Profile-page__Main-body {
     margin-left: 20%;
     margin-right: 20%;
+  }
+
+  .Detailed-Course-View__Main-body {
+    margin: 5%;
   }
 }

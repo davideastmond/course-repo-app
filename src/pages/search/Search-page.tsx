@@ -90,7 +90,6 @@ function SearchPage() {
     let seconds = 0;
     const timer = setInterval(() => {
       seconds += 1;
-      console.log("Timer seconds", seconds);
       if (seconds >= 5) clearInterval(timer);
     }, 500);
 

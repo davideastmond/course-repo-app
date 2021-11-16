@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  deleteCourseRecommendation,
   getAllCourses,
   getDetailedCourseById,
   postCourseRecommendation,
@@ -70,6 +71,9 @@ export const coursesSlice = createSlice({
     setCourseFilter(state, action: { payload: string }) {
       state.filter = action.payload;
     },
+    clearCurrentCourseContext(state) {
+      state.currentCourseContext = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -129,5 +133,6 @@ export const selectSkip = (state: any) => {
   return state.courses.courses.length;
 };
 
-export const { setCourseFilter } = coursesSlice.actions;
+export const { setCourseFilter, clearCurrentCourseContext } =
+  coursesSlice.actions;
 export default coursesSlice.reducer;

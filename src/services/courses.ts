@@ -3,6 +3,7 @@ import {
   ICourse,
   ICourseRecommendationSubmission,
   IDetailedCourse,
+  IProcessedUser,
 } from "../types";
 import { getUserInterests } from "./users";
 import { intersection } from "lodash";
@@ -88,10 +89,36 @@ export const postCourseRecommendation = async (
       successHandler(false);
       return [];
     }
-  } catch (err) {
+  } catch (err: any) {
     successHandler(false);
     throw new Error(err);
   }
+};
+
+export const deleteCourseRecommendation = ({
+  courseIds,
+  onSuccess,
+  onFail,
+}: {
+  courseIds: string[];
+  onSuccess: (responseData: IProcessedUser) => void;
+  onFail: (errorMessage: string) => void;
+}) => {
+  axios({
+    method: "delete",
+    url: `${process.env.REACT_APP_API_URL}/api/courses`,
+    data: { courseIds: courseIds },
+    withCredentials: true,
+    headers: AUTH_HEADER,
+  })
+    .then((response) => {
+      if (response) {
+        onSuccess(response.data as IProcessedUser);
+      }
+    })
+    .catch((error) => {
+      onFail(error);
+    });
 };
 
 const sortCoursesByDate = (courses: ICourse[]): ICourse[] => {

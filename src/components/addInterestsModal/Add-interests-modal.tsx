@@ -9,10 +9,6 @@ interface IAddInterestModalProps {
 }
 function AddInterestsModal(props: IAddInterestModalProps) {
   const [interestsTags, setInterestTags] = useState<string[]>([]);
-  useEffect(() => {
-    console.log("Interest tags", interestsTags);
-  }, [interestsTags]);
-
   return (
     <div className="Add-interests-modal__Main-window-body">
       <header className="Add-interest-modal__Header-Enclosure">

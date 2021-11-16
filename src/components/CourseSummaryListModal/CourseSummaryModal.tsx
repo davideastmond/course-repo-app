@@ -1,4 +1,3 @@
-import React from "react";
 import { ICourse, IProcessedUser } from "../../types";
 import { UserCourseSummaryTable } from "../Profile-view/User-course-summary-list";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
@@ -8,6 +7,7 @@ interface ICourseSummaryListModalProps {
   userData: IProcessedUser | undefined;
   courseRecommendations: ICourse[];
   editable: boolean;
+  onCourseDataChanged?: (data: any) => void;
 }
 
 function CourseSummaryListModal(props: ICourseSummaryListModalProps) {
@@ -29,6 +29,7 @@ function CourseSummaryListModal(props: ICourseSummaryListModalProps) {
         allowScrolling={props.courseRecommendations.length > 3}
         sourceId="Course Summary Modal CourseSummaryListModal__main"
         canEdit={props.editable}
+        onCourseDataChanged={props.onCourseDataChanged}
       />
     </div>
   );

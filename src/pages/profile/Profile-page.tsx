@@ -95,20 +95,19 @@ function ProfilePage() {
       setJobTitle(e.target.value);
     }
   };
-
-  useEffect(() => {
-    const getCourseRecommendations = async () => {
-      try {
-        if (userData) {
-          const fetchedRecommendations = await getCourseRecommendationsByUser({
-            id: userData._id,
-          });
-          setCourseRecommendations(fetchedRecommendations);
-        }
-      } catch (exception) {
-        // POIJ handle some exception
+  const getCourseRecommendations = async () => {
+    try {
+      if (userData) {
+        const fetchedRecommendations = await getCourseRecommendationsByUser({
+          id: userData._id,
+        });
+        setCourseRecommendations(fetchedRecommendations);
       }
-    };
+    } catch (exception) {
+      // POIJ handle some exception
+    }
+  };
+  useEffect(() => {
     getCourseRecommendations();
   }, []);
 
@@ -138,6 +137,10 @@ function ProfilePage() {
   const handleShowInterestsModal = () => {
     setModalType(ModalType.AddInterestsModal);
     setModalVisible(true);
+  };
+
+  const handleUserCourseSummaryTableCoursesChanged = () => {
+    getCourseRecommendations();
   };
 
   return (
@@ -234,20 +237,24 @@ function ProfilePage() {
             </div>
             <UserCourseSummaryTable
               sourceId="Actual full profile page"
-              canEdit={true}
+              canEdit={false}
               courseRecommendations={courseRecommendations}
               size={
                 courseRecommendations.length > 3
                   ? 3
                   : courseRecommendations.length
               }
+              onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
             />
-            {courseRecommendations && courseRecommendations.length >= 3 && (
+            {courseRecommendations && courseRecommendations.length >= 4 && (
+              <>Plus {courseRecommendations.length - 3} more</>
+            )}
+            {courseRecommendations && courseRecommendations.length > 0 && (
               <div
                 className="Profile_view-ShowMoreRecommendations main-font align-text-center pointer"
                 onClick={handleFullSummaryShowModal}
               >
-                Plus {courseRecommendations.length - 3} more
+                Edit
               </div>
             )}
           </div>
@@ -273,6 +280,7 @@ function ProfilePage() {
             courseRecommendations={courseRecommendations}
             userData={userData}
             editable={true}
+            onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
           />
         </div>
       )}

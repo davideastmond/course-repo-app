@@ -38,7 +38,6 @@ const MOCK_DATA: ICourseRecommendationSubmission = {
 describe("course recommendation validation tests", () => {
   test("Validates correctly - everything is valid", () => {
     const result = validateCourseRecommendation(MOCK_DATA);
-    console.log(result);
     expect(result.validated).toBe(true);
     expect(result.invalidFields).toEqual({});
     expect(result.output).toHaveProperty("courseRating");

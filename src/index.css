@@ -347,6 +347,10 @@ h1, h2, h3, h4, h5, h5 {
   padding-left: 5px;
 }
 
+.Detailed-Course-View__Main-body {
+  margin: unset;
+}
+
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -504,5 +508,9 @@ h1, h2, h3, h4, h5, h5 {
   .Profile-page__Main-body {
     margin-left: 20%;
     margin-right: 20%;
+  }
+
+  .Detailed-Course-View__Main-body {
+    margin: 5%;
   }
 }

@@ -81,6 +81,10 @@ function ProfileView(props: IProfileViewProps) {
     setModalVisible(false);
     setModalType(ModalType.nullModal);
   };
+
+  const handleUserCourseSummaryTableCoursesChanged = () => {
+    getCourseRecommendations();
+  };
   return (
     <div className="Profile-view__Main__Window">
       <div className="Profile-view__Main__container window-padding-1p">
@@ -138,10 +142,7 @@ function ProfileView(props: IProfileViewProps) {
                   </td>
                   <td className="bottom-border edit-text-icon-spacing"></td>
                 </tr>
-                <tr
-                  className="Department-row"
-                  onClick={() => console.log("clicked department row")}
-                >
+                <tr className="Department-row">
                   <td className="cell-padding label-category-width font-category-title">
                     DEPARTMENT
                   </td>
@@ -174,6 +175,7 @@ function ProfileView(props: IProfileViewProps) {
                     ? 3
                     : courseRecommendations.length
                 }
+                onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
               />
               {courseRecommendations && courseRecommendations.length >= 3 && (
                 <div
@@ -194,6 +196,7 @@ function ProfileView(props: IProfileViewProps) {
             courseRecommendations={courseRecommendations}
             userData={userData}
             editable={isLoggedInUser}
+            onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
           />
         </div>
       )}

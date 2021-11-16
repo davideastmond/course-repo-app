@@ -97,7 +97,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
         </div>
         <img
           onClick={handleCloseModal}
-          className="Detailed-Course-View__windowClose"
+          className="Detailed-Course-View__windowClose pointer"
           alt="close window"
           src={WindowCloseButton}
         />

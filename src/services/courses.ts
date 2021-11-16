@@ -3,6 +3,7 @@ import {
   ICourse,
   ICourseRecommendationSubmission,
   IDetailedCourse,
+  IProcessedUser,
 } from "../types";
 import { getUserInterests } from "./users";
 import { intersection } from "lodash";
@@ -100,24 +101,9 @@ export const deleteCourseRecommendation = ({
   onFail,
 }: {
   courseIds: string[];
-  onSuccess: () => void;
+  onSuccess: (responseData: IProcessedUser) => void;
   onFail: (errorMessage: string) => void;
 }) => {
-  // try {
-  //   const req = await axios({
-  //     method: "delete",
-  //     withCredentials: true,
-  //     url: `${process.env.REACT_APP_API_URL}/api/courses`,
-  //     data: courseIds,
-  //     headers: AUTH_HEADER
-  //   })
-
-  //   if (req.status === 200) {
-  //     return req.data as ICourse[];
-  //   }
-  // } catch (err: any) {
-  //  throw new Error(err);
-  // }
   axios({
     method: "delete",
     url: `${process.env.REACT_APP_API_URL}/api/courses`,
@@ -125,9 +111,9 @@ export const deleteCourseRecommendation = ({
     withCredentials: true,
     headers: AUTH_HEADER,
   })
-    .then((data) => {
-      if (data) {
-        onSuccess();
+    .then((response) => {
+      if (response) {
+        onSuccess(response.data as IProcessedUser);
       }
     })
     .catch((error) => {

@@ -15,7 +15,9 @@ import {
   getDetailedCourseById,
 } from "../../services/courses";
 import EditRack from "../CourseSummaryListModal/EditRack";
-import ErrorMessage from "../error-message";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { getAllCoursesAsync, selectLimit, selectSkip } from "../../reducers";
+import ToastPop from "../toast-pop";
 
 const CourseRow = ({
   idx,
@@ -41,7 +43,6 @@ const CourseRow = ({
     checked: boolean;
     id: string;
   }) => {
-    console.log("check box change handler, 33");
     if (checked === true) {
       if (onElementChecked) {
         onElementChecked(id);
@@ -108,6 +109,7 @@ interface IUserCourseSummaryTableProps {
   courseRecommendations: ICourse[];
   size?: number;
   canEdit: boolean;
+  onCourseDataChanged?: (data: any) => void;
 }
 
 export const UserCourseSummaryTable = ({
@@ -116,6 +118,7 @@ export const UserCourseSummaryTable = ({
   courseRecommendations,
   size,
   canEdit,
+  onCourseDataChanged,
 }: IUserCourseSummaryTableProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
@@ -127,6 +130,15 @@ export const UserCourseSummaryTable = ({
     courseRecommendations.map(() => false)
   );
   const [checkboxesVisible, setCheckboxesVisible] = useState<boolean>(false);
+  const [showChangeStatus, setShowChangeStatus] = useState<boolean>(false);
+  const [toastDivStyle, setToastDivStyle] = useState("");
+  const [toastTextStyle, setToastTextStyle] = useState("");
+  const [toastMessage, setToastMessage] = useState("");
+  const [toastSticky, setToastSticky] = useState(false);
+
+  const dispatch = useDispatch();
+  const limit = useSelector(selectLimit, shallowEqual);
+  const skip = useSelector(selectSkip, shallowEqual);
 
   const handleOpenDetailedCourseViewModal = (courseId: string) => {
     async function getCourseContext() {
@@ -149,7 +161,6 @@ export const UserCourseSummaryTable = ({
   };
 
   const handleElementIsChecked = ({ idx, id }: { idx: number; id: string }) => {
-    console.log(`element ${id} is checked`);
     const courses = Array.from(selectedCourses);
 
     if (!courses.includes(id)) {
@@ -190,21 +201,39 @@ export const UserCourseSummaryTable = ({
     setSelectedCourses([]);
   };
 
+  const generateToast = () => {
+    return;
+  };
+
   const handleDeleteCourseRecommendation = () => {
-    console.log("Delete course clicked!");
     deleteCourseRecommendation({
       courseIds: selectedCourses,
       onFail: (errorMessage) => {
         console.log(errorMessage);
+        setToastSticky(true);
+        setShowChangeStatus(true);
+        setToastDivStyle(
+          "toast-red small-padding rounded-corners animated-stay"
+        );
+        setToastTextStyle("small-text");
+        setToastMessage(`Error ${errorMessage}`);
       },
-      onSuccess: () => {
-        console.log("Success message");
+      onSuccess: (data) => {
+        onCourseDataChanged && onCourseDataChanged(data);
+        dispatch(getAllCoursesAsync({ limit, skip }));
+        setShowChangeStatus(true);
+        setToastTextStyle("small-text");
+        setToastDivStyle(
+          "toast-green small-padding rounded-corners animated-fade-out"
+        );
+        setToastMessage("Updated");
+        setToastSticky(false);
       },
     });
   };
 
   useEffect(() => {
-    console.log("Current selected courses are", selectedCourses);
+    console.debug("Current selected courses are", selectedCourses);
   }, [selectedCourses]);
 
   return (
@@ -226,6 +255,16 @@ export const UserCourseSummaryTable = ({
           allowScrolling ? "scroll-limit" : ""
         }`}
       >
+        {showChangeStatus && (
+          <ToastPop
+            text={toastMessage}
+            textStyle={toastTextStyle}
+            duration={1}
+            backgroundStyle={toastDivStyle}
+            onDisappear={() => setShowChangeStatus(false)}
+            sticky={toastSticky}
+          />
+        )}
         <table className="Profile_view-CoursesTable">
           {courseRecommendations && size && courseRecommendations.length >= size
             ? courseRecommendations

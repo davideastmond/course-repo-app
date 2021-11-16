@@ -50,3 +50,16 @@
 .button-padding {
   padding: 5px;
 }
+
+.small-button {
+  width: 100px;
+  height: 30px;
+  background-color: var(--green-500);
+  border-radius: 5px;
+  color: white;
+}
+
+.slim-font {
+  font-size: 12px;
+  font-weight: normal;
+}

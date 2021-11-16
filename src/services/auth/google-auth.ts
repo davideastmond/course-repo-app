@@ -22,17 +22,14 @@ const doGoogleLogin = async ({
         withCredentials: true,
       });
 
-      console.log("RES STATUS after making request to /api/auth :", req.status);
       if (req.status === 200) {
         setDone(true);
       } else {
-        console.log("Some other status occured: ", req.status);
         setErrorMessage(
           ` Received ${req.status} ${req.statusText} Did not receive an OK (done) response`
         );
       }
     } catch (error: any) {
-      console.log("ERROR ON google auth request?", error);
       setDone(false);
       if (error.status === 401) {
         typeof error?.message === "string" &&

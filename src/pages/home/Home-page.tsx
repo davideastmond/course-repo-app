@@ -13,16 +13,14 @@ import SuggestCourseModal from "../../components/suggest-course-modal";
 import ZenSpinner from "../../components/Spinner";
 import {
   checkIsAuthedAsync,
-  getAllCoursesAsync,
+  clearCurrentCourseContext,
   getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
   selectCurrentCourseContext,
   selectIsLoggedIn,
-  selectLimit,
   selectLoggedInUser,
-  selectSkip,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
@@ -44,9 +42,6 @@ function HomePage() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
-
-  const limit = useSelector(selectLimit, shallowEqual);
-  const skip = useSelector(selectSkip, shallowEqual);
 
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
@@ -78,7 +73,7 @@ function HomePage() {
       setModalVisible(true);
       document.body.classList.add("no-body-scroll");
     }
-  }, [currentCourseContext]);
+  });
 
   useEffect(() => {
     if (modalVisible) {
@@ -107,6 +102,7 @@ function HomePage() {
   const handleModalClosed = () => {
     setModalVisible(false);
     setModalType(ModalType.nullModal);
+    dispatch(clearCurrentCourseContext());
     document.body.classList.remove("no-body-scroll");
   };
 
@@ -117,9 +113,6 @@ function HomePage() {
     });
   }, [courses]);
 
-  const handleLoadCourses = () => {
-    dispatch(getAllCoursesAsync({ limit, skip }));
-  };
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (

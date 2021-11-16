@@ -7,14 +7,6 @@
   animation-iteration-count: 1;
 }
 
-.animated-stay {
-  /* transform: scaleY(0);
-  animation-name: flipin_stay;
-  animation-duration: 0.5s; */
- /* animation-direction: alternate; 
-  animation-iteration-count: 1; */
-}
-
 .small-text {
   height: 16px;
   line-height: 16px;

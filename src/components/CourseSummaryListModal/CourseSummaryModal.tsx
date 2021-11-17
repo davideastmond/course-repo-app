@@ -26,6 +26,7 @@ function CourseSummaryListModal(props: ICourseSummaryListModalProps) {
       </div>
       <UserCourseSummaryTable
         courseRecommendations={props.courseRecommendations}
+        editRackVisible={props.editable}
         allowScrolling={props.courseRecommendations.length > 3}
         sourceId="Course Summary Modal CourseSummaryListModal__main"
         canEdit={props.editable}

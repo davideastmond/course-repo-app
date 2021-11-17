@@ -238,6 +238,7 @@ function ProfilePage() {
             <UserCourseSummaryTable
               sourceId="Actual full profile page"
               canEdit={false}
+              editRackVisible={false}
               courseRecommendations={courseRecommendations}
               size={
                 courseRecommendations.length > 3

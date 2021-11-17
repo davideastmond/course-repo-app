@@ -110,6 +110,7 @@ interface IUserCourseSummaryTableProps {
   size?: number;
   canEdit: boolean;
   onCourseDataChanged?: (data: any) => void;
+  editRackVisible: boolean;
 }
 
 export const UserCourseSummaryTable = ({
@@ -119,6 +120,7 @@ export const UserCourseSummaryTable = ({
   size,
   canEdit,
   onCourseDataChanged,
+  editRackVisible,
 }: IUserCourseSummaryTableProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
@@ -201,10 +203,6 @@ export const UserCourseSummaryTable = ({
     setSelectedCourses([]);
   };
 
-  const generateToast = () => {
-    return;
-  };
-
   const handleDeleteCourseRecommendation = () => {
     deleteCourseRecommendation({
       courseIds: selectedCourses,
@@ -238,7 +236,7 @@ export const UserCourseSummaryTable = ({
 
   return (
     <>
-      {canEdit === true && (
+      {canEdit === true && editRackVisible === true && (
         <div>
           <EditRack
             onSelectAll={handleSelectAll}

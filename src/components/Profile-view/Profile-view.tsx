@@ -168,6 +168,7 @@ function ProfileView(props: IProfileViewProps) {
               </div>
               <UserCourseSummaryTable
                 sourceId="Profile view"
+                editRackVisible={false}
                 canEdit={isLoggedInUser}
                 courseRecommendations={courseRecommendations}
                 size={

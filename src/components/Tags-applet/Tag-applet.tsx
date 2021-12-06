@@ -31,6 +31,7 @@ function TagApplet(props: ITagAppletProps) {
   };
 
   const handleContentTagRawStringChange = (e: any) => {
+    console.log(e.target.value);
     if (e.target.value) {
       setContentTagRawString(e.target.value.trim());
     }

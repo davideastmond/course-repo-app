@@ -20,13 +20,14 @@ interface IStylizedTextInputProps {
   clearOnEnter?: boolean;
   isError?: boolean;
   errorMessages?: string[];
+  autoFill?: boolean;
 }
 
 export const TEXT_INPUT_MAX_LENGTH: number = 524288;
 
 function StylizedTextInput(props: IStylizedTextInputProps) {
   const [textValue, setTextValue] = useState<string>(props.value || "");
-  const [charCount, setCharCount] = useState<number>(0);
+  const [charCount, setCharCount] = useState<number>(props.value?.length || 0);
   const [errorShouldClear, setErrorShouldClear] = useState<boolean>(false);
 
   const textValueChanged = (e: any) => {
@@ -96,7 +97,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
               props.inputBoxClassNames || ""
             } ${props.isError ? "text-error-border" : ""}`}
             placeholder={props.placeholderText}
-            value={textValue}
+            value={props.autoFill && props.value ? props.value : textValue}
             onChange={textValueChanged}
             onKeyPress={handleKeyPressed}
             id={props.id}
@@ -131,7 +132,7 @@ function StylizedTextInput(props: IStylizedTextInputProps) {
             } ${props.isError ? "text-error-border" : ""}`}
             type="text"
             placeholder={props.placeholderText}
-            value={textValue}
+            value={props.autoFill && props.value ? props.value : textValue}
             onChange={textValueChanged}
             onKeyPress={handleKeyPressed}
             id={props.id}

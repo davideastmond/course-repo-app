@@ -226,6 +226,7 @@ export const UserCourseSummaryTable = ({
         );
         setToastMessage("Updated");
         setToastSticky(false);
+        dispatch(getAllCoursesAsync);
       },
     });
   };

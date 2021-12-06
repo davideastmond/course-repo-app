@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 interface ICourseTakeAwayProps {
   id: string;
   index?: number;
+  value?: string;
   onUpdatePackage: (
     packageUpdate: {
       [key in number]: {
@@ -17,7 +18,7 @@ interface ICourseTakeAwayProps {
   ) => void;
 }
 function CourseTakeAway(props: ICourseTakeAwayProps) {
-  const [learningBlurb, setLearningBlurb] = useState<string>("");
+  const [learningBlurb, setLearningBlurb] = useState<string>(props.value || "");
   const [keyTakeAways, setKeyTakeAways] = useState<any>({});
   const packageChanged = (e: any) => {
     setKeyTakeAways(e);
@@ -52,6 +53,7 @@ function CourseTakeAway(props: ICourseTakeAwayProps) {
             multiLine={true}
             onTextChange={handleLearningBlurbTextChanged}
             inputBoxClassNames="full-space"
+            value={props.value ? props.value : ""}
           />
         </div>
         <div className="CourseTakeAway__right-col">

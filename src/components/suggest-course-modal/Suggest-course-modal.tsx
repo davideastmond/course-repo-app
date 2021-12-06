@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import "./suggest-course-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import StylizedTextInput from "../stylized-text-input";
@@ -15,9 +15,12 @@ import {
 } from "../../types";
 import { useDispatch } from "react-redux";
 import { validateCourseRecommendation } from "../../utils/course-recommendation";
-import ErrorAlertIconRed from "../../images/icons/error-alert-circle-red.svg";
 import ZenSpinner from "../Spinner";
 import { postCourseRecommendationAsync } from "../../reducers";
+import { getCourseAutoComplete } from "../../services/courses";
+import { isURLValid } from "../../utils/url/url-valid";
+import AlertToast from "../alert-toast";
+import { AlertType } from "../alert-toast/types";
 
 const [...COURSE_CATEGORIES] = Object.entries(
   COURSE_CATEGORY_FRIENDLY_DICTIONARY
@@ -76,6 +79,13 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
       ...packageUpdate,
     };
   };
+  const [
+    autoCompleteProcessingInProgress,
+    setAutoCompleteProcessingInProgress,
+  ] = useState<boolean>(false);
+  const [autoFillMode, setAutoFillMode] = useState<boolean>(false);
+  const [autoFillTextError, setAutoFillTextError] = useState<string>("");
+  const [autoFillErrorShow, setAutoFillErrorShow] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   const addTakeAway = () => {
@@ -92,8 +102,29 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
     }
   };
 
+  const createAutoFillTakeAway = (takeAways: string[]) => {
+    if (takeAways && takeAways.length && takeAways.length > 0) {
+      const takeAwaySelection = takeAways.slice(0, 3);
+      const newTakeAwaysFromSelection: any[] = takeAwaySelection.map(
+        (selection, index) => (
+          <CourseTakeAway
+            key={`autoFillTakeAwayElement${index + 1}`}
+            id={`autoFillTakeAwayElement${index + 1}`}
+            index={index}
+            onUpdatePackage={handlePackageUpdate}
+            value={selection}
+          />
+        )
+      );
+
+      takeAwayPackages.current = newTakeAwaysFromSelection;
+      setTakeAways(newTakeAwaysFromSelection);
+      handlePackageUpdate(newTakeAwaysFromSelection);
+    }
+  };
   const handleCategoryDropDownChange = (value: string) => {
     if (value) {
+      console.log("Course category dropdown", value);
       setCourseCategory(value);
     }
   };
@@ -176,9 +207,49 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
   const handleCloseModal = () => {
     props.onModalClose(false);
   };
+
+  const handleCourseDescriptionChanged = (e: any) => {
+    setCourseDescription(e.target.value);
+  };
+
+  const attemptAutofill = async () => {
+    if (url) {
+      try {
+        setAutoCompleteProcessingInProgress(true);
+        setAutoFillMode(true);
+        const autoCompleteData = await getCourseAutoComplete({ url });
+        setCourseTitle(autoCompleteData.title!);
+        setCourseDescription(autoCompleteData.description!);
+        if (autoCompleteData.keyPoints) {
+          createAutoFillTakeAway(autoCompleteData.keyPoints);
+        }
+        const titleTextBox = document.getElementById(
+          "courseTitle"
+        ) as HTMLTextAreaElement;
+        const descriptionTextBox = document.getElementById(
+          "description"
+        ) as HTMLTextAreaElement;
+        if (titleTextBox) {
+          titleTextBox.value = autoCompleteData.title!;
+        }
+        if (descriptionTextBox) {
+          descriptionTextBox.value = autoCompleteData.description!;
+          setCourseDescription(autoCompleteData.description!);
+        }
+        setAutoCompleteProcessingInProgress(false);
+      } catch (err) {
+        console.log("autofill error", err);
+        setAutoFillTextError("Unable to auto-complete with this URL.");
+        setAutoFillErrorShow(true);
+        setAutoCompleteProcessingInProgress(false);
+      }
+    }
+  };
+
   return (
     <div className="Suggest-course__Main-body">
       {submissionInProgress && <ZenSpinner />}
+      {autoCompleteProcessingInProgress && <ZenSpinner />}
       <div className="Suggest-course__margin-body">
         <div className="Suggest-course__Main-header-top-enclosure">
           <img
@@ -189,12 +260,12 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
           />
         </div>
         {submissionErrorState && (
-          <div className="Suggest-course__SubmissionErrors-enclosure">
-            <img src={ErrorAlertIconRed} alt="error" />
-            <div className="Suggest-course__SubmissionError-text error-text">
-              {submissionErrorMessageText}
-            </div>
-          </div>
+          <AlertToast
+            message={submissionErrorMessageText}
+            textClassNames={"error-text"}
+            dismissErrorFunction={setSubmissionErrorState}
+            dismissTextFunction={setSubmissionErrorMessageText}
+          />
         )}
         <div className="Suggest-course__body-main-enclosure">
           <div className="Suggest-course__Window-title-Enclosure">
@@ -220,6 +291,8 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
                   isError={courseTitleErrorState}
                   errorMessages={courseTitleErrorMessages}
                   specialDivClassnames="Suggest-course__text-input-responsive_spacing"
+                  value={title && title.length > 0 ? title : title}
+                  autoFill={autoFillMode}
                 />
                 <StylizedTextInput
                   classNames="right-column-text-margin-left"
@@ -232,6 +305,26 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
                   isError={courseURLErrorState}
                   errorMessages={courseURLErrorMessages}
                 />
+                <div className="AutoGetDetails__encl">
+                  <ActionButton
+                    title="Auto Get details"
+                    action={attemptAutofill}
+                    plusSymbol={false}
+                    disabled={
+                      !(url && url.trim().length > 0 && isURLValid(url)) ||
+                      autoCompleteProcessingInProgress
+                    }
+                  />
+                  {autoFillErrorShow && (
+                    <AlertToast
+                      message={autoFillTextError}
+                      dismissTextFunction={setAutoFillTextError}
+                      dismissErrorFunction={setAutoFillErrorShow}
+                      alertType={AlertType.Error}
+                      textClassNames={"color-red"}
+                    />
+                  )}
+                </div>
               </div>
               <div className="Course-data__section__description__rating left-column-text-margin-left desktop-flex-positioning">
                 <StylizedTextInput
@@ -240,12 +333,12 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
                   labelClassnames="bold"
                   id="description"
                   inputBoxClassNames="open-sans-font-family"
-                  onTextChange={(e: any) =>
-                    setCourseDescription(e.target.value)
-                  }
+                  onTextChange={handleCourseDescriptionChanged}
                   isError={courseDescriptionErrorState}
                   errorMessages={courseDescriptionErrorMessages}
                   specialDivClassnames="Suggest-course-description-responsive"
+                  value={description}
+                  autoFill={autoFillMode}
                 />
                 <StarRating
                   editable={true}
@@ -273,12 +366,17 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
               </div>
               {courseTakeAwayPackagesErrorState &&
                 courseTakeAwayPackagesErrorMessages.map((errorMessage) => (
-                  <div className="TakeAwaySection__error-container display-flex flex-wrap">
-                    <img className="" src={ErrorAlertIconRed} alt="alert" />
-                    <div className="TakeAwaySection__ErrorMessage__text open-sans-font-family font-size-12px left-margin-buffer-10px">
-                      {errorMessage}
-                    </div>
-                  </div>
+                  // <div className="TakeAwaySection__error-container display-flex flex-wrap">
+                  //   <img className="" src={ErrorAlertIconRed} alt="alert" />
+                  //   <div className="TakeAwaySection__ErrorMessage__text open-sans-font-family font-size-12px left-margin-buffer-10px">
+                  //     {errorMessage}
+                  //   </div>
+                  // </div>
+                  <AlertToast
+                    message={errorMessage}
+                    dismissTextFunction={() => {}}
+                    dismissErrorFunction={() => {}}
+                  />
                 ))}
             </header>
             <div className="line-separator"></div>

@@ -113,4 +113,11 @@ export type HtmlExtractionData = {
   title: string | null;
   keyPoints?: string[] | null;
   category?: string | null;
+  provider: CourseProvider;
 };
+
+export enum CourseProvider {
+  Udemy = "udemy",
+  LinkedInLearning = "linkedin",
+  FreeCodeCamp = "freecodecamp",
+}

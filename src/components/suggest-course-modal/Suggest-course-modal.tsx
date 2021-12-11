@@ -229,6 +229,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
         const descriptionTextBox = document.getElementById(
           "description"
         ) as HTMLTextAreaElement;
+
         if (titleTextBox) {
           titleTextBox.value = autoCompleteData.title!;
         }
@@ -236,6 +237,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
           descriptionTextBox.value = autoCompleteData.description!;
           setCourseDescription(autoCompleteData.description!);
         }
+        setCourseTags(autoCompleteData.category!);
         setAutoCompleteProcessingInProgress(false);
       } catch (err) {
         console.log("autofill error", err);
@@ -413,6 +415,7 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
               onTagsChanged={setCourseTags}
               readOnly={false}
               inputBoxClassnames="open-sans-font-family"
+              tags={courseTags}
             />
           </section>
           <div className="line-separator"></div>

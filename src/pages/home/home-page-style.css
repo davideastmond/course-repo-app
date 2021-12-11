@@ -75,10 +75,6 @@ body {
     flex-wrap: wrap;
   }
 
-  .Side-browser-menu-option-label {
-    font-size: 12px;
-  }
-
   .Home-Page__center-column {
     max-height: 70vh;
   }

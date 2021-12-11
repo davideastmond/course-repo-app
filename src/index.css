@@ -329,10 +329,6 @@ h1, h2, h3, h4, h5, h5 {
   font-size: 20px;
 }
 
-.Add-interests-modal__Main-window-body {
-  
-}
-
 .Home-Page__Spinner-Overlay {
   position: absolute;
   width: 100vw;
@@ -515,5 +511,11 @@ h1, h2, h3, h4, h5, h5 {
 
   .Detailed-Course-View__Main-body {
     margin: 5%;
+  }
+  .Side-browser-menu-option-label {
+    word-wrap:break-word;
+    font-size: 16px;
+    font-weight: normal;
+    padding: 15px;
   }
 }

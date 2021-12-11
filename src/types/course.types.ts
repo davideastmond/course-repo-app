@@ -112,7 +112,7 @@ export type HtmlExtractionData = {
   description: string | null;
   title: string | null;
   keyPoints?: string[] | null;
-  category?: string | null;
+  category?: string[] | null;
   provider: CourseProvider;
 };
 

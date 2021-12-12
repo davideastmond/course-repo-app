@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  HtmlExtractionData,
   ICourse,
   ICourseRecommendationSubmission,
   IDetailedCourse,
@@ -45,7 +46,6 @@ export function getAllCourses({
       });
   });
 }
-// export const getAllCourses = async ({
 
 export const getDetailedCourseById = async (
   courseId: string
@@ -119,6 +119,25 @@ export const deleteCourseRecommendation = ({
     .catch((error) => {
       onFail(error);
     });
+};
+
+export const getCourseAutoComplete = async ({
+  url,
+}: {
+  url: string;
+}): Promise<HtmlExtractionData> => {
+  const req = await axios({
+    method: "post",
+    url: `${process.env.REACT_APP_API_URL}/api/utils/courses/auto_complete`,
+    withCredentials: true,
+    headers: AUTH_HEADER,
+    data: { url },
+  });
+  if (req.status === 200) {
+    return req.data as HtmlExtractionData;
+  } else {
+    throw new Error("Unable to do auto complete");
+  }
 };
 
 const sortCoursesByDate = (courses: ICourse[]): ICourse[] => {

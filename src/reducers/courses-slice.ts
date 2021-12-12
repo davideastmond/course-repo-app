@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  deleteCourseRecommendation,
   getAllCourses,
   getDetailedCourseById,
   postCourseRecommendation,

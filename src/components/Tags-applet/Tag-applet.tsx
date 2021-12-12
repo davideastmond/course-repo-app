@@ -14,9 +14,10 @@ interface ITagAppletProps {
 }
 
 function TagApplet(props: ITagAppletProps) {
-  const [contentTags, setContentTags] = useState<string[]>([]);
+  const [contentTags, setContentTags] = useState<string[]>(props.tags || []);
   const [contentTagRawString, setContentTagRawString] = useState<string>("");
 
+  console.log("Body, content tags", props.tags);
   const handleContentTags = (e?: any) => {
     if (contentTagRawString) {
       const splitTags = getArrayOfInterestTagsFromString(contentTagRawString);
@@ -31,6 +32,7 @@ function TagApplet(props: ITagAppletProps) {
   };
 
   const handleContentTagRawStringChange = (e: any) => {
+    console.log(e.target.value);
     if (e.target.value) {
       setContentTagRawString(e.target.value.trim());
     }
@@ -49,6 +51,12 @@ function TagApplet(props: ITagAppletProps) {
   };
   useEffect(() => {
     if (props.readOnly && props.tags && props.tags.length > 0) {
+      setContentTags(props.tags);
+    }
+  });
+
+  useEffect(() => {
+    if (props.tags) {
       setContentTags(props.tags);
     }
   });

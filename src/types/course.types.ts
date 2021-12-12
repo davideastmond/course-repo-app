@@ -32,6 +32,7 @@ export enum CourseCategory {
   PersonalDevelopment = "personal_development",
   FinanceAccounting = "finance_accounting",
   TeachingAcademics = "teaching_academics",
+  ArtsHumanities = "arts_humanities",
 }
 
 export const COURSE_CATEGORY_COLOR: { [key in CourseCategory]: string } = {
@@ -49,6 +50,7 @@ export const COURSE_CATEGORY_COLOR: { [key in CourseCategory]: string } = {
   [CourseCategory.PersonalDevelopment]: "course-category-color-blue",
   [CourseCategory.FinanceAccounting]: "course-category-color-green",
   [CourseCategory.TeachingAcademics]: "course-category-color-rose",
+  [CourseCategory.ArtsHumanities]: "course-category-color-blue",
 };
 
 export const COURSE_CATEGORY_FRIENDLY_DICTIONARY: {
@@ -68,6 +70,7 @@ export const COURSE_CATEGORY_FRIENDLY_DICTIONARY: {
   [CourseCategory.PersonalDevelopment]: "Personal Development",
   [CourseCategory.FinanceAccounting]: "Finance & Accounting",
   [CourseCategory.TeachingAcademics]: "Teaching & Academics",
+  [CourseCategory.ArtsHumanities]: "Arts & Humanities",
 };
 
 export interface ICourseRecommendationPost {
@@ -106,4 +109,20 @@ export interface ICourseRecommendationSubmission {
   category: string;
   tags: string[];
   notes: ICourseRecommendationTakeAwayPackage;
+}
+
+export type HtmlExtractionData = {
+  description: string | null;
+  title: string | null;
+  keyPoints?: string[] | null;
+  category?: string[] | null;
+  provider: CourseProvider;
+};
+
+export enum CourseProvider {
+  Udemy = "udemy",
+  LinkedInLearning = "linkedin",
+  FreeCodeCamp = "freecodecamp",
+  Coursera = "coursera",
+  Edx = "edx",
 }

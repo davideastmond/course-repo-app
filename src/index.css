@@ -350,6 +350,16 @@ h1, h2, h3, h4, h5, h5 {
   margin: unset;
 }
 
+.side-browser-overlay {
+  position: absolute;
+  background-color: white;
+  box-shadow: 2px 2px 10px 2px #d9d9d9;
+  display: block;
+  flex-wrap: wrap;
+  width: 100%;
+  left: 0px;
+}
+
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;
@@ -517,5 +527,13 @@ h1, h2, h3, h4, h5, h5 {
     font-size: 16px;
     font-weight: normal;
     padding: 15px;
+  }
+
+  .side-browser-overlay {
+    position: unset;
+    background-color: white;
+    box-shadow: unset;
+    display: block;
+    width: 100%;
   }
 }

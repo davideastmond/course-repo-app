@@ -8,9 +8,23 @@ interface IActionButtonProps {
   action?: () => void;
   classNames?: string;
   titleClassNames?: string;
+  disabled?: boolean;
 }
 function ActionButton(props: IActionButtonProps) {
-  return (
+  return props.disabled && props.disabled === true ? (
+    <div className={`Action-button__main ${props.classNames || ""}`}>
+      <div className={`Action-button__plus-arrow center-buttons`}>
+        {props.plusSymbol && <img alt="add button" src={AddPlusArrow}></img>}
+      </div>
+      <div
+        className={`Action-button__text center-buttons button-padding text-button-disabled ${
+          props.titleClassNames ? props.titleClassNames : ""
+        }`}
+      >
+        {props.title}
+      </div>
+    </div>
+  ) : (
     <div
       className={`Action-button__main ${props.classNames || ""}`}
       onClick={props.action}
@@ -19,7 +33,7 @@ function ActionButton(props: IActionButtonProps) {
         {props.plusSymbol && <img alt="add button" src={AddPlusArrow}></img>}
       </div>
       <div
-        className={`Action-button__text center-buttons button-padding ${
+        className={`Action-button__text center-buttons button-padding text-button-enabled${
           props.titleClassNames ? props.titleClassNames : ""
         }`}
       >

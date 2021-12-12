@@ -30,7 +30,7 @@
   align-self: center;
 }
 
-.Action-button__main:hover {
+.text-button-enabled:hover {
   cursor: pointer;
 }
 

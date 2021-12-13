@@ -84,7 +84,7 @@ export const coursesSlice = createSlice({
         state.courses = [...state.courses, ...action.payload];
       })
       .addCase(getAllCoursesAsync.rejected, (state) => {
-        stateStatus.error(state, "unable to get courses");
+        stateStatus.error(state, "Unable to get courses");
       })
       .addCase(postCourseRecommendationAsync.pending, (state) => {
         stateStatus.loading(state, "posting course");
@@ -94,7 +94,7 @@ export const coursesSlice = createSlice({
         state.courses = action.payload;
       })
       .addCase(postCourseRecommendationAsync.rejected, (state) => {
-        stateStatus.error(state, "unable to post courses");
+        stateStatus.error(state, "Unable to post courses");
       })
       .addCase(getDetailedCourseByIdAsync.pending, (state) => {
         stateStatus.loading(state, "getting course...");
@@ -132,6 +132,9 @@ export const selectSkip = (state: any) => {
   return state.courses.courses.length;
 };
 
+export const selectCourseStateStatus = (state: any) => {
+  return state.courses.status;
+};
 export const { setCourseFilter, clearCurrentCourseContext } =
   coursesSlice.actions;
 export default coursesSlice.reducer;

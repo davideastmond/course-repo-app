@@ -18,6 +18,7 @@ import {
   getLoggedInUserAsync,
   logOutAsync,
   selectAllCourses,
+  selectCourseStateStatus,
   selectCurrentCourseContext,
   selectIsLoggedIn,
   selectLoggedInUser,
@@ -26,9 +27,13 @@ import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
 
 import "./home-page-style.css";
+import { StatusState } from "../../utils/state-status";
+import AlertToast from "../../components/alert-toast";
+import { AlertType } from "../../components/alert-toast/types";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
+  const courseErrorState = useSelector(selectCourseStateStatus, shallowEqual);
   const currentCourseContext = useSelector(
     selectCurrentCourseContext,
     shallowEqual
@@ -113,9 +118,15 @@ function HomePage() {
     });
   }, [courses]);
 
+  console.log("Course error state", courseErrorState);
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
+        <div className="Home-Page__Spinner-Overlay">
+          <ZenSpinner />
+        </div>
+      )}
+      {courseErrorState && courseErrorState.state === StatusState.Loading && (
         <div className="Home-Page__Spinner-Overlay">
           <ZenSpinner />
         </div>
@@ -131,6 +142,15 @@ function HomePage() {
         <div className="Home-Page__middle-section">
           <SideBrowser />
           <div className="Home-Page__center-column">
+            {courseErrorState &&
+              courseErrorState.state === StatusState.Error && (
+                <AlertToast
+                  message={`Server error: ${courseErrorState.error}`}
+                  alertType={AlertType.Error}
+                  textClassNames="error-text"
+                  classNames="justify-center"
+                />
+              )}
             {courses && (
               <DataContainer
                 courses={courses}

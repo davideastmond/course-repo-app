@@ -6,15 +6,15 @@ interface IErrorMessageProps {
   classNames?: string;
   textClassNames?: string;
   message: string;
-  dismissTextFunction: (message: string) => void;
-  dismissErrorFunction: (show: boolean) => void;
+  dismissTextFunction?: (message: string) => void;
+  dismissErrorFunction?: (show: boolean) => void;
   alertType?: AlertType;
 }
 
 const ErrorMessage = (props: IErrorMessageProps) => {
   const handleDismiss = () => {
-    props.dismissErrorFunction(false);
-    props.dismissTextFunction("");
+    props.dismissErrorFunction && props.dismissErrorFunction(false);
+    props.dismissTextFunction && props.dismissTextFunction("");
   };
   return (
     <div

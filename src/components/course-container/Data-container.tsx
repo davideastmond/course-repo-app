@@ -1,5 +1,7 @@
 import React from "react";
 import { ICourse, IProcessedUser } from "../../types";
+import AlertToast from "../alert-toast";
+import { AlertType } from "../alert-toast/types";
 import CourseCard from "../course-card";
 import ProfileView from "../Profile-view";
 import "./data-container-style.css";
@@ -29,7 +31,12 @@ function DataContainer(props: IDataContainerProps) {
           />
         ))}
       {props.courses && props.courses.length === 0 && (
-        <div className="Courses-Empty-list">No courses to display</div>
+        <>
+          <div className="Courses-Empty-list">
+            {/* <AlertToast message="Can't connect to server" alertType={AlertType.Error} classNames="justify-center" textClassNames="error-text" dismissTextFunction={()=> {}} dismissErrorFunction={()=> {}}/> */}
+            No courses to display
+          </div>
+        </>
       )}
       {props.users && props.users.length === 0 && (
         <div className="Courses-Empty-list">No users to display</div>

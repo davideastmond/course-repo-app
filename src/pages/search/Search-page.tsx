@@ -16,12 +16,16 @@ import StylizedTextInput from "../../components/stylized-text-input";
 import {
   performSearchAsync,
   selectSearchResults,
+  selectSearchStatus,
   selectSearchString,
   setSearchString,
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 import doGoogleLogin from "../../services/auth";
 import ZenSpinner from "../../components/Spinner";
+import { StatusState } from "../../utils/state-status";
+import { AlertType } from "../../components/alert-toast/types";
+import AlertToast from "../../components/alert-toast";
 
 enum SearchResultFilterSetting {
   Courses = 0,
@@ -32,7 +36,7 @@ function SearchPage() {
     SearchResultFilterSetting.Courses
   );
   const [done, setDone] = useState<boolean>(false);
-
+  const searchErrorStatus = useSelector(selectSearchStatus, shallowEqual);
   const [spinnerOn, setSpinnerOn] = useState<boolean>(false);
   const [, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
@@ -79,9 +83,8 @@ function SearchPage() {
 
   const handleSearchTextBoxChange = (e: any) => {
     const queryString = e.target.value;
-    if (queryString) {
+    if (queryString && queryString.trim()) {
       dispatch(setSearchString(queryString));
-      setSpinnerOn(true);
       setTimer(true);
     }
   };
@@ -99,14 +102,16 @@ function SearchPage() {
   };
 
   useEffect(() => {
-    dispatch(
-      performSearchAsync({
-        searchQuery: searchString,
-        onCompleted: handleOnCompleted,
-      })
-    );
-    setSpinnerOn(true);
-    setTimer(true);
+    if (searchString && searchString.trim() !== "") {
+      dispatch(
+        performSearchAsync({
+          searchQuery: searchString,
+          onCompleted: handleOnCompleted,
+        })
+      );
+      setSpinnerOn(true);
+      setTimer(true);
+    }
   }, [searchString]);
 
   useEffect(() => {
@@ -160,6 +165,15 @@ function SearchPage() {
             )}
           </div>
           <div className="Search-Page__search-results-container">
+            {searchErrorStatus &&
+              searchErrorStatus.state === StatusState.Error && (
+                <AlertToast
+                  message={`Server error: ${searchErrorStatus.error}`}
+                  alertType={AlertType.Error}
+                  textClassNames="error-text"
+                  classNames="justify-center"
+                />
+              )}
             {filterSetting === SearchResultFilterSetting.Courses && (
               <DataContainer
                 courses={searchResults.courses ? searchResults.courses : []}

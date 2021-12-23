@@ -4,8 +4,11 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../../components/header-bar";
 import {
   checkIsAuthedAsync,
+  clearCurrentCourseContext,
+  getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
+  selectCurrentCourseContext,
   selectIsLoggedIn,
   selectLoggedInUser,
 } from "../../reducers";
@@ -26,6 +29,9 @@ import ZenSpinner from "../../components/Spinner";
 import { StatusState } from "../../utils/state-status";
 import { AlertType } from "../../components/alert-toast/types";
 import AlertToast from "../../components/alert-toast";
+import { ModalType } from "../../types/modal.types";
+import ProfileView from "../../components/Profile-view";
+import DetailedCourseViewModal from "../../components/detailed-course-view-modal";
 
 enum SearchResultFilterSetting {
   Courses = 0,
@@ -41,9 +47,16 @@ function SearchPage() {
   const [, setErrorMessage] = useState<string>("");
   const dispatch = useDispatch();
   const userData = useSelector(selectLoggedInUser, shallowEqual);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
   const isLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
   const searchResults = useSelector(selectSearchResults, shallowEqual);
   const searchString = useSelector(selectSearchString, shallowEqual);
+  const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
+  const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const currentCourseContext = useSelector(
+    selectCurrentCourseContext,
+    shallowEqual
+  );
   const handleGoogleLogin = () => {
     doGoogleLogin({ setDone, setErrorMessage });
     setAuthInProgress(true);
@@ -100,6 +113,25 @@ function SearchPage() {
       clearInterval(timer);
     }
   };
+  const handleModalClosed = () => {
+    setModalVisible(false);
+    setModalType(ModalType.nullModal);
+    dispatch(clearCurrentCourseContext());
+    document.body.classList.remove("no-body-scroll");
+  };
+
+  const handleGenericUserProfileClick = (id: string) => {
+    if (id) {
+      setProfileDetailUserId(id);
+      setModalType(ModalType.ProfileDetailView);
+      setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
+    }
+  };
+
+  const handleCourseCardClickedSearchPage = (id: string) => {
+    dispatch(getDetailedCourseByIdAsync({ id }));
+  };
 
   useEffect(() => {
     if (searchString && searchString.trim() !== "") {
@@ -127,6 +159,13 @@ function SearchPage() {
       window.location.reload();
     }
   }, [done]);
+  useEffect(() => {
+    if (currentCourseContext) {
+      setModalType(ModalType.DetailedCourseView);
+      setModalVisible(true);
+      document.body.classList.add("no-body-scroll");
+    }
+  });
 
   return (
     <div className="Search-Page__container">
@@ -177,14 +216,14 @@ function SearchPage() {
             {filterSetting === SearchResultFilterSetting.Courses && (
               <DataContainer
                 courses={searchResults.courses ? searchResults.courses : []}
-                genericUserProfileClickHandler={() => {}}
-                courseCardClickHandler={() => {}}
+                genericUserProfileClickHandler={handleGenericUserProfileClick}
+                courseCardClickHandler={handleCourseCardClickedSearchPage}
               />
             )}
             {filterSetting === SearchResultFilterSetting.Users && (
               <DataContainer
                 users={searchResults.users ? searchResults.users : []}
-                genericUserProfileClickHandler={() => {}}
+                genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={() => {}}
               />
             )}
@@ -192,6 +231,23 @@ function SearchPage() {
         </div>
         {/* <div className="column-width-40vw"></div> */}
       </div>
+      {modalVisible && modalType === ModalType.ProfileDetailView && (
+        <div className="Page-Modal">
+          <ProfileView
+            onModalClose={handleModalClosed}
+            userId={profileDetailUserId}
+            closeButtonVisible={true}
+          />
+        </div>
+      )}
+      {modalVisible && modalType === ModalType.DetailedCourseView && (
+        <div className="Page-Modal">
+          <DetailedCourseViewModal
+            courseContext={currentCourseContext}
+            onModalClose={handleModalClosed}
+          />
+        </div>
+      )}
     </div>
   );
 }

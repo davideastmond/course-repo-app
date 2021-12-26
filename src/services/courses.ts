@@ -172,3 +172,20 @@ const sortCoursesByInterest = ({
     return 0;
   });
 };
+
+export const toggleCourseLike = async ({
+  id,
+}: {
+  id: string;
+}): Promise<{ courses: ICourse[]; actionTaken: string }> => {
+  const req = await axios({
+    withCredentials: true,
+    method: "PATCH",
+    url: `${API_URL}/api/courses/${id}/like`,
+    headers: AUTH_HEADER,
+  });
+  if (req.status === 200) {
+    return req.data;
+  }
+  return Promise.reject("Unable to toggle like");
+};

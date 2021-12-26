@@ -57,3 +57,7 @@
 .Course-Card__title-link_enclosure {
   display: flex;
 }
+
+.Course-card__likesFooter-section {
+  float: right;
+}

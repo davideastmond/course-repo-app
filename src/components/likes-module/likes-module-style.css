@@ -1,0 +1,12 @@
+.flex-container {
+  display: flex;
+}
+
+.small-heart-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.small-heart-icon {
+  color: red;
+}

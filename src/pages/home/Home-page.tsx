@@ -21,7 +21,9 @@ import {
   selectCourseStateStatus,
   selectCurrentCourseContext,
   selectIsLoggedIn,
+  selectLikeInProgress,
   selectLoggedInUser,
+  toggleCourseLikeAsync,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
@@ -33,6 +35,7 @@ import { AlertType } from "../../components/alert-toast/types";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
+  const likeInProgress = useSelector(selectLikeInProgress, shallowEqual);
   const courseErrorState = useSelector(selectCourseStateStatus, shallowEqual);
   const currentCourseContext = useSelector(
     selectCurrentCourseContext,
@@ -118,7 +121,10 @@ function HomePage() {
     });
   }, [courses]);
 
-  console.log("Course error state", courseErrorState);
+  const handleDataContainerCourseToggle = (courseId: string) => {
+    dispatch(toggleCourseLikeAsync({ id: courseId }));
+  };
+
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -126,11 +132,13 @@ function HomePage() {
           <ZenSpinner />
         </div>
       )}
-      {courseErrorState && courseErrorState.state === StatusState.Loading && (
-        <div className="Home-Page__Spinner-Overlay">
-          <ZenSpinner />
-        </div>
-      )}
+      {courseErrorState &&
+        courseErrorState.state === StatusState.Loading &&
+        !likeInProgress && (
+          <div className="Home-Page__Spinner-Overlay">
+            <ZenSpinner />
+          </div>
+        )}
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
         logOutAction={handleLogOut}
@@ -153,9 +161,12 @@ function HomePage() {
               )}
             {courses && (
               <DataContainer
+                loggedInUser={userData}
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
+                showCourseCardLikes={true}
+                onCourseLikeToggle={handleDataContainerCourseToggle}
               />
             )}
           </div>

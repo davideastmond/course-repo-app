@@ -215,16 +215,20 @@ function SearchPage() {
               )}
             {filterSetting === SearchResultFilterSetting.Courses && (
               <DataContainer
+                loggedInUser={userData}
                 courses={searchResults.courses ? searchResults.courses : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={handleCourseCardClickedSearchPage}
+                showCourseCardLikes={true}
               />
             )}
             {filterSetting === SearchResultFilterSetting.Users && (
               <DataContainer
+                loggedInUser={userData}
                 users={searchResults.users ? searchResults.users : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={() => {}}
+                showCourseCardLikes={true}
               />
             )}
           </div>

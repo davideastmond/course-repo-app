@@ -12,12 +12,16 @@ import {
 import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import dayjs from "dayjs";
+import LikesModule from "../likes-module";
 
 interface ICourseCardProps {
   color?: string | CourseCategory;
   course: ICourse;
   courseCardClickHandler: (id: string) => void;
   genericUserProfileClickHandler: (id: string) => void;
+  onLikeClicked?: (courseId: string) => void;
+  showLikes: boolean;
+  isLikedByUser?: boolean;
 }
 
 function CourseCard(props: ICourseCardProps) {
@@ -42,6 +46,22 @@ function CourseCard(props: ICourseCardProps) {
     if (userName && userName[props.course.postedByUserId]) {
       props.genericUserProfileClickHandler(props.course.postedByUserId);
     }
+  };
+
+  const handleCourseCardClickedLikeButton = () => {
+    if (props.showLikes) {
+      props.onLikeClicked && props.onLikeClicked(props.course._id);
+    }
+  };
+
+  const getLikesCount = ({
+    data,
+  }: {
+    data: { [keyof: string]: string } | null;
+  }): number => {
+    if (data) {
+      return Object.keys(data).length;
+    } else return 0;
   };
 
   return (
@@ -99,6 +119,16 @@ function CourseCard(props: ICourseCardProps) {
             props.course.tags.map((tag, index) => (
               <ContentTag title={tag} key={`${index}_${tag}`} />
             ))}
+        </div>
+        <div className="Course-card__likesFooter-section">
+          {props.showLikes && (
+            <LikesModule
+              checked={!!props.isLikedByUser}
+              likesCount={getLikesCount({ data: props.course.likes })}
+              forCourseId={props.course._id}
+              onLikeButtonClicked={handleCourseCardClickedLikeButton}
+            />
+          )}
         </div>
       </div>
     </div>

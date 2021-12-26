@@ -13,6 +13,7 @@ export interface IUser {
   updatedAt: Date;
   department: string;
   interestTags: string[];
+  likes: { [keyof: string]: string };
 }
 
 export interface IProcessedUser {
@@ -26,4 +27,5 @@ export interface IProcessedUser {
   updatedAt: Date;
   department: string;
   interestTags: string[];
+  likes: { [keyof: string]: string };
 }

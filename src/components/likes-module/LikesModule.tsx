@@ -32,9 +32,9 @@ const HeartContainer = ({
 
 const getLikesCountText = ({ likesCount }: { likesCount: number }): string => {
   if (likesCount === 1) {
-    return "1 like";
+    return "1";
   } else if (likesCount > 1) {
-    return `${likesCount} likes`;
+    return `${likesCount}`;
   }
   return "";
 };
@@ -56,7 +56,7 @@ function LikesModule(props: ILikesModuleProps) {
             heartContainerClassNames: props.heartContainerClassNames,
           })}
         </div>
-        <div className="LikesModuleMain_likes-text color-light-grey">
+        <div className="LikesModuleMain_likes-text likes-text-spacing color-light-grey">
           {getLikesCountText({ likesCount: props.likesCount })}
         </div>
       </div>

@@ -215,7 +215,6 @@ function SearchPage() {
               )}
             {filterSetting === SearchResultFilterSetting.Courses && (
               <DataContainer
-                loggedInUser={userData}
                 courses={searchResults.courses ? searchResults.courses : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={handleCourseCardClickedSearchPage}
@@ -224,7 +223,6 @@ function SearchPage() {
             )}
             {filterSetting === SearchResultFilterSetting.Users && (
               <DataContainer
-                loggedInUser={userData}
                 users={searchResults.users ? searchResults.users : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={() => {}}
@@ -249,6 +247,8 @@ function SearchPage() {
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
+            showLikes={true}
+            onLikeClicked={() => {}}
           />
         </div>
       )}

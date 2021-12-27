@@ -298,6 +298,8 @@ export const UserCourseSummaryTable = ({
                 <DetailedCourseViewModal
                   courseContext={courseContextData}
                   onModalClose={handleDetailedCourseModalClose}
+                  showLikes={true}
+                  onLikeClicked={() => {}}
                 />
               )}
             </div>

@@ -364,6 +364,10 @@ h1, h2, h3, h4, h5, h5 {
   left: 0px;
 }
 
+.likes-module-float-right {
+  float: right;
+}
+
 @media only screen and (max-width: 1676px) {
   .Profile-page__Welcome-message-enclosure__mobile {
     display: block;

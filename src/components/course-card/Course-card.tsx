@@ -13,6 +13,7 @@ import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import dayjs from "dayjs";
 import LikesModule from "../likes-module";
+import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
 
 interface ICourseCardProps {
   color?: string | CourseCategory;
@@ -52,16 +53,6 @@ function CourseCard(props: ICourseCardProps) {
     if (props.showLikes) {
       props.onLikeClicked && props.onLikeClicked(props.course._id);
     }
-  };
-
-  const getLikesCount = ({
-    data,
-  }: {
-    data: { [keyof: string]: string } | null;
-  }): number => {
-    if (data) {
-      return Object.keys(data).length;
-    } else return 0;
   };
 
   return (
@@ -120,16 +111,16 @@ function CourseCard(props: ICourseCardProps) {
               <ContentTag title={tag} key={`${index}_${tag}`} />
             ))}
         </div>
-        <div className="Course-card__likesFooter-section">
-          {props.showLikes && (
+        {props.showLikes && (
+          <div className="Course-card__likesFooter-section">
             <LikesModule
               checked={!!props.isLikedByUser}
               likesCount={getLikesCount({ data: props.course.likes })}
               forCourseId={props.course._id}
               onLikeButtonClicked={handleCourseCardClickedLikeButton}
             />
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </div>
   );

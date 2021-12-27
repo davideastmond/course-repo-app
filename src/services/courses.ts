@@ -177,7 +177,11 @@ export const toggleCourseLike = async ({
   id,
 }: {
   id: string;
-}): Promise<{ courses: ICourse[]; actionTaken: string }> => {
+}): Promise<{
+  courses: ICourse[];
+  actionTaken: string;
+  courseChanged: ICourse;
+}> => {
   const req = await axios({
     withCredentials: true,
     method: "PATCH",

@@ -20,6 +20,7 @@ import {
   selectAllCourses,
   selectCourseStateStatus,
   selectCurrentCourseContext,
+  selectCurrentCourseContextLike,
   selectIsLoggedIn,
   selectLikeInProgress,
   selectLoggedInUser,
@@ -32,6 +33,7 @@ import "./home-page-style.css";
 import { StatusState } from "../../utils/state-status";
 import AlertToast from "../../components/alert-toast";
 import { AlertType } from "../../components/alert-toast/types";
+import { deepEqual, deepStrictEqual } from "assert";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
@@ -39,6 +41,10 @@ function HomePage() {
   const courseErrorState = useSelector(selectCourseStateStatus, shallowEqual);
   const currentCourseContext = useSelector(
     selectCurrentCourseContext,
+    shallowEqual
+  );
+  const currentContextLike = useSelector(
+    selectCurrentCourseContextLike,
     shallowEqual
   );
   const [done, setDone] = useState<boolean>(false);
@@ -81,7 +87,8 @@ function HomePage() {
       setModalVisible(true);
       document.body.classList.add("no-body-scroll");
     }
-  });
+  }, [currentCourseContext]);
+  useEffect(() => {}, [currentCourseContext]);
 
   useEffect(() => {
     if (modalVisible) {
@@ -121,7 +128,7 @@ function HomePage() {
     });
   }, [courses]);
 
-  const handleDataContainerCourseToggle = (courseId: string) => {
+  const handleDataContainerCourseToggleLike = (courseId: string) => {
     dispatch(toggleCourseLikeAsync({ id: courseId }));
   };
 
@@ -161,12 +168,11 @@ function HomePage() {
               )}
             {courses && (
               <DataContainer
-                loggedInUser={userData}
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
-                showCourseCardLikes={true}
-                onCourseLikeToggle={handleDataContainerCourseToggle}
+                showCourseCardLikes={isLoggedIn}
+                onCourseLikeToggle={handleDataContainerCourseToggleLike}
               />
             )}
           </div>
@@ -203,6 +209,9 @@ function HomePage() {
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
+            onLikeClicked={handleDataContainerCourseToggleLike}
+            showLikes={isLoggedIn}
+            currentCourseContextLike={currentContextLike}
           />
         </div>
       )}

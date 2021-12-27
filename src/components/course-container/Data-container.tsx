@@ -1,4 +1,7 @@
+import { shallowEqual, useSelector } from "react-redux";
+import { selectLoggedInUser } from "../../reducers";
 import { ICourse, IProcessedUser } from "../../types";
+import { getIsLikedByLoggedInUser } from "../../utils/course-recommendation/is-liked-by-logged-in-user";
 import CourseCard from "../course-card";
 import ProfileView from "../Profile-view";
 import "./data-container-style.css";
@@ -7,7 +10,6 @@ interface IDataContainerProps {
   classNames?: string;
   courses?: ICourse[];
   users?: IProcessedUser[];
-  loggedInUser?: IProcessedUser;
   courseCardClickHandler: (id: string) => void;
   genericUserProfileClickHandler: (id: string) => void;
   showCourseCardLikes: boolean;
@@ -15,22 +17,10 @@ interface IDataContainerProps {
 }
 
 function DataContainer(props: IDataContainerProps) {
-  const getIsLikedByLoggedInUser = ({
-    course,
-  }: {
-    course: ICourse;
-  }): boolean => {
-    return !!(
-      props.loggedInUser &&
-      props.loggedInUser._id &&
-      course &&
-      course.likes &&
-      course.likes[props.loggedInUser._id]
-    );
-  };
+  const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
 
   const dataContainerHandleCourseLikeClicked = (courseId: string) => {
-    if (props.loggedInUser && props.loggedInUser._id) {
+    if (loggedInUser && loggedInUser._id) {
       props.onCourseLikeToggle && props.onCourseLikeToggle(courseId);
     }
   };
@@ -46,7 +36,7 @@ function DataContainer(props: IDataContainerProps) {
               courseCardClickHandler: props.courseCardClickHandler,
               genericUserProfileClickHandler:
                 props.genericUserProfileClickHandler,
-              isLikedByUser: getIsLikedByLoggedInUser({ course }),
+              isLikedByUser: getIsLikedByLoggedInUser({ loggedInUser, course }),
               onLikeClicked: dataContainerHandleCourseLikeClicked,
               showLikes: props.showCourseCardLikes,
             }}

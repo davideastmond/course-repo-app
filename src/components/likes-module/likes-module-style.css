@@ -1,5 +1,7 @@
 .flex-container {
   display: flex;
+  justify-content: flex-end;
+  margin-right: 1rem;
 }
 
 .small-heart-icon {
@@ -9,4 +11,12 @@
 
 .small-heart-icon {
   color: red;
+}
+
+.HeartContainerImage_main:hover {
+  cursor: pointer;
+}
+
+.likes-text-spacing {
+  margin-left: 0.4rem;
 }

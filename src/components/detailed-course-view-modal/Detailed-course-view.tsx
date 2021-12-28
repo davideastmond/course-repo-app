@@ -16,7 +16,7 @@ interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
   onModalClose: (visible: boolean) => void;
   showLikes: boolean;
-  onLikeClicked?: (courseId: string) => void;
+  onCourseLikeClicked?: (courseId: string) => void;
   currentCourseContextLike?: ICourse;
 }
 
@@ -159,7 +159,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
                 data: props.currentCourseContextLike?.likes,
               })}
               forCourseId={props.courseContext._id}
-              onLikeButtonClicked={props.onLikeClicked}
+              onLikeButtonClicked={props.onCourseLikeClicked}
               classNames="bottom-margin"
             />
           </div>

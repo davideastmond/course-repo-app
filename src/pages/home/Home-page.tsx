@@ -209,7 +209,7 @@ function HomePage() {
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
-            onLikeClicked={handleDataContainerCourseToggleLike}
+            onCourseLikeClicked={handleDataContainerCourseToggleLike}
             showLikes={isLoggedIn}
             currentCourseContextLike={currentContextLike}
           />
@@ -221,6 +221,8 @@ function HomePage() {
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
             closeButtonVisible={true}
+            onCourseLikeClicked={handleDataContainerCourseToggleLike}
+            courseContext={currentCourseContext}
           />
         </div>
       )}

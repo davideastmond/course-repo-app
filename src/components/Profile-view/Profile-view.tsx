@@ -9,7 +9,7 @@ import "./profile-view-style.css";
 import "../../pages/profile/profile-page-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-import { ICourse, IProcessedUser } from "../../types";
+import { ICourse, IDetailedCourse, IProcessedUser } from "../../types";
 import { ModalType } from "../../types/modal.types";
 import { UserCourseSummaryTable } from "./User-course-summary-list";
 import CourseSummaryListModal from "../CourseSummaryListModal";
@@ -19,6 +19,8 @@ export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
   onModalClose?: (visible: boolean) => void;
+  onCourseLikeClicked?: (courseId: string) => void;
+  courseContext?: IDetailedCourse;
 }
 
 function ProfileView(props: IProfileViewProps) {
@@ -85,6 +87,7 @@ function ProfileView(props: IProfileViewProps) {
   const handleUserCourseSummaryTableCoursesChanged = () => {
     getCourseRecommendations();
   };
+
   return (
     <div className="Profile-view__Main__Window">
       <div className="Profile-view__Main__container window-padding-1p">
@@ -177,6 +180,7 @@ function ProfileView(props: IProfileViewProps) {
                     : courseRecommendations.length
                 }
                 onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+                onCourseLikeClicked={props.onCourseLikeClicked}
               />
               {courseRecommendations && courseRecommendations.length >= 3 && (
                 <div
@@ -198,6 +202,8 @@ function ProfileView(props: IProfileViewProps) {
             userData={userData}
             editable={isLoggedInUser}
             onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+            onCourseLikeClicked={props.onCourseLikeClicked}
+            courseContext={props.courseContext}
           />
         </div>
       )}

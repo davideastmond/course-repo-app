@@ -248,7 +248,7 @@ function SearchPage() {
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
             showLikes={true}
-            onLikeClicked={() => {}}
+            onCourseLikeClicked={() => {}}
           />
         </div>
       )}

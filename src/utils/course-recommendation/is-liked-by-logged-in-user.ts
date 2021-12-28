@@ -7,11 +7,14 @@ export const getIsLikedByLoggedInUser = ({
   loggedInUser: IProcessedUser;
   course: ICourse | undefined;
 }): boolean => {
-  return !!(
+  const isLiked = !!(
     loggedInUser &&
     loggedInUser._id &&
     course &&
     course.likes &&
     course.likes[loggedInUser._id]
   );
+  console.log("course", course);
+  console.log("18 - isLiked?", isLiked);
+  return isLiked;
 };

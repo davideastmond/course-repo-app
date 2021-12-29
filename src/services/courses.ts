@@ -29,22 +29,26 @@ export function getAllCourses({
     })
       .then((req) => {
         const courses = req.data as ICourse[];
-        getUserInterests("me")
-          .then((interestTags) => {
-            if (interestTags && interestTags.length > 0) {
-              resolve(sortCoursesByInterest({ courses, interestTags }));
-            } else {
-              resolve(sortCoursesByDate(courses));
-            }
-          })
-          .catch(() => {
-            resolve(sortCoursesByDate(courses));
-          });
+        resolve(sortCoursesByInterestsAndDate(courses));
       })
       .catch((error) => {
         reject(new Error("Unable to fetch"));
       });
   });
+}
+
+async function sortCoursesByInterestsAndDate(
+  courses: ICourse[]
+): Promise<ICourse[]> {
+  try {
+    const interestTags = await getUserInterests("me");
+    if (interestTags && interestTags.length > 0) {
+      return sortCoursesByInterest({ courses, interestTags });
+    }
+    return sortCoursesByDate(courses);
+  } catch (exception) {
+    return sortCoursesByDate(courses);
+  }
 }
 
 export const getDetailedCourseById = async (
@@ -189,7 +193,8 @@ export const toggleCourseLike = async ({
     headers: AUTH_HEADER,
   });
   if (req.status === 200) {
-    return req.data;
+    const sortedCourses = await sortCoursesByInterestsAndDate(req.data.courses);
+    return { ...req.data, courses: sortedCourses };
   }
   return Promise.reject("Unable to toggle like");
 };

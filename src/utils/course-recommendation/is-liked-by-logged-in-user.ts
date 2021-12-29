@@ -14,7 +14,5 @@ export const getIsLikedByLoggedInUser = ({
     course.likes &&
     course.likes[loggedInUser._id]
   );
-  console.log("course", course);
-  console.log("18 - isLiked?", isLiked);
   return isLiked;
 };

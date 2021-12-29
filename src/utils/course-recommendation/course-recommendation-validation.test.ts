@@ -40,8 +40,8 @@ describe("course recommendation validation tests", () => {
     const result = validateCourseRecommendation(MOCK_DATA);
     expect(result.validated).toBe(true);
     expect(result.invalidFields).toEqual({});
-    expect(result.output).toHaveProperty("courseRating");
-    expect(result.output).toHaveProperty("courseTitle");
+    expect(result.output).toHaveProperty("rating");
+    expect(result.output).toHaveProperty("title");
     expect(result.output).toHaveProperty("notes");
     expect(
       (result.output as ICourseRecommendationSubmission).notes[0].takeAways[1]

@@ -100,6 +100,7 @@ export const appSlice = createSlice({
         stateStatus.idle(state);
         state.user = {};
         state.isLoggedIn = false;
+        window?.sessionStorage.clear();
       })
       .addCase(updateUserJobTitleDepartmentAsync.pending, (state) => {
         stateStatus.loading(state, "Updating user profile data");

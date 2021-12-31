@@ -33,7 +33,6 @@ import "./home-page-style.css";
 import { StatusState } from "../../utils/state-status";
 import AlertToast from "../../components/alert-toast";
 import { AlertType } from "../../components/alert-toast/types";
-import { deepEqual, deepStrictEqual } from "assert";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);

@@ -5,9 +5,8 @@ import {
   CourseCategory,
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,
   ICourse,
-  IDetailedCourse,
 } from "../../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ModalType } from "../../types/modal.types";
 import DetailedCourseViewModal from "../detailed-course-view-modal";
 import { deleteCourseRecommendation } from "../../services/courses";
@@ -130,9 +129,6 @@ export const UserCourseSummaryTable = ({
 }: IUserCourseSummaryTableProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
-  const [courseContextData, setCourseContextData] = useState<
-    IDetailedCourse | undefined | null
-  >(undefined);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [checkBoxes, setCheckBoxes] = useState<boolean[]>(
     courseRecommendations.map(() => false)
@@ -170,22 +166,6 @@ export const UserCourseSummaryTable = ({
     dispatch(getDetailedCourseByIdAsync({ id: courseId }));
     setModalType(ModalType.DetailedCourseView);
     setModalVisible(true);
-  };
-  // const refreshCourseContextNoModal = (courseId: string) => {
-  //   async function getCourseContext() {
-  //     try {
-  //       console.log("164 - Refresh course no modal", courseId)
-  //       const courseContext = await getDetailedCourseById(courseId);
-  //       setCourseContextData(courseContext);
-  //     } catch (exception) {
-  //       console.log("Unable to get course data");
-  //     }
-  //   }
-  //   getCourseContext();
-  // }
-
-  const refreshCourseContextNoModal = (courseId: string) => {
-    dispatch(getDetailedCourseByIdAsync({ id: courseId }));
   };
 
   const handleDetailedCourseModalClose = () => {

@@ -8,6 +8,7 @@ export interface ICourse {
     [keyof: string]: string;
   };
   tags: Array<string>;
+  likes: { [keyof: string]: string };
   createdAt: string;
   updatedAt: string;
   category: string | CourseCategory;

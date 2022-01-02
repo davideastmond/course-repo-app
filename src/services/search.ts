@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ISearchResults } from "../types/search.types";
+import { sortCoursesByDate } from "../utils/course-recommendation/sort-courses-by-interest-and-date";
 import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const doSearch = async ({
@@ -19,7 +20,11 @@ export const doSearch = async ({
 
     if (res.status === 200) {
       onCompleted(true);
-      return res.data as ISearchResults;
+      const sortedCourses = sortCoursesByDate(res.data.courses);
+      return {
+        courses: sortedCourses,
+        users: res.data.users,
+      };
     } else {
       onCompleted(true);
       throw new Error("Error searching");

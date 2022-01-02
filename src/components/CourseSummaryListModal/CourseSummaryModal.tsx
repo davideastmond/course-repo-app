@@ -1,4 +1,4 @@
-import { ICourse, IProcessedUser } from "../../types";
+import { ICourse, IDetailedCourse, IProcessedUser } from "../../types";
 import { UserCourseSummaryTable } from "../Profile-view/User-course-summary-list";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 
@@ -8,6 +8,8 @@ interface ICourseSummaryListModalProps {
   courseRecommendations: ICourse[];
   editable: boolean;
   onCourseDataChanged?: (data: any) => void;
+  onCourseLikeClicked?: (courseId: string) => void;
+  courseContext?: IDetailedCourse;
 }
 
 function CourseSummaryListModal(props: ICourseSummaryListModalProps) {
@@ -31,6 +33,7 @@ function CourseSummaryListModal(props: ICourseSummaryListModalProps) {
         sourceId="Course Summary Modal CourseSummaryListModal__main"
         canEdit={props.editable}
         onCourseDataChanged={props.onCourseDataChanged}
+        onCourseLikeClicked={props.onCourseLikeClicked}
       />
     </div>
   );

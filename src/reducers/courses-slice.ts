@@ -3,6 +3,7 @@ import {
   getAllCourses,
   getDetailedCourseById,
   postCourseRecommendation,
+  toggleCourseLike,
 } from "../services/courses";
 import {
   ICourse,
@@ -19,6 +20,8 @@ interface IInitialCoursesState {
   currentCourseContext: IDetailedCourse | null;
   limit: number;
   skip: number;
+  likeInProgress: boolean;
+  likedCourseContext: ICourse | null;
 }
 const initialState: IInitialCoursesState = {
   courses: [],
@@ -30,6 +33,8 @@ const initialState: IInitialCoursesState = {
   currentCourseContext: null,
   limit: 1000,
   skip: 0,
+  likeInProgress: false,
+  likedCourseContext: null,
 };
 
 export const getAllCoursesAsync = createAsyncThunk(
@@ -63,6 +68,13 @@ export const getDetailedCourseByIdAsync = createAsyncThunk(
   }
 );
 
+export const toggleCourseLikeAsync = createAsyncThunk(
+  "courses/toggleCourseLikeAsync",
+  async ({ id }: { id: string }) => {
+    const res = await toggleCourseLike({ id });
+    return res;
+  }
+);
 export const coursesSlice = createSlice({
   name: "courses",
   initialState,
@@ -72,6 +84,7 @@ export const coursesSlice = createSlice({
     },
     clearCurrentCourseContext(state) {
       state.currentCourseContext = null;
+      state.likedCourseContext = null;
     },
   },
   extraReducers: (builder) => {
@@ -102,9 +115,28 @@ export const coursesSlice = createSlice({
       .addCase(getDetailedCourseByIdAsync.fulfilled, (state, action) => {
         stateStatus.idle(state);
         state.currentCourseContext = action.payload;
+        state.likedCourseContext = action.payload;
       })
       .addCase(getDetailedCourseByIdAsync.rejected, (state) => {
         stateStatus.error(state, "Unable to retrieve course details");
+      })
+      .addCase(toggleCourseLikeAsync.pending, (state) => {
+        stateStatus.loading(state, "processing like toggle");
+        state.likeInProgress = true;
+      })
+      .addCase(toggleCourseLikeAsync.fulfilled, (state, action) => {
+        stateStatus.idle(state, "processing like toggle");
+        state.courses = action.payload.courses;
+        if (
+          state.currentCourseContext?._id === action.payload.courseChanged._id
+        ) {
+          state.likedCourseContext = action.payload.courseChanged;
+        }
+        state.likeInProgress = false;
+      })
+      .addCase(toggleCourseLikeAsync.rejected, (state) => {
+        stateStatus.error(state, "Unable to toggle like");
+        state.likeInProgress = false;
       });
   },
 });
@@ -134,6 +166,13 @@ export const selectSkip = (state: any) => {
 
 export const selectCourseStateStatus = (state: any) => {
   return state.courses.status;
+};
+export const selectLikeInProgress = (state: any) => {
+  return state.courses.likeInProgress;
+};
+
+export const selectCurrentCourseContextLike = (state: any) => {
+  return state.courses.likedCourseContext;
 };
 export const { setCourseFilter, clearCurrentCourseContext } =
   coursesSlice.actions;

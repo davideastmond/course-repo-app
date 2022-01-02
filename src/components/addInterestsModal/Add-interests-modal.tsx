@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import ActionButton from "../Buttons/ActionButton";
 import TagApplet from "../Tags-applet";
 import "./add-interests-style.css";

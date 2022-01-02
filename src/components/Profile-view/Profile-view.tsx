@@ -9,7 +9,7 @@ import "./profile-view-style.css";
 import "../../pages/profile/profile-page-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-import { ICourse, IProcessedUser } from "../../types";
+import { ICourse, IDetailedCourse, IProcessedUser } from "../../types";
 import { ModalType } from "../../types/modal.types";
 import { UserCourseSummaryTable } from "./User-course-summary-list";
 import CourseSummaryListModal from "../CourseSummaryListModal";
@@ -19,6 +19,9 @@ export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
   onModalClose?: (visible: boolean) => void;
+  onCourseLikeClicked?: (courseId: string) => void;
+  courseContext?: IDetailedCourse;
+  hasSearchContext?: boolean;
 }
 
 function ProfileView(props: IProfileViewProps) {
@@ -37,6 +40,7 @@ function ProfileView(props: IProfileViewProps) {
   const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
 
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+  console.log("43 HAS SEARCH CONTEXT", props.hasSearchContext);
   const getUser = async () => {
     try {
       if (props.userId && props.userId !== "") {
@@ -78,13 +82,14 @@ function ProfileView(props: IProfileViewProps) {
   };
 
   const handleCloseModal = () => {
-    setModalVisible(false);
     setModalType(ModalType.nullModal);
+    setModalVisible(false);
   };
 
   const handleUserCourseSummaryTableCoursesChanged = () => {
     getCourseRecommendations();
   };
+
   return (
     <div className="Profile-view__Main__Window">
       <div className="Profile-view__Main__container window-padding-1p">
@@ -177,6 +182,8 @@ function ProfileView(props: IProfileViewProps) {
                     : courseRecommendations.length
                 }
                 onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+                onCourseLikeClicked={props.onCourseLikeClicked}
+                hasSearchContext={props.hasSearchContext}
               />
               {courseRecommendations && courseRecommendations.length >= 3 && (
                 <div
@@ -191,13 +198,15 @@ function ProfileView(props: IProfileViewProps) {
         </div>
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Profile-view_Full-course-summary-list">
           <CourseSummaryListModal
             handleCloseModal={handleCloseModal}
             courseRecommendations={courseRecommendations}
             userData={userData}
             editable={isLoggedInUser}
             onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+            onCourseLikeClicked={props.onCourseLikeClicked}
+            courseContext={props.courseContext}
           />
         </div>
       )}

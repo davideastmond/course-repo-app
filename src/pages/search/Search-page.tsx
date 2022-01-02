@@ -4,11 +4,8 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import HeaderBar from "../../components/header-bar";
 import {
   checkIsAuthedAsync,
-  clearCurrentCourseContext,
-  getDetailedCourseByIdAsync,
   getLoggedInUserAsync,
   logOutAsync,
-  selectCurrentCourseContext,
   selectIsLoggedIn,
   selectLoggedInUser,
 } from "../../reducers";
@@ -17,11 +14,16 @@ import RadioGroup from "../../components/radio-group";
 import { IRadioClicked } from "../../components/radio-group/Radio-toggle-set";
 import StylizedTextInput from "../../components/stylized-text-input";
 import {
+  clearSearchCurrentCourseContext,
+  getDetailedCourseInfoByIdFromSearchAsync,
   performSearchAsync,
+  selectLikedSearchCurrentCourseContext,
+  selectSearchCurrentCourseContext,
   selectSearchResults,
   selectSearchStatus,
   selectSearchString,
   setSearchString,
+  toggleLikeForSearchCourseContextAsync,
 } from "../../reducers/search-slice";
 import DataContainer from "../../components/course-container";
 import doGoogleLogin from "../../services/auth";
@@ -54,7 +56,11 @@ function SearchPage() {
   const [profileDetailUserId, setProfileDetailUserId] = useState<string>("");
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const currentCourseContext = useSelector(
-    selectCurrentCourseContext,
+    selectSearchCurrentCourseContext,
+    shallowEqual
+  );
+  const searchCurrentContextLike = useSelector(
+    selectLikedSearchCurrentCourseContext,
     shallowEqual
   );
   const handleGoogleLogin = () => {
@@ -116,7 +122,7 @@ function SearchPage() {
   const handleModalClosed = () => {
     setModalVisible(false);
     setModalType(ModalType.nullModal);
-    dispatch(clearCurrentCourseContext());
+    dispatch(clearSearchCurrentCourseContext());
     document.body.classList.remove("no-body-scroll");
   };
 
@@ -130,7 +136,11 @@ function SearchPage() {
   };
 
   const handleCourseCardClickedSearchPage = (id: string) => {
-    dispatch(getDetailedCourseByIdAsync({ id }));
+    dispatch(getDetailedCourseInfoByIdFromSearchAsync({ id }));
+  };
+
+  const handleSearchToggleLikeOnCourseContext = (courseId: string) => {
+    dispatch(toggleLikeForSearchCourseContextAsync({ id: courseId }));
   };
 
   useEffect(() => {
@@ -218,13 +228,19 @@ function SearchPage() {
                 courses={searchResults.courses ? searchResults.courses : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
                 courseCardClickHandler={handleCourseCardClickedSearchPage}
+                showCourseCardLikes={true}
+                onCourseLikeToggle={handleSearchToggleLikeOnCourseContext}
+                hasSearchContext={true}
               />
             )}
             {filterSetting === SearchResultFilterSetting.Users && (
               <DataContainer
                 users={searchResults.users ? searchResults.users : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
-                courseCardClickHandler={() => {}}
+                courseCardClickHandler={handleCourseCardClickedSearchPage}
+                showCourseCardLikes={true}
+                onCourseLikeToggle={handleSearchToggleLikeOnCourseContext}
+                hasSearchContext={true}
               />
             )}
           </div>
@@ -232,19 +248,25 @@ function SearchPage() {
         {/* <div className="column-width-40vw"></div> */}
       </div>
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Search-page__ProfileView_modal">
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
             closeButtonVisible={true}
+            onCourseLikeClicked={handleSearchToggleLikeOnCourseContext}
+            courseContext={currentCourseContext}
+            hasSearchContext={true}
           />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Search-page__detailedCourseView-modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
+            onCourseLikeClicked={handleSearchToggleLikeOnCourseContext}
+            showLikes={true}
+            currentCourseContextLike={searchCurrentContextLike}
           />
         </div>
       )}

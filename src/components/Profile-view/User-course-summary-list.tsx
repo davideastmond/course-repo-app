@@ -5,19 +5,27 @@ import {
   CourseCategory,
   COURSE_CATEGORY_FRIENDLY_DICTIONARY,
   ICourse,
-  IDetailedCourse,
 } from "../../types";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ModalType } from "../../types/modal.types";
 import DetailedCourseViewModal from "../detailed-course-view-modal";
-import {
-  deleteCourseRecommendation,
-  getDetailedCourseById,
-} from "../../services/courses";
+import { deleteCourseRecommendation } from "../../services/courses";
 import EditRack from "../CourseSummaryListModal/EditRack";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { getAllCoursesAsync, selectLimit, selectSkip } from "../../reducers";
+import {
+  clearCurrentCourseContext,
+  getAllCoursesAsync,
+  getDetailedCourseByIdAsync,
+  selectCurrentCourseContext,
+  selectLimit,
+  selectSkip,
+} from "../../reducers";
 import ToastPop from "../toast-pop";
+import {
+  clearSearchCurrentCourseContext,
+  getDetailedCourseInfoByIdFromSearchAsync,
+  selectSearchCurrentCourseContext,
+} from "../../reducers/search-slice";
 
 const CourseRow = ({
   idx,
@@ -111,6 +119,8 @@ interface IUserCourseSummaryTableProps {
   canEdit: boolean;
   onCourseDataChanged?: (data: any) => void;
   editRackVisible: boolean;
+  onCourseLikeClicked?: (courseId: string) => void;
+  hasSearchContext?: boolean;
 }
 
 export const UserCourseSummaryTable = ({
@@ -121,12 +131,11 @@ export const UserCourseSummaryTable = ({
   canEdit,
   onCourseDataChanged,
   editRackVisible,
+  onCourseLikeClicked,
+  hasSearchContext,
 }: IUserCourseSummaryTableProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
-  const [courseContextData, setCourseContextData] = useState<
-    IDetailedCourse | undefined | null
-  >(undefined);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [checkBoxes, setCheckBoxes] = useState<boolean[]>(
     courseRecommendations.map(() => false)
@@ -141,25 +150,35 @@ export const UserCourseSummaryTable = ({
   const dispatch = useDispatch();
   const limit = useSelector(selectLimit, shallowEqual);
   const skip = useSelector(selectSkip, shallowEqual);
+  const detailedCourseContext = useSelector(
+    selectCurrentCourseContext,
+    shallowEqual
+  );
+
+  const detailSearchCourseContext = useSelector(
+    selectSearchCurrentCourseContext,
+    shallowEqual
+  );
 
   const handleOpenDetailedCourseViewModal = (courseId: string) => {
-    async function getCourseContext() {
-      try {
-        const courseContext = await getDetailedCourseById(courseId);
-        setCourseContextData(courseContext);
-        setModalType(ModalType.DetailedCourseView);
-        setModalVisible(true);
-      } catch (exception) {
-        console.log("Unable to get course data");
-      }
+    if (!hasSearchContext) {
+      dispatch(getDetailedCourseByIdAsync({ id: courseId }));
+    } else {
+      dispatch(getDetailedCourseInfoByIdFromSearchAsync({ id: courseId }));
     }
-    getCourseContext();
+    setModalType(ModalType.DetailedCourseView);
+    setModalVisible(true);
   };
 
   const handleDetailedCourseModalClose = () => {
-    setModalVisible(false);
+    // POIJ this method isn't being called - will investigate later
+    if (!hasSearchContext) {
+      dispatch(clearCurrentCourseContext);
+    } else {
+      dispatch(clearSearchCurrentCourseContext);
+    }
     setModalType(ModalType.nullModal);
-    setCourseContextData(null);
+    setModalVisible(false);
   };
 
   const handleElementIsChecked = ({ idx, id }: { idx: number; id: string }) => {
@@ -231,10 +250,6 @@ export const UserCourseSummaryTable = ({
     });
   };
 
-  useEffect(() => {
-    console.debug("Current selected courses are", selectedCourses);
-  }, [selectedCourses]);
-
   return (
     <>
       {canEdit === true && editRackVisible === true && (
@@ -248,7 +263,6 @@ export const UserCourseSummaryTable = ({
           />
         </div>
       )}
-
       <div
         className={`Profile_view_top-three-course-recommendations-list__container ${
           allowScrolling ? "scroll-limit" : ""
@@ -291,18 +305,38 @@ export const UserCourseSummaryTable = ({
                 />
               ))}
         </table>
-        {modalVisible && modalType === ModalType.DetailedCourseView && (
-          <div className="Page-Modal">
-            <div className="Profile_view__DetailedCourseView__modal-body">
-              {courseContextData && (
+        {modalVisible &&
+          modalType === ModalType.DetailedCourseView &&
+          detailSearchCourseContext &&
+          hasSearchContext === false && (
+            <div className="Page-Modal UserCourseSummaryList__modal_no_search-context">
+              <div className="Profile_view__DetailedCourseView__modal-body">
                 <DetailedCourseViewModal
-                  courseContext={courseContextData}
+                  courseContext={detailedCourseContext}
+                  currentCourseContextLike={detailedCourseContext}
                   onModalClose={handleDetailedCourseModalClose}
+                  showLikes={true}
+                  onCourseLikeClicked={onCourseLikeClicked}
                 />
-              )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        {modalVisible &&
+          modalType === ModalType.DetailedCourseView &&
+          detailSearchCourseContext &&
+          hasSearchContext === false && (
+            <div className="Page-Modal UserCourseSummaryList__modal_has_search-context">
+              <div className="Profile_view__DetailedCourseView__modal-body">
+                <DetailedCourseViewModal
+                  courseContext={detailSearchCourseContext}
+                  currentCourseContextLike={detailSearchCourseContext}
+                  onModalClose={handleDetailedCourseModalClose}
+                  showLikes={true}
+                  onCourseLikeClicked={onCourseLikeClicked}
+                />
+              </div>
+            </div>
+          )}
       </div>
     </>
   );

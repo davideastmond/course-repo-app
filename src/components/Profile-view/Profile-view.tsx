@@ -198,7 +198,7 @@ function ProfileView(props: IProfileViewProps) {
         </div>
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Profile-view_Full-course-summary-list">
           <CourseSummaryListModal
             handleCloseModal={handleCloseModal}
             courseRecommendations={courseRecommendations}

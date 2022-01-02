@@ -309,7 +309,7 @@ export const UserCourseSummaryTable = ({
           modalType === ModalType.DetailedCourseView &&
           detailSearchCourseContext &&
           hasSearchContext === false && (
-            <div className="Page-Modal">
+            <div className="Page-Modal UserCourseSummaryList__modal_no_search-context">
               <div className="Profile_view__DetailedCourseView__modal-body">
                 <DetailedCourseViewModal
                   courseContext={detailedCourseContext}
@@ -325,7 +325,7 @@ export const UserCourseSummaryTable = ({
           modalType === ModalType.DetailedCourseView &&
           detailSearchCourseContext &&
           hasSearchContext === false && (
-            <div className="Page-Modal">
+            <div className="Page-Modal UserCourseSummaryList__modal_has_search-context">
               <div className="Profile_view__DetailedCourseView__modal-body">
                 <DetailedCourseViewModal
                   courseContext={detailSearchCourseContext}

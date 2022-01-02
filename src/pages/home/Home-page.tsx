@@ -199,12 +199,12 @@ function HomePage() {
         /> */}
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__suggest-course-modal">
           <SuggestCourseModal onModalClose={handleModalClosed} />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__detailed-course-view-modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
@@ -215,7 +215,7 @@ function HomePage() {
         </div>
       )}
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__Profile-view-modal">
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}

@@ -167,7 +167,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
         )}
       </section>
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Detailed-course-view">
           <ProfileView
             onModalClose={handleProfileViewModalClosed}
             userId={props.courseContext.postedByUserId}

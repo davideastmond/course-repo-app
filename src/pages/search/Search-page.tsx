@@ -248,7 +248,7 @@ function SearchPage() {
         {/* <div className="column-width-40vw"></div> */}
       </div>
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Search-page__ProfileView_modal">
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
@@ -260,7 +260,7 @@ function SearchPage() {
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
-        <div className="Page-Modal Search-page-modal">
+        <div className="Page-Modal Search-page__detailedCourseView-modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}

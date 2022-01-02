@@ -230,14 +230,17 @@ function SearchPage() {
                 courseCardClickHandler={handleCourseCardClickedSearchPage}
                 showCourseCardLikes={true}
                 onCourseLikeToggle={handleSearchToggleLikeOnCourseContext}
+                hasSearchContext={true}
               />
             )}
             {filterSetting === SearchResultFilterSetting.Users && (
               <DataContainer
                 users={searchResults.users ? searchResults.users : []}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
-                courseCardClickHandler={() => {}}
+                courseCardClickHandler={handleCourseCardClickedSearchPage}
                 showCourseCardLikes={true}
+                onCourseLikeToggle={handleSearchToggleLikeOnCourseContext}
+                hasSearchContext={true}
               />
             )}
           </div>
@@ -250,11 +253,14 @@ function SearchPage() {
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
             closeButtonVisible={true}
+            onCourseLikeClicked={handleSearchToggleLikeOnCourseContext}
+            courseContext={currentCourseContext}
+            hasSearchContext={true}
           />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Search-page-modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}

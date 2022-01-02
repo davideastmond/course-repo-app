@@ -21,6 +21,7 @@ export interface IProfileViewProps {
   onModalClose?: (visible: boolean) => void;
   onCourseLikeClicked?: (courseId: string) => void;
   courseContext?: IDetailedCourse;
+  hasSearchContext?: boolean;
 }
 
 function ProfileView(props: IProfileViewProps) {
@@ -39,6 +40,7 @@ function ProfileView(props: IProfileViewProps) {
   const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
 
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+  console.log("43 HAS SEARCH CONTEXT", props.hasSearchContext);
   const getUser = async () => {
     try {
       if (props.userId && props.userId !== "") {
@@ -80,8 +82,8 @@ function ProfileView(props: IProfileViewProps) {
   };
 
   const handleCloseModal = () => {
-    setModalVisible(false);
     setModalType(ModalType.nullModal);
+    setModalVisible(false);
   };
 
   const handleUserCourseSummaryTableCoursesChanged = () => {
@@ -181,6 +183,7 @@ function ProfileView(props: IProfileViewProps) {
                 }
                 onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
                 onCourseLikeClicked={props.onCourseLikeClicked}
+                hasSearchContext={props.hasSearchContext}
               />
               {courseRecommendations && courseRecommendations.length >= 3 && (
                 <div

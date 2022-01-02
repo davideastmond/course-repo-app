@@ -3,6 +3,7 @@ import { getDetailedCourseById, toggleCourseLike } from "../services/courses";
 import { doSearch } from "../services/search";
 import { ICourse } from "../types";
 import { ISearchResults } from "../types/search.types";
+import { sortCoursesByDate } from "../utils/course-recommendation/sort-courses-by-interest-and-date";
 import stateStatus from "../utils/state-status";
 
 interface ISearchState {
@@ -145,14 +146,15 @@ const updateSearchResultsState = ({
     const filteredCourses = courses.filter(
       (course: ICourse) => course._id !== courseChanged._id
     );
+
     return {
-      courses: [...filteredCourses, courseChanged],
+      courses: sortCoursesByDate([...filteredCourses, courseChanged]),
       users: state.users,
     };
     //return [...filteredCourses, courseChanged]
   }
   return {
-    courses: state.searchResults.courses,
+    courses: sortCoursesByDate(state.searchResults.courses),
     users: state.searchResults.users,
   };
 };

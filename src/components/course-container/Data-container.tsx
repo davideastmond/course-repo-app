@@ -14,6 +14,7 @@ interface IDataContainerProps {
   genericUserProfileClickHandler: (id: string) => void;
   showCourseCardLikes: boolean;
   onCourseLikeToggle?: (courseId: string) => void;
+  hasSearchContext?: boolean;
 }
 
 function DataContainer(props: IDataContainerProps) {
@@ -58,6 +59,8 @@ function DataContainer(props: IDataContainerProps) {
             userId={user._id}
             key={`${user._id}_${index}`}
             closeButtonVisible={false}
+            onCourseLikeClicked={dataContainerHandleCourseLikeClicked}
+            hasSearchContext={props.hasSearchContext}
           />
         ))}
     </div>

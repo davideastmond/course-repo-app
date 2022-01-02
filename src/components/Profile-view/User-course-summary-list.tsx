@@ -21,6 +21,11 @@ import {
   selectSkip,
 } from "../../reducers";
 import ToastPop from "../toast-pop";
+import {
+  clearSearchCurrentCourseContext,
+  getDetailedCourseInfoByIdFromSearchAsync,
+  selectSearchCurrentCourseContext,
+} from "../../reducers/search-slice";
 
 const CourseRow = ({
   idx,
@@ -115,6 +120,7 @@ interface IUserCourseSummaryTableProps {
   onCourseDataChanged?: (data: any) => void;
   editRackVisible: boolean;
   onCourseLikeClicked?: (courseId: string) => void;
+  hasSearchContext?: boolean;
 }
 
 export const UserCourseSummaryTable = ({
@@ -126,6 +132,7 @@ export const UserCourseSummaryTable = ({
   onCourseDataChanged,
   editRackVisible,
   onCourseLikeClicked,
+  hasSearchContext,
 }: IUserCourseSummaryTableProps) => {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
@@ -148,31 +155,30 @@ export const UserCourseSummaryTable = ({
     shallowEqual
   );
 
-  // const handleOpenDetailedCourseViewModal = (courseId: string) => {
-  //   async function getCourseContext() {
-  //     try {
-  //       const courseContext = await getDetailedCourseById(courseId);
-  //       setCourseContextData(courseContext);
-  //       setModalType(ModalType.DetailedCourseView);
-  //       setModalVisible(true);
-  //     } catch (exception) {
-  //       console.log("Unable to get course data");
-  //     }
-  //   }
-  //   getCourseContext();
-  // };
+  const detailSearchCourseContext = useSelector(
+    selectSearchCurrentCourseContext,
+    shallowEqual
+  );
 
   const handleOpenDetailedCourseViewModal = (courseId: string) => {
-    dispatch(getDetailedCourseByIdAsync({ id: courseId }));
+    if (!hasSearchContext) {
+      dispatch(getDetailedCourseByIdAsync({ id: courseId }));
+    } else {
+      dispatch(getDetailedCourseInfoByIdFromSearchAsync({ id: courseId }));
+    }
     setModalType(ModalType.DetailedCourseView);
     setModalVisible(true);
   };
 
   const handleDetailedCourseModalClose = () => {
-    setModalVisible(false);
+    // POIJ this method isn't being called - will investigate later
+    if (!hasSearchContext) {
+      dispatch(clearCurrentCourseContext);
+    } else {
+      dispatch(clearSearchCurrentCourseContext);
+    }
     setModalType(ModalType.nullModal);
-    // setCourseContextData(null);
-    dispatch(clearCurrentCourseContext);
+    setModalVisible(false);
   };
 
   const handleElementIsChecked = ({ idx, id }: { idx: number; id: string }) => {
@@ -299,21 +305,38 @@ export const UserCourseSummaryTable = ({
                 />
               ))}
         </table>
-        {modalVisible && modalType === ModalType.DetailedCourseView && (
-          <div className="Page-Modal">
-            <div className="Profile_view__DetailedCourseView__modal-body">
-              {detailedCourseContext && (
+        {modalVisible &&
+          modalType === ModalType.DetailedCourseView &&
+          detailSearchCourseContext &&
+          hasSearchContext === false && (
+            <div className="Page-Modal">
+              <div className="Profile_view__DetailedCourseView__modal-body">
                 <DetailedCourseViewModal
                   courseContext={detailedCourseContext}
                   currentCourseContextLike={detailedCourseContext}
                   onModalClose={handleDetailedCourseModalClose}
                   showLikes={true}
-                  onCourseLikeClicked={() => {}}
+                  onCourseLikeClicked={onCourseLikeClicked}
                 />
-              )}
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        {modalVisible &&
+          modalType === ModalType.DetailedCourseView &&
+          detailSearchCourseContext &&
+          hasSearchContext === false && (
+            <div className="Page-Modal">
+              <div className="Profile_view__DetailedCourseView__modal-body">
+                <DetailedCourseViewModal
+                  courseContext={detailSearchCourseContext}
+                  currentCourseContextLike={detailSearchCourseContext}
+                  onModalClose={handleDetailedCourseModalClose}
+                  showLikes={true}
+                  onCourseLikeClicked={onCourseLikeClicked}
+                />
+              </div>
+            </div>
+          )}
       </div>
     </>
   );

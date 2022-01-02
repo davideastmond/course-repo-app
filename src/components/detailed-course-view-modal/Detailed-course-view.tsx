@@ -14,7 +14,7 @@ import { selectLoggedInUser } from "../../reducers";
 import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
-  onModalClose: (visible: boolean) => void;
+  onModalClose: () => void;
   showLikes: boolean;
   onCourseLikeClicked?: (courseId: string) => void;
   currentCourseContextLike?: ICourse;
@@ -60,8 +60,9 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+
   const handleCloseModal = () => {
-    props.onModalClose(false);
+    props.onModalClose();
   };
 
   const [userName, setUserNames] = useState<any>({});

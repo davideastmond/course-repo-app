@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ContentTag from "../Content-tag";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
 import "./course-card-style.css";
@@ -12,7 +12,7 @@ import {
 import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import dayjs from "dayjs";
-import LikesModule from "../likes-module";
+import SocialMediaModule from "../social-media-module";
 import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
 
 interface ICourseCardProps {
@@ -113,7 +113,7 @@ function CourseCard(props: ICourseCardProps) {
         </div>
         {props.showLikes && (
           <div className="Course-card__likesFooter-section">
-            <LikesModule
+            <SocialMediaModule
               checked={!!props.isLikedByUser}
               likesCount={getLikesCount({ data: props.course.likes })}
               forCourseId={props.course._id}

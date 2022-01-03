@@ -1,8 +1,8 @@
-import "./likes-module-style.css";
+import "./social-media-module-style.css";
 import HeartFill from "./heart-fill.svg";
 import HeartEmpty from "./heart-empty.svg";
 
-interface ILikesModuleProps {
+interface ISocialMediaModuleProps {
   classNames?: string;
   textClassNames?: string;
   heartContainerClassNames?: string;
@@ -39,7 +39,7 @@ const getLikesCountText = ({ likesCount }: { likesCount: number }): string => {
   return "";
 };
 
-function LikesModule(props: ILikesModuleProps) {
+function SocialMediaModule(props: ISocialMediaModuleProps) {
   const handleHeartClicked = () => {
     props.onLikeButtonClicked && props.onLikeButtonClicked(props.forCourseId);
   };
@@ -64,4 +64,4 @@ function LikesModule(props: ILikesModuleProps) {
   );
 }
 
-export default LikesModule;
+export default SocialMediaModule;

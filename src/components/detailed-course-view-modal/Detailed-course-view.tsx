@@ -12,6 +12,7 @@ import { getIsLikedByLoggedInUser } from "../../utils/course-recommendation/is-l
 import { shallowEqual, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../reducers";
 import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
+import { SocialMediaModuleType } from "../social-media-module/types";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
   onModalClose: () => void;
@@ -160,8 +161,9 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
                 data: props.currentCourseContextLike?.likes,
               })}
               forCourseId={props.courseContext._id}
-              onLikeButtonClicked={props.onCourseLikeClicked}
+              onClicked={props.onCourseLikeClicked}
               classNames="bottom-margin"
+              moduleType={SocialMediaModuleType.Like}
             />
           </div>
         )}

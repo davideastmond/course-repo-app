@@ -14,6 +14,7 @@ import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendation
 import dayjs from "dayjs";
 import SocialMediaModule from "../social-media-module";
 import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
+import { SocialMediaModuleType } from "../social-media-module/types";
 
 interface ICourseCardProps {
   color?: string | CourseCategory;
@@ -117,7 +118,8 @@ function CourseCard(props: ICourseCardProps) {
               checked={!!props.isLikedByUser}
               likesCount={getLikesCount({ data: props.course.likes })}
               forCourseId={props.course._id}
-              onLikeButtonClicked={handleCourseCardClickedLikeButton}
+              onClicked={handleCourseCardClickedLikeButton}
+              moduleType={SocialMediaModuleType.Like}
             />
           </div>
         )}

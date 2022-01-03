@@ -1,30 +1,45 @@
 import "./social-media-module-style.css";
 import HeartFill from "./heart-fill.svg";
 import HeartEmpty from "./heart-empty.svg";
+import FollowEmpty from "./follow-empty.svg";
+import FollowFill from "./follow-fill.svg";
+import { SocialMediaModuleType } from "./types";
 
 interface ISocialMediaModuleProps {
   classNames?: string;
   textClassNames?: string;
-  heartContainerClassNames?: string;
+  containerClassNames?: string;
   checked: boolean;
   likesCount: number;
-  forCourseId: string;
-  onLikeButtonClicked?: (forCourseId: string) => void;
+  forCourseId?: string;
+  forUserId?: string;
+  onClicked?: (id: string) => void;
+  moduleType: SocialMediaModuleType;
 }
 
-const HeartContainer = ({
+const SocialMediaIconContainer = ({
+  iconType,
   checked,
-  heartContainerClassNames,
+  ContainerClassNames,
 }: {
+  iconType: SocialMediaModuleType;
   checked: boolean;
-  heartContainerClassNames?: string;
+  ContainerClassNames?: string;
 }) => {
-  return (
+  return iconType === SocialMediaModuleType.Like ? (
     <img
       className={`HeartContainerImage_main small-heart-icon ${
-        heartContainerClassNames || ""
+        ContainerClassNames || ""
       }`}
       src={checked ? HeartFill : HeartEmpty}
+      alt="like"
+    />
+  ) : (
+    <img
+      className={`FollowContainerImage_main small-follow-icon ${
+        ContainerClassNames || ""
+      }`}
+      src={checked ? FollowFill : FollowEmpty}
       alt="like"
     />
   );
@@ -41,23 +56,47 @@ const getLikesCountText = ({ likesCount }: { likesCount: number }): string => {
 
 function SocialMediaModule(props: ISocialMediaModuleProps) {
   const handleHeartClicked = () => {
-    props.onLikeButtonClicked && props.onLikeButtonClicked(props.forCourseId);
+    if (props.moduleType === SocialMediaModuleType.Like) {
+      props.onClicked &&
+        props.forCourseId &&
+        props.onClicked(props.forCourseId);
+    } else {
+      props.onClicked && props.forUserId && props.onClicked(props.forUserId);
+    }
   };
-  return (
+
+  return props.moduleType === SocialMediaModuleType.Like ? (
     <div
       className={`LikesModuleMain_main ${
         props.classNames ? props.classNames : ""
       }`}
     >
       <div className="LikesModuleMain__innerBody flex-container">
-        <div className="HeartContainer_body" onClick={handleHeartClicked}>
-          {HeartContainer({
+        <div className="container_body" onClick={handleHeartClicked}>
+          {SocialMediaIconContainer({
             checked: props.checked,
-            heartContainerClassNames: props.heartContainerClassNames,
+            ContainerClassNames: props.containerClassNames,
+            iconType: props.moduleType,
           })}
         </div>
         <div className="LikesModuleMain_likes-text likes-text-spacing color-light-grey">
           {getLikesCountText({ likesCount: props.likesCount })}
+        </div>
+      </div>
+    </div>
+  ) : (
+    <div
+      className={`FollowsModuleMain_main ${
+        props.classNames ? props.classNames : ""
+      }`}
+    >
+      <div className="FollowsModuleMain__innerBody flex-container">
+        <div className="container_body" onClick={handleHeartClicked}>
+          {SocialMediaIconContainer({
+            checked: props.checked,
+            ContainerClassNames: props.containerClassNames,
+            iconType: props.moduleType,
+          })}
         </div>
       </div>
     </div>

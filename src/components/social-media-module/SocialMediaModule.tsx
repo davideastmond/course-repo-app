@@ -10,7 +10,7 @@ interface ISocialMediaModuleProps {
   textClassNames?: string;
   containerClassNames?: string;
   checked: boolean;
-  likesCount: number;
+  likesCount?: number;
   forCourseId?: string;
   forUserId?: string;
   onClicked?: (id: string) => void;
@@ -32,7 +32,7 @@ const SocialMediaIconContainer = ({
         ContainerClassNames || ""
       }`}
       src={checked ? HeartFill : HeartEmpty}
-      alt="like"
+      alt={`${checked ? "Unlike this" : "Like this"}`}
     />
   ) : (
     <img
@@ -40,7 +40,7 @@ const SocialMediaIconContainer = ({
         ContainerClassNames || ""
       }`}
       src={checked ? FollowFill : FollowEmpty}
-      alt="like"
+      alt={`${checked ? "Un-follow this user" : "Follow this user"}`}
     />
   );
 };
@@ -80,7 +80,7 @@ function SocialMediaModule(props: ISocialMediaModuleProps) {
           })}
         </div>
         <div className="LikesModuleMain_likes-text likes-text-spacing color-light-grey">
-          {getLikesCountText({ likesCount: props.likesCount })}
+          {getLikesCountText({ likesCount: props.likesCount! })}
         </div>
       </div>
     </div>

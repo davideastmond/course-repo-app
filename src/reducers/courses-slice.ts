@@ -12,7 +12,7 @@ import {
 } from "../types";
 import stateStatus from "../utils/state-status";
 
-interface IInitialCoursesState {
+interface ICourseState {
   courses: ICourse[];
   coursesByTags: ICourse[];
   status: any;
@@ -23,7 +23,7 @@ interface IInitialCoursesState {
   likeInProgress: boolean;
   likedCourseContext: ICourse | null;
 }
-const initialState: IInitialCoursesState = {
+const initialState: ICourseState = {
   courses: [],
   coursesByTags: [],
   filter: "all",

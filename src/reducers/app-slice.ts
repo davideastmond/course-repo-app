@@ -115,10 +115,12 @@ export const appSlice = createSlice({
   },
 });
 
-export const selectIsLoggedIn = (state: any) => state.app.isLoggedIn;
-export const selectLoggedInUser = (state: any) => state.app.user;
-export const selectCourseRecommendationModalOpenState = (state: any) =>
+export const selectIsLoggedIn = (state: any): boolean => state.app.isLoggedIn;
+export const selectLoggedInUser = (state: any): IProcessedUser =>
+  state.app.user;
+export const selectCourseRecommendationModalOpenState = (state: any): boolean =>
   state.app.courseRecommenderModalOpen;
-export const selectAppStatus = (state: any) => state.app.status;
+export const selectAppStatus = (state: any): { state: string } =>
+  state.app.status;
 export const { setCourseFilterOpen } = appSlice.actions;
 export default appSlice.reducer;

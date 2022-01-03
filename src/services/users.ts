@@ -101,3 +101,15 @@ export const getCourseRecommendationsByUser = async ({
   }
   return Promise.reject("Unable to get courses by postedByUserId");
 };
+
+export const toggleFollowUser = async ({ id }: { id: string }) => {
+  const req = await axios({
+    withCredentials: true,
+    method: "PATCH",
+    url: `${API_URL}/api/users/${id}/follow`,
+    headers: AUTH_HEADER,
+  });
+  if (req.status === 200) {
+  }
+  return Promise.reject("Unable to process follow request");
+};

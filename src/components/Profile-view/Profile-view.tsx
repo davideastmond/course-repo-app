@@ -15,6 +15,8 @@ import { UserCourseSummaryTable } from "./User-course-summary-list";
 import CourseSummaryListModal from "../CourseSummaryListModal";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../reducers";
+import SocialMediaModule from "../social-media-module";
+import { SocialMediaModuleType } from "../social-media-module/types";
 export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
@@ -40,7 +42,7 @@ function ProfileView(props: IProfileViewProps) {
   const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
 
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
-  console.log("43 HAS SEARCH CONTEXT", props.hasSearchContext);
+
   const getUser = async () => {
     try {
       if (props.userId && props.userId !== "") {
@@ -169,7 +171,9 @@ function ProfileView(props: IProfileViewProps) {
             </div>
             <div className="Profile_view__my-recommendations-footer">
               <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
-                My Recommendations
+                {userData?.firstName
+                  ? `Recommendations by ${userData.firstName}`
+                  : "Recommendations"}
               </div>
               <UserCourseSummaryTable
                 sourceId="Profile view"
@@ -194,6 +198,19 @@ function ProfileView(props: IProfileViewProps) {
                 </div>
               )}
             </div>
+            {props.userId !== loggedInUser._id && (
+              <div className="Profile_view_social-media-footer">
+                <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
+                  Social
+                </div>
+                <div className="Follow-social-media-main-enclosure flex-container">
+                  <SocialMediaModule
+                    checked={true}
+                    moduleType={SocialMediaModuleType.Follow}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

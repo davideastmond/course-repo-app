@@ -44,3 +44,7 @@
 .CourseSummaryListModal__header {
   margin-bottom: 2%;
 }
+
+.FollowsModuleMain__caption-text {
+  color: var(--light-grey);
+}

@@ -20,7 +20,6 @@ const initialState: IUserState = {
 export const getInterestTagsAsync = createAsyncThunk(
   "user/getInterestTags",
   async (id: string): Promise<string[]> => {
-    console.log("User interests is being called");
     const res = await getUserInterests(id);
     return res;
   }
@@ -81,6 +80,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const selectInterestTags = (state: any) => state.user.interests;
+export const selectInterestTags = (state: any): string[] =>
+  state.user.interests;
 export const selectUserStatus = (state: any) => state.user.status;
 export default userSlice.reducer;

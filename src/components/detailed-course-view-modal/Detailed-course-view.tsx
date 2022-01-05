@@ -7,11 +7,12 @@ import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import { ModalType } from "../../types/modal.types";
 import ProfileView from "../Profile-view";
-import LikesModule from "../likes-module";
+import SocialMediaModule from "../social-media-module";
 import { getIsLikedByLoggedInUser } from "../../utils/course-recommendation/is-liked-by-logged-in-user";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../reducers";
 import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
+import { SocialMediaModuleType } from "../social-media-module/types";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
   onModalClose: () => void;
@@ -151,7 +152,7 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
         </div>
         {props.showLikes && (
           <div className="Detailed-Course-View__likesFooter-section">
-            <LikesModule
+            <SocialMediaModule
               checked={getIsLikedByLoggedInUser({
                 loggedInUser,
                 course: props.currentCourseContextLike,
@@ -160,8 +161,9 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
                 data: props.currentCourseContextLike?.likes,
               })}
               forCourseId={props.courseContext._id}
-              onLikeButtonClicked={props.onCourseLikeClicked}
+              onClicked={props.onCourseLikeClicked}
               classNames="bottom-margin"
+              moduleType={SocialMediaModuleType.Like}
             />
           </div>
         )}

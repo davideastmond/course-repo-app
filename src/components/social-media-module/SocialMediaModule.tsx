@@ -15,6 +15,7 @@ interface ISocialMediaModuleProps {
   forUserId?: string;
   onClicked?: (id: string) => void;
   moduleType: SocialMediaModuleType;
+  caption?: string;
 }
 
 const SocialMediaIconContainer = ({
@@ -98,6 +99,9 @@ function SocialMediaModule(props: ISocialMediaModuleProps) {
             iconType: props.moduleType,
           })}
         </div>
+        {props.checked && props.caption && (
+          <div className="FollowsModuleMain__caption-text">{props.caption}</div>
+        )}
       </div>
     </div>
   );

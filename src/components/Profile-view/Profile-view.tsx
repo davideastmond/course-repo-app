@@ -221,6 +221,7 @@ function ProfileView(props: IProfileViewProps) {
                     moduleType={SocialMediaModuleType.Follow}
                     onClicked={handleFollowToggle}
                     forUserId={userData?._id}
+                    caption={"You're following this user"}
                   />
                 </div>
               </div>

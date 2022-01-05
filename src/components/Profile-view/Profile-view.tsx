@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import {
   getCourseRecommendationsByUser,
   getUserById,
+  toggleFollowUser,
 } from "../../services/users";
 import ProfileIcon from "../profile-icon";
 import "./profile-view-style.css";
@@ -15,7 +16,7 @@ import { UserCourseSummaryTable } from "./User-course-summary-list";
 import CourseSummaryListModal from "../CourseSummaryListModal";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../reducers";
-import SocialMediaModule from "../social-media-module";
+import SocialMediaFollowModule from "../social-media-module";
 import { SocialMediaModuleType } from "../social-media-module/types";
 export interface IProfileViewProps {
   userId: string;
@@ -40,6 +41,8 @@ function ProfileView(props: IProfileViewProps) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
+  const [isFollowButtonChecked, setIsFollowButtonChecked] =
+    useState<boolean>(false);
 
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
 
@@ -48,6 +51,7 @@ function ProfileView(props: IProfileViewProps) {
       if (props.userId && props.userId !== "") {
         const user = await getUserById(props.userId);
         setUserData(user);
+        setIsFollowButtonChecked(!!user!.followedBy[loggedInUser._id]);
         if (loggedInUser && loggedInUser._id === props.userId) {
           setIsLoggedInUser(true);
         } else {
@@ -90,6 +94,14 @@ function ProfileView(props: IProfileViewProps) {
 
   const handleUserCourseSummaryTableCoursesChanged = () => {
     getCourseRecommendations();
+  };
+
+  const handleFollowToggle = async () => {
+    const followData = await toggleFollowUser({ id: props.userId });
+    setUserData(followData.targetUser);
+    setIsFollowButtonChecked(
+      !!followData.targetUser.followedBy[loggedInUser._id]
+    );
   };
 
   return (
@@ -204,9 +216,11 @@ function ProfileView(props: IProfileViewProps) {
                   Social
                 </div>
                 <div className="Follow-social-media-main-enclosure flex-container">
-                  <SocialMediaModule
-                    checked={true}
+                  <SocialMediaFollowModule
+                    checked={isFollowButtonChecked}
                     moduleType={SocialMediaModuleType.Follow}
+                    onClicked={handleFollowToggle}
+                    forUserId={userData?._id}
                   />
                 </div>
               </div>

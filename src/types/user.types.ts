@@ -14,6 +14,8 @@ export interface IUser {
   department: string;
   interestTags: string[];
   likes: { [keyof: string]: string };
+  following: { [keyof: string]: Date };
+  followedBy: { [keyof: string]: Date };
 }
 
 export interface IProcessedUser {
@@ -28,4 +30,17 @@ export interface IProcessedUser {
   department: string;
   interestTags: string[];
   likes: { [keyof: string]: string };
+  following: { [keyof: string]: Date };
+  followedBy: { [keyof: string]: Date };
+}
+
+export type TToggleFollowReturnData = {
+  sourceUser: IProcessedUser;
+  targetUser: IProcessedUser;
+  actionTaken: ToggleFollowAction;
+};
+
+export enum ToggleFollowAction {
+  Follow = "follow",
+  Unfollow = "unfollow",
 }

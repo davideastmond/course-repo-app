@@ -1,0 +1,23 @@
+.NotificationItemsPanel__main {
+  background-color: white;
+  box-shadow: 2px 2px darkgray;
+}
+
+.NotificationItemsPanel__main {
+  position: absolute;
+  border-radius: 8px;
+  right: 0vw;
+}
+
+.PanelItem {
+  padding: 10px;
+}
+
+.slight-left-margin {
+  margin-left: 10px;
+}
+
+.NotificationItemsPanel__main__header__text {
+  font-weight: bolder;
+  font-size: 30px;
+}

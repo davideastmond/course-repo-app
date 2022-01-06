@@ -11,6 +11,7 @@ import {
 } from "../../reducers";
 import { shallowEqual, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import NotificationModule from "../notification";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -137,6 +138,7 @@ function HeaderBar(props: IHeaderBarProps) {
                   props.userData?.avatar ? props.userData.avatar[0].url : ""
                 }
               />
+              <NotificationModule isLit={false} count={0} />
             </>
           )}
           {profileMenuOpen &&

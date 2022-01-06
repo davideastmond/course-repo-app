@@ -1,3 +1,5 @@
+import { INotification } from "./notification.types";
+
 export interface IUser {
   _id: string;
   firstName: string;
@@ -32,6 +34,10 @@ export interface IProcessedUser {
   likes: { [keyof: string]: string };
   following: { [keyof: string]: Date };
   followedBy: { [keyof: string]: Date };
+  notifications: {
+    unread: Array<INotification>;
+    read: Array<string>;
+  };
 }
 
 export type TToggleFollowReturnData = {

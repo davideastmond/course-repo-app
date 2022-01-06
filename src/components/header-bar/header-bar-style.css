@@ -33,11 +33,18 @@
   align-items: center;
 }
 
+.NotificationModule__MainEnclosure {
+  grid-area: notification-area;
+}
+.NotificationModule__MainEnclosure:hover {
+  cursor: pointer;
+}
+
 .Nav__Header-bar__Profile-section {
   grid-area: profile-icon-section;
   display: grid;
-  grid-template-columns: auto 32px;
-  grid-template-areas: "profile-name avatar";
+  grid-template-columns: 32px auto auto;
+  grid-template-areas: "avatar profile-name notification-area";
   justify-content: right;
 }
 
@@ -56,7 +63,7 @@
 }
 
 @media only screen and (min-width: 2050px) {
-  .Nav__Header-bar_body {
+  .Nav__Header-bar_body .notification-flex-margin {
     margin-right: 15%;
   }
 }
@@ -68,7 +75,7 @@
 }
 
 @media only screen and (min-width: 2500px) {
-  .Nav__Header-bar_body {
+  .Nav__Header-bar_body .notification-flex-margin {
     margin-right: 20%;
   }
 }

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ICourse, IProcessedUser, TToggleFollowReturnData } from "../types";
+import { FetchedNotificationData } from "../types/notification.types";
 import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const getUserById = async (
@@ -118,3 +119,17 @@ export const toggleFollowUser = async ({
   }
   return Promise.reject("Unable to process follow request");
 };
+
+export const fetchAllNotifications =
+  async (): Promise<FetchedNotificationData> => {
+    const req = await axios({
+      withCredentials: true,
+      headers: AUTH_HEADER,
+      method: "GET",
+      url: `${API_URL}/api/users/me/notifications`,
+    });
+    if (req.status === 200) {
+      return req.data;
+    }
+    return Promise.reject("Unable to fetch notifications");
+  };

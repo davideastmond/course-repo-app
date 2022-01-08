@@ -21,3 +21,21 @@
   font-weight: bolder;
   font-size: 30px;
 }
+
+.Notification__UnredDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(  --green-500);
+  align-self: center;
+  margin-left: 5px;
+}
+
+.vertical-align {
+  align-self: center;
+}
+
+.NotificationModule__Main__count{
+  align-self: center;
+  margin-left: 5px;
+}

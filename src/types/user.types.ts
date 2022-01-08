@@ -18,6 +18,7 @@ export interface IUser {
   likes: { [keyof: string]: string };
   following: { [keyof: string]: Date };
   followedBy: { [keyof: string]: Date };
+  notifications: Array<INotification>;
 }
 
 export interface IProcessedUser {
@@ -34,10 +35,7 @@ export interface IProcessedUser {
   likes: { [keyof: string]: string };
   following: { [keyof: string]: Date };
   followedBy: { [keyof: string]: Date };
-  notifications: {
-    unread: Array<INotification>;
-    read: Array<string>;
-  };
+  notifications: Array<INotification>;
 }
 
 export type TToggleFollowReturnData = {

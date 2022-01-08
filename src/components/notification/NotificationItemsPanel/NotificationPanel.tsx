@@ -10,6 +10,9 @@ interface INotificationPanelProps {
   items: Array<INotification>;
 }
 
+const UnRedDot = ({ count }: { count?: number }) => {
+  return <div className="Notification__UnredDot"></div>;
+};
 const PanelItem = ({
   notificationItem,
   classNameData,
@@ -26,9 +29,10 @@ const PanelItem = ({
       key={notificationItem._id}
     >
       <GenericUserIcon userName="test" />
-      <div className="PanelItem__text slight-left-margin">
+      <div className="PanelItem__text slight-left-margin vertical-align">
         {notificationItem.message}
       </div>
+      <UnRedDot count={3} />
     </div>
   );
 };

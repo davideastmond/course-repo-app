@@ -35,10 +35,12 @@ function NotificationModule(props: INotificationModuleProps) {
             src={props.isLit ? NotificationIconLit : NotificationIconOff}
             alt="notification"
           />
+          {/* {props.count > 0 && (
+          <div className="NotificationModule__Main__count">
+            {props.count}
+          </div>
+           )} */}
         </div>
-        {props.count > 0 && (
-          <div className="NotificationModule__Main__count">{props.count}</div>
-        )}
       </div>
       {isPanelOpen && (
         <NotificationItemsPanel onPanelItemClicked={() => {}} items={[]} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
 import AlternateAppLogo from "../../images/logos/alternate-app-logo.svg";
 import ProfileIcon from "../profile-icon";
@@ -9,9 +9,10 @@ import {
   selectCourseRecommendationModalOpenState,
   selectIsLoggedIn,
 } from "../../reducers";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import NotificationModule from "../notification";
+import { fetchAllNotificationsAsync } from "../../reducers/notification-slice";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -55,6 +56,7 @@ interface IHeaderBarProps {
 }
 function HeaderBar(props: IHeaderBarProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const courseRecommenderModalOpen = useSelector(
     selectCourseRecommendationModalOpenState,
     shallowEqual
@@ -101,6 +103,12 @@ function HeaderBar(props: IHeaderBarProps) {
   const handleMenuOptionClicked = () => {
     setProfileMenuOpen(false);
   };
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      dispatch(fetchAllNotificationsAsync());
+    }, 5000);
+  }, []);
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
@@ -138,7 +146,7 @@ function HeaderBar(props: IHeaderBarProps) {
                   props.userData?.avatar ? props.userData.avatar[0].url : ""
                 }
               />
-              <NotificationModule isLit={false} count={0} />
+              <NotificationModule isLit={true} count={2} />
             </>
           )}
           {profileMenuOpen &&

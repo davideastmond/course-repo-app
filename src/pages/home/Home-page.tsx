@@ -33,6 +33,7 @@ import "./home-page-style.css";
 import { StatusState } from "../../utils/state-status";
 import AlertToast from "../../components/alert-toast";
 import { AlertType } from "../../components/alert-toast/types";
+import { fetchAllNotificationsAsync } from "../../reducers/notification-slice";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);

@@ -1,9 +1,7 @@
 .NotificationItemsPanel__main {
   background-color: white;
   box-shadow: 2px 2px darkgray;
-}
-
-.NotificationItemsPanel__main {
+  padding: 2%;
   position: absolute;
   border-radius: 8px;
   right: 0vw;
@@ -36,6 +34,29 @@
 }
 
 .NotificationModule__Main__count{
+  background-color: white;  
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+  color: red;
+  line-height: 9px;
   align-self: center;
   margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 8px;
+  text-align: center;
+  padding: 3px;
+  box-shadow: 1px 1px darkslategrey;
+}
+
+.mouse-hover:hover {
+  cursor: pointer;
+  background-color: var(--pale-light-green-color);
+}
+
+.flex-container-notification {
+  display: flex;
+  margin-right: 1rem;
 }

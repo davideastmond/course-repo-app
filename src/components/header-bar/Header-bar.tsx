@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
 import AlternateAppLogo from "../../images/logos/alternate-app-logo.svg";
+import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
 import { ContextMenu, ContextMenuOption } from "../context-menu";
 import { ContextMenuSeparator } from "../context-menu/Menu-divider";
@@ -12,7 +13,15 @@ import {
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import NotificationModule from "../notification";
-import { fetchAllNotificationsAsync } from "../../reducers/notification-slice";
+import {
+  dismissNotificationAsReadAsync,
+  fetchAllNotificationsAsync,
+  selectAllNotifications,
+  selectNotificationUnreadCount,
+} from "../../reducers/notification-slice";
+import { IS_ZEN } from "../../utils/environment";
+
+const headerBarAppTitle = IS_ZEN ? "Zen Course Repo" : "Course Repo";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -67,6 +76,11 @@ function HeaderBar(props: IHeaderBarProps) {
   };
 
   const isAppLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
+  const notifications = useSelector(selectAllNotifications, shallowEqual);
+  const notificationUnReadCount = useSelector(
+    selectNotificationUnreadCount,
+    shallowEqual
+  );
   useEffect(() => {
     if (courseRecommenderModalOpen && courseRecommenderModalOpen === true) {
       clickedInMenuRef.current = true;
@@ -104,10 +118,16 @@ function HeaderBar(props: IHeaderBarProps) {
     setProfileMenuOpen(false);
   };
 
+  const handleNotificationPanelItemClicked = (notificationId: string) => {
+    dispatch(dismissNotificationAsReadAsync({ id: notificationId }));
+  };
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch(fetchAllNotificationsAsync());
     }, 5000);
+  }, []);
+  useEffect(() => {
+    dispatch(fetchAllNotificationsAsync());
   }, []);
   return (
     <nav className="Nav__Header-bar">
@@ -116,13 +136,13 @@ function HeaderBar(props: IHeaderBarProps) {
           <Link to="/">
             <img
               className="app-logo"
-              src={AlternateAppLogo}
+              src={IS_ZEN ? ZenLogo : AlternateAppLogo}
               alt="zen logo"
             ></img>
           </Link>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
-          <h3 className="app-title">Course Repo</h3>
+          <h3 className="app-title">{headerBarAppTitle}</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
           {!isAppLoggedIn && (
@@ -146,7 +166,12 @@ function HeaderBar(props: IHeaderBarProps) {
                   props.userData?.avatar ? props.userData.avatar[0].url : ""
                 }
               />
-              <NotificationModule isLit={true} count={2} />
+              <NotificationModule
+                notifications={notifications}
+                isLit={notificationUnReadCount > 0}
+                count={notificationUnReadCount}
+                onPanelItemClicked={handleNotificationPanelItemClicked}
+              />
             </>
           )}
           {profileMenuOpen &&

@@ -8,6 +8,7 @@ interface INotificationModuleProps {
   isLit: boolean;
   count: number;
   onClickOpen?: (data?: any) => void;
+  onPanelItemClicked?: (notificationId: string) => void;
   notifications?: Array<INotification>;
   mainClassNames?: string;
   panelClassNames?: string;
@@ -35,15 +36,16 @@ function NotificationModule(props: INotificationModuleProps) {
             src={props.isLit ? NotificationIconLit : NotificationIconOff}
             alt="notification"
           />
-          {/* {props.count > 0 && (
-          <div className="NotificationModule__Main__count">
-            {props.count}
-          </div>
-           )} */}
+          {props.count > 0 && (
+            <div className="NotificationModule__Main__count">{props.count}</div>
+          )}
         </div>
       </div>
       {isPanelOpen && (
-        <NotificationItemsPanel onPanelItemClicked={() => {}} items={[]} />
+        <NotificationItemsPanel
+          onPanelItemClicked={props.onPanelItemClicked}
+          items={props.notifications || []}
+        />
       )}
     </div>
   );

@@ -1,16 +1,13 @@
-import {
-  INotification,
-  NotificationType,
-} from "../../../types/notification.types";
+import { INotification } from "../../../types/notification.types";
 import GenericUserIcon from "../../profile-icon/Generic-User-Icon";
 import "../notification-module-style.css";
 
 interface INotificationPanelProps {
-  onPanelItemClicked?: () => void;
+  onPanelItemClicked?: (notificationId: string) => void;
   items: Array<INotification>;
 }
 
-const UnRedDot = ({ count }: { count?: number }) => {
+const UnRedDot = () => {
   return <div className="Notification__UnredDot"></div>;
 };
 const PanelItem = ({
@@ -20,34 +17,36 @@ const PanelItem = ({
 }: {
   notificationItem: INotification;
   classNameData?: string;
-  onItemClick?: () => void;
+  onItemClick?: (notificationId: string) => void;
 }) => {
   return (
     <div
-      className={`PanelItem flex-container ${classNameData || ""}`}
-      onClick={onItemClick}
+      className={`PanelItem flex-container-notification ${
+        classNameData || ""
+      } mouse-hover`}
+      onClick={() => onItemClick && onItemClick(notificationItem._id)}
       key={notificationItem._id}
     >
       <GenericUserIcon userName="test" />
       <div className="PanelItem__text slight-left-margin vertical-align">
         {notificationItem.message}
       </div>
-      <UnRedDot count={3} />
+      {!notificationItem.read && <UnRedDot />}
     </div>
   );
 };
 
 function NotificationItemsPanel(props: INotificationPanelProps) {
-  const testNotification: INotification = {
-    _id: "test",
-    sourceId: "testSource",
-    targetId: "testTarget",
-    message: "test message",
-    updatedAt: new Date(),
-    createdAt: new Date(),
-    read: false,
-    type: NotificationType.UserFollow,
-  };
+  // const testNotification: INotification = {
+  //   _id: "test",
+  //   sourceId: "testSource",
+  //   targetId: "testTarget",
+  //   message: "test message",
+  //   updatedAt: new Date(),
+  //   createdAt: new Date(),
+  //   read: false,
+  //   type: NotificationType.UserFollow,
+  // };
   return (
     <div className="NotificationItemsPanel__main notification-flex-margin">
       <div className="NotificationItemsPanel__main__header">
@@ -56,22 +55,15 @@ function NotificationItemsPanel(props: INotificationPanelProps) {
         </div>
       </div>
       <div className="NotificationItemsPanel__panelItemsContainer">
-        <PanelItem
-          notificationItem={testNotification}
-          classNameData="main-font"
-        />
-        <PanelItem
-          notificationItem={testNotification}
-          classNameData="main-font"
-        />
-        <PanelItem
-          notificationItem={testNotification}
-          classNameData="main-font"
-        />
-        <PanelItem
-          notificationItem={testNotification}
-          classNameData="main-font"
-        />
+        {props.items.length === 0 && <div>No notifications</div>}
+        {props.items &&
+          props.items.length > 0 &&
+          props.items.map((individualNotification) => (
+            <PanelItem
+              notificationItem={individualNotification}
+              onItemClick={props.onPanelItemClicked}
+            />
+          ))}
       </div>
     </div>
   );

@@ -46,7 +46,6 @@ export const dismissNotificationAsReadAsync = createAsyncThunk(
 export const deleteNotificationAsync = createAsyncThunk(
   "notification/deleteNotification",
   async ({ id }: { id: string }) => {
-    console.log("Do some async operation concerning delete notificaitons");
     const res = await deleteNotification({ id });
     return res;
   }

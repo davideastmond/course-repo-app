@@ -226,7 +226,6 @@ export const UserCourseSummaryTable = ({
     deleteCourseRecommendation({
       courseIds: selectedCourses,
       onFail: (errorMessage) => {
-        console.log(errorMessage);
         setToastSticky(true);
         setShowChangeStatus(true);
         setToastDivStyle(

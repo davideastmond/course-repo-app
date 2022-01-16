@@ -124,7 +124,6 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
   };
   const handleCategoryDropDownChange = (value: string) => {
     if (value) {
-      console.log("Course category dropdown", value);
       setCourseCategory(value);
     }
   };
@@ -240,7 +239,6 @@ function SuggestCourseModal(props: ISuggestCourseModalProps) {
         setCourseTags(autoCompleteData.category!);
         setAutoCompleteProcessingInProgress(false);
       } catch (err) {
-        console.log("autofill error", err);
         setAutoFillTextError("Unable to auto-complete with this URL.");
         setAutoFillErrorShow(true);
         setAutoCompleteProcessingInProgress(false);

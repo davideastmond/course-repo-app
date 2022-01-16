@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { dismissNotification, fetchAllNotifications } from "../services/users";
+import {
+  deleteNotification,
+  dismissNotification,
+  fetchAllNotifications,
+} from "../services/users";
 import { INotification } from "../types/notification.types";
 import { IS_ZEN } from "../utils/environment";
 import stateStatus from "../utils/state-status";
@@ -39,6 +43,15 @@ export const dismissNotificationAsReadAsync = createAsyncThunk(
   }
 );
 
+export const deleteNotificationAsync = createAsyncThunk(
+  "notification/deleteNotification",
+  async ({ id }: { id: string }) => {
+    console.log("Do some async operation concerning delete notificaitons");
+    const res = await deleteNotification({ id });
+    return res;
+  }
+);
+
 export const notificationSlice = createSlice({
   name: "notification",
   initialState,
@@ -68,6 +81,18 @@ export const notificationSlice = createSlice({
       })
       .addCase(dismissNotificationAsReadAsync.rejected, (state) => {
         stateStatus.error(state, "Unable to dismiss notification by id");
+      })
+      .addCase(deleteNotificationAsync.pending, (state) => {
+        stateStatus.loading(state, "deleting notification by id");
+      })
+      .addCase(deleteNotificationAsync.fulfilled, (state, action) => {
+        state.notifications = action.payload;
+        const count = getNotificationCount({ notifications: action.payload });
+        updateAppTitle({ count });
+        state.unreadCount = count;
+      })
+      .addCase(deleteNotificationAsync.rejected, (state) => {
+        stateStatus.error(state, "Unable to delete notification by id");
       });
   },
 });

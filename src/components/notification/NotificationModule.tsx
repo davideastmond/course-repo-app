@@ -9,6 +9,7 @@ interface INotificationModuleProps {
   count: number;
   onClickOpen?: (data?: any) => void;
   onPanelItemClicked?: (notificationId: string) => void;
+  onDeleteNotificationItemClicked: (notificationId: string) => void;
   notifications?: Array<INotification>;
   mainClassNames?: string;
   panelClassNames?: string;
@@ -44,7 +45,9 @@ function NotificationModule(props: INotificationModuleProps) {
       {isPanelOpen && (
         <NotificationItemsPanel
           onPanelItemClicked={props.onPanelItemClicked}
+          onClickOffArea={() => setIsPanelOpen(false)}
           items={props.notifications || []}
+          onDeleteNotificationClicked={props.onDeleteNotificationItemClicked}
         />
       )}
     </div>

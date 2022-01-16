@@ -1,9 +1,8 @@
 .NotificationItemsPanel__main {
   background-color: white;
-  box-shadow: 2px 2px darkgray;
+  box-shadow: 0px 5px 20px darkgray;
   padding: 2%;
   position: absolute;
-  border-radius: 8px;
   right: 0vw;
 }
 
@@ -56,7 +55,35 @@
   background-color: var(--pale-light-green-color);
 }
 
-.flex-container-notification {
+/* .flex-container-notification {
   display: flex;
-  margin-right: 1rem;
+} */
+
+.grid-container-notification {
+  display: grid;
+  grid-template-columns: auto auto auto 60px;
+  grid-template-areas: "avatar text-caption note-dot context-circle-button";
+}
+
+.Generic-User-Icon-grid-area {
+  grid-area: avatar;
+}
+
+.notification-panel-item-text {
+  grid-area: text-caption;
+}
+
+.notification-dot {
+  grid-area: note-dot;
+}
+
+.notification-context-menu-circle {
+  grid-area: context-circle-button;
+}
+
+.NotificationItemsPanel__main_parent {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  height: 100vh;
 }

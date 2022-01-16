@@ -14,6 +14,7 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import NotificationModule from "../notification";
 import {
+  deleteNotificationAsync,
   dismissNotificationAsReadAsync,
   fetchAllNotificationsAsync,
   selectAllNotifications,
@@ -33,7 +34,7 @@ const ProfileContextMenu = (
   }
 ) => {
   return loggedInStatus ? (
-    <ContextMenu>
+    <ContextMenu optionalClassNames="absolute-positioning login-menu-responsive">
       <ContextMenuOption
         title="Profile"
         action={actions.showProfileCallBack}
@@ -47,7 +48,7 @@ const ProfileContextMenu = (
       />
     </ContextMenu>
   ) : (
-    <ContextMenu>
+    <ContextMenu optionalClassNames="absolute-positioning login-menu-responsive">
       <ContextMenuOption
         title="Sign in with Google"
         action={actions.googleLogInCallBack}
@@ -121,6 +122,11 @@ function HeaderBar(props: IHeaderBarProps) {
   const handleNotificationPanelItemClicked = (notificationId: string) => {
     dispatch(dismissNotificationAsReadAsync({ id: notificationId }));
   };
+
+  const handleDeleteNotification = (notificationId: string) => {
+    // Dispatch some action
+    dispatch(deleteNotificationAsync({ id: notificationId }));
+  };
   useEffect(() => {
     const timer = setInterval(() => {
       dispatch(fetchAllNotificationsAsync());
@@ -171,6 +177,7 @@ function HeaderBar(props: IHeaderBarProps) {
                 isLit={notificationUnReadCount > 0}
                 count={notificationUnReadCount}
                 onPanelItemClicked={handleNotificationPanelItemClicked}
+                onDeleteNotificationItemClicked={handleDeleteNotification}
               />
             </>
           )}

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { ICourse, IProcessedUser, TToggleFollowReturnData } from "../types";
+import { INotification } from "../types/notification.types";
 import { API_URL, AUTH_HEADER } from "../utils/environment";
 
 export const getUserById = async (
@@ -117,4 +118,52 @@ export const toggleFollowUser = async ({
     return req.data;
   }
   return Promise.reject("Unable to process follow request");
+};
+
+export const fetchAllNotifications = async (): Promise<INotification[]> => {
+  const req = await axios({
+    withCredentials: true,
+    headers: AUTH_HEADER,
+    method: "GET",
+    url: `${API_URL}/api/users/me/notifications`,
+  });
+  if (req.status === 200) {
+    return req.data;
+  }
+  return Promise.reject("Unable to fetch notifications");
+};
+
+export const dismissNotification = async ({
+  id,
+}: {
+  id: string;
+}): Promise<INotification[]> => {
+  const req = await axios({
+    withCredentials: true,
+    headers: AUTH_HEADER,
+    method: "PATCH",
+    url: `${API_URL}/api/users/me/notifications/${id}`,
+  });
+  if (req.status === 200) {
+    return req.data;
+  }
+  return Promise.reject("Unable to dismiss notification");
+};
+
+export const deleteNotification = async ({
+  id,
+}: {
+  id: string;
+}): Promise<INotification[]> => {
+  const req = await axios({
+    withCredentials: true,
+    headers: AUTH_HEADER,
+    method: "DELETE",
+    url: `${API_URL}/api/users/me/notifications/${id}`,
+  });
+  if (req.status === 200) {
+    console.log("delete notification data", req.data);
+    return req.data;
+  }
+  return Promise.reject("Unable to delete notification");
 };

@@ -32,6 +32,9 @@ h1, h2, h3, h4, h5, h5 {
   margin: 0px;
 }
 
+.remove-absolute-positioning {
+  position: unset;
+}
 .course-category-color-green {
   background-color: var( --pale-light-green-color);
   border-left-color: var(--green-500);
@@ -366,6 +369,12 @@ h1, h2, h3, h4, h5, h5 {
 
 .likes-module-float-right {
   float: right;
+}
+
+@media only screen and (max-width: 769px) {
+  .login-menu-responsive {
+    right: 0vw;
+  }
 }
 
 @media only screen and (max-width: 1676px) {

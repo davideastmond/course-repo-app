@@ -1,0 +1,89 @@
+.NotificationItemsPanel__main {
+  background-color: white;
+  box-shadow: 0px 5px 20px darkgray;
+  padding: 2%;
+  position: absolute;
+  right: 0vw;
+}
+
+.PanelItem {
+  padding: 10px;
+}
+
+.slight-left-margin {
+  margin-left: 10px;
+}
+
+.NotificationItemsPanel__main__header__text {
+  font-weight: bolder;
+  font-size: 30px;
+}
+
+.Notification__UnredDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(  --green-500);
+  align-self: center;
+  margin-left: 5px;
+}
+
+.vertical-align {
+  align-self: center;
+}
+
+.NotificationModule__Main__count{
+  background-color: white;  
+  border-radius: 50%;
+  border-width: 2px;
+  border-style: solid;
+  color: red;
+  line-height: 9px;
+  align-self: center;
+  margin-left: 5px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 8px;
+  text-align: center;
+  padding: 3px;
+  box-shadow: 1px 1px darkslategrey;
+}
+
+.mouse-hover:hover {
+  cursor: pointer;
+  background-color: var(--pale-light-green-color);
+}
+
+/* .flex-container-notification {
+  display: flex;
+} */
+
+.grid-container-notification {
+  display: grid;
+  grid-template-columns: auto auto auto 60px;
+  grid-template-areas: "avatar text-caption note-dot context-circle-button";
+}
+
+.Generic-User-Icon-grid-area {
+  grid-area: avatar;
+}
+
+.notification-panel-item-text {
+  grid-area: text-caption;
+}
+
+.notification-dot {
+  grid-area: note-dot;
+}
+
+.notification-context-menu-circle {
+  grid-area: context-circle-button;
+}
+
+.NotificationItemsPanel__main_parent {
+  position: absolute;
+  width: 100%;
+  left: 0px;
+  height: 100vh;
+}

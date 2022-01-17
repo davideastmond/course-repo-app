@@ -14,9 +14,12 @@
   padding: 10%;
 }
 
+.absolute-positioning {
+  position: absolute;
+}
+
 .ContextMenu__root__main-body {
   width: 193px;
-  position: absolute;
   /* grey100 */
   background: #FFFFFF;
   /* grey 200 */
@@ -25,7 +28,6 @@
   box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.08);
   border-radius: 8px;
   top: 57px;
-  left: 47vw;
 }
 
 .Context-menu-option__main-body:hover {

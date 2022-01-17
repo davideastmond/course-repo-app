@@ -12,3 +12,5 @@ export const API_TOKEN = isProduction
 export const AUTH_HEADER = {
   Authorization: `Bearer ${API_TOKEN}`,
 };
+
+export const IS_ZEN = !!process.env.REACT_APP_DEV_ZEN;

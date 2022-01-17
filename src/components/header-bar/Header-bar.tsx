@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./header-bar-style.css";
 import AlternateAppLogo from "../../images/logos/alternate-app-logo.svg";
+import ZenLogo from "../../images/logos/zen-logo.svg";
 import ProfileIcon from "../profile-icon";
 import { ContextMenu, ContextMenuOption } from "../context-menu";
 import { ContextMenuSeparator } from "../context-menu/Menu-divider";
@@ -9,8 +10,19 @@ import {
   selectCourseRecommendationModalOpenState,
   selectIsLoggedIn,
 } from "../../reducers";
-import { shallowEqual, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import NotificationModule from "../notification";
+import {
+  deleteNotificationAsync,
+  dismissNotificationAsReadAsync,
+  fetchAllNotificationsAsync,
+  selectAllNotifications,
+  selectNotificationUnreadCount,
+} from "../../reducers/notification-slice";
+import { IS_ZEN } from "../../utils/environment";
+
+const headerBarAppTitle = IS_ZEN ? "Zen Course Repo" : "Course Repo";
 
 const ProfileContextMenu = (
   loggedInStatus: boolean,
@@ -22,7 +34,7 @@ const ProfileContextMenu = (
   }
 ) => {
   return loggedInStatus ? (
-    <ContextMenu>
+    <ContextMenu optionalClassNames="absolute-positioning login-menu-responsive">
       <ContextMenuOption
         title="Profile"
         action={actions.showProfileCallBack}
@@ -36,7 +48,7 @@ const ProfileContextMenu = (
       />
     </ContextMenu>
   ) : (
-    <ContextMenu>
+    <ContextMenu optionalClassNames="absolute-positioning login-menu-responsive">
       <ContextMenuOption
         title="Sign in with Google"
         action={actions.googleLogInCallBack}
@@ -54,6 +66,7 @@ interface IHeaderBarProps {
 }
 function HeaderBar(props: IHeaderBarProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
   const courseRecommenderModalOpen = useSelector(
     selectCourseRecommendationModalOpenState,
     shallowEqual
@@ -64,6 +77,11 @@ function HeaderBar(props: IHeaderBarProps) {
   };
 
   const isAppLoggedIn = useSelector(selectIsLoggedIn, shallowEqual);
+  const notifications = useSelector(selectAllNotifications, shallowEqual);
+  const notificationUnReadCount = useSelector(
+    selectNotificationUnreadCount,
+    shallowEqual
+  );
   useEffect(() => {
     if (courseRecommenderModalOpen && courseRecommenderModalOpen === true) {
       clickedInMenuRef.current = true;
@@ -100,6 +118,23 @@ function HeaderBar(props: IHeaderBarProps) {
   const handleMenuOptionClicked = () => {
     setProfileMenuOpen(false);
   };
+
+  const handleNotificationPanelItemClicked = (notificationId: string) => {
+    dispatch(dismissNotificationAsReadAsync({ id: notificationId }));
+  };
+
+  const handleDeleteNotification = (notificationId: string) => {
+    // Dispatch some action
+    dispatch(deleteNotificationAsync({ id: notificationId }));
+  };
+  useEffect(() => {
+    const timer = setInterval(() => {
+      dispatch(fetchAllNotificationsAsync());
+    }, 5000);
+  }, []);
+  useEffect(() => {
+    dispatch(fetchAllNotificationsAsync());
+  }, []);
   return (
     <nav className="Nav__Header-bar">
       <div className="Nav__Header-bar_body">
@@ -107,13 +142,13 @@ function HeaderBar(props: IHeaderBarProps) {
           <Link to="/">
             <img
               className="app-logo"
-              src={AlternateAppLogo}
+              src={IS_ZEN ? ZenLogo : AlternateAppLogo}
               alt="zen logo"
             ></img>
           </Link>
         </div>
         <div className="Nav__Header-bar__Apple-title-section">
-          <h3 className="app-title">Course Repo</h3>
+          <h3 className="app-title">{headerBarAppTitle}</h3>
         </div>
         <div className="Nav__Header-bar__Profile-section">
           {!isAppLoggedIn && (
@@ -136,6 +171,13 @@ function HeaderBar(props: IHeaderBarProps) {
                 imageSrc={
                   props.userData?.avatar ? props.userData.avatar[0].url : ""
                 }
+              />
+              <NotificationModule
+                notifications={notifications}
+                isLit={notificationUnReadCount > 0}
+                count={notificationUnReadCount}
+                onPanelItemClicked={handleNotificationPanelItemClicked}
+                onDeleteNotificationItemClicked={handleDeleteNotification}
               />
             </>
           )}

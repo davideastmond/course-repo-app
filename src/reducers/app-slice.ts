@@ -100,6 +100,7 @@ export const appSlice = createSlice({
         stateStatus.idle(state);
         state.user = {};
         state.isLoggedIn = false;
+        window?.sessionStorage.clear();
       })
       .addCase(updateUserJobTitleDepartmentAsync.pending, (state) => {
         stateStatus.loading(state, "Updating user profile data");
@@ -114,10 +115,12 @@ export const appSlice = createSlice({
   },
 });
 
-export const selectIsLoggedIn = (state: any) => state.app.isLoggedIn;
-export const selectLoggedInUser = (state: any) => state.app.user;
-export const selectCourseRecommendationModalOpenState = (state: any) =>
+export const selectIsLoggedIn = (state: any): boolean => state.app.isLoggedIn;
+export const selectLoggedInUser = (state: any): IProcessedUser =>
+  state.app.user;
+export const selectCourseRecommendationModalOpenState = (state: any): boolean =>
   state.app.courseRecommenderModalOpen;
-export const selectAppStatus = (state: any) => state.app.status;
+export const selectAppStatus = (state: any): { state: string } =>
+  state.app.status;
 export const { setCourseFilterOpen } = appSlice.actions;
 export default appSlice.reducer;

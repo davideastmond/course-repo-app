@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { IDetailedCourse } from "../../types";
+import { ICourse, IDetailedCourse } from "../../types";
 import "./detailed-course-view.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
@@ -7,9 +7,18 @@ import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import { ModalType } from "../../types/modal.types";
 import ProfileView from "../Profile-view";
+import SocialMediaModule from "../social-media-module";
+import { getIsLikedByLoggedInUser } from "../../utils/course-recommendation/is-liked-by-logged-in-user";
+import { shallowEqual, useSelector } from "react-redux";
+import { selectLoggedInUser } from "../../reducers";
+import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
+import { SocialMediaModuleType } from "../social-media-module/types";
 interface IDetailedCourseViewProps {
   courseContext: IDetailedCourse;
-  onModalClose: (visible: boolean) => void;
+  onModalClose: () => void;
+  showLikes: boolean;
+  onCourseLikeClicked?: (courseId: string) => void;
+  currentCourseContextLike?: ICourse;
 }
 
 type Note = {
@@ -51,8 +60,10 @@ const ReadOnlyNote = ({ index, note }: { index: number; note: Note }) => {
 function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
+  const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+
   const handleCloseModal = () => {
-    props.onModalClose(false);
+    props.onModalClose();
   };
 
   const [userName, setUserNames] = useState<any>({});
@@ -139,9 +150,26 @@ function DetailedCourseViewModal(props: IDetailedCourseViewProps) {
             />
           </div>
         </div>
+        {props.showLikes && (
+          <div className="Detailed-Course-View__likesFooter-section">
+            <SocialMediaModule
+              checked={getIsLikedByLoggedInUser({
+                loggedInUser,
+                course: props.currentCourseContextLike,
+              })}
+              likesCount={getLikesCount({
+                data: props.currentCourseContextLike?.likes,
+              })}
+              forCourseId={props.courseContext._id}
+              onClicked={props.onCourseLikeClicked}
+              classNames="bottom-margin"
+              moduleType={SocialMediaModuleType.Like}
+            />
+          </div>
+        )}
       </section>
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Detailed-course-view">
           <ProfileView
             onModalClose={handleProfileViewModalClosed}
             userId={props.courseContext.postedByUserId}

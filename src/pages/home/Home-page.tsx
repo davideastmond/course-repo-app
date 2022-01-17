@@ -20,8 +20,11 @@ import {
   selectAllCourses,
   selectCourseStateStatus,
   selectCurrentCourseContext,
+  selectCurrentCourseContextLike,
   selectIsLoggedIn,
+  selectLikeInProgress,
   selectLoggedInUser,
+  toggleCourseLikeAsync,
 } from "../../reducers";
 import doGoogleLogin from "../../services/auth";
 import { ModalType } from "../../types/modal.types";
@@ -30,12 +33,18 @@ import "./home-page-style.css";
 import { StatusState } from "../../utils/state-status";
 import AlertToast from "../../components/alert-toast";
 import { AlertType } from "../../components/alert-toast/types";
+import { fetchAllNotificationsAsync } from "../../reducers/notification-slice";
 
 function HomePage() {
   const courses = useSelector(selectAllCourses, shallowEqual);
+  const likeInProgress = useSelector(selectLikeInProgress, shallowEqual);
   const courseErrorState = useSelector(selectCourseStateStatus, shallowEqual);
   const currentCourseContext = useSelector(
     selectCurrentCourseContext,
+    shallowEqual
+  );
+  const currentContextLike = useSelector(
+    selectCurrentCourseContextLike,
     shallowEqual
   );
   const [done, setDone] = useState<boolean>(false);
@@ -78,7 +87,8 @@ function HomePage() {
       setModalVisible(true);
       document.body.classList.add("no-body-scroll");
     }
-  });
+  }, [currentCourseContext]);
+  useEffect(() => {}, [currentCourseContext]);
 
   useEffect(() => {
     if (modalVisible) {
@@ -118,7 +128,10 @@ function HomePage() {
     });
   }, [courses]);
 
-  console.log("Course error state", courseErrorState);
+  const handleDataContainerCourseToggleLike = (courseId: string) => {
+    dispatch(toggleCourseLikeAsync({ id: courseId }));
+  };
+
   return (
     <div className={`Home-Page__container`}>
       {authInProgress && (
@@ -126,11 +139,13 @@ function HomePage() {
           <ZenSpinner />
         </div>
       )}
-      {courseErrorState && courseErrorState.state === StatusState.Loading && (
-        <div className="Home-Page__Spinner-Overlay">
-          <ZenSpinner />
-        </div>
-      )}
+      {courseErrorState &&
+        courseErrorState.state === StatusState.Loading &&
+        !likeInProgress && (
+          <div className="Home-Page__Spinner-Overlay">
+            <ZenSpinner />
+          </div>
+        )}
       <HeaderBar
         googleLoginAction={handleGoogleLogin}
         logOutAction={handleLogOut}
@@ -156,6 +171,8 @@ function HomePage() {
                 courses={courses}
                 courseCardClickHandler={handleCourseCardClickedHomePage}
                 genericUserProfileClickHandler={handleGenericUserProfileClick}
+                showCourseCardLikes={isLoggedIn}
+                onCourseLikeToggle={handleDataContainerCourseToggleLike}
               />
             )}
           </div>
@@ -183,24 +200,29 @@ function HomePage() {
         /> */}
       </footer>
       {modalVisible && modalType === ModalType.SuggestCourse && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__suggest-course-modal">
           <SuggestCourseModal onModalClose={handleModalClosed} />
         </div>
       )}
       {modalVisible && modalType === ModalType.DetailedCourseView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__detailed-course-view-modal">
           <DetailedCourseViewModal
             courseContext={currentCourseContext}
             onModalClose={handleModalClosed}
+            onCourseLikeClicked={handleDataContainerCourseToggleLike}
+            showLikes={isLoggedIn}
+            currentCourseContextLike={currentContextLike}
           />
         </div>
       )}
       {modalVisible && modalType === ModalType.ProfileDetailView && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Home-page__Profile-view-modal">
           <ProfileView
             onModalClose={handleModalClosed}
             userId={profileDetailUserId}
             closeButtonVisible={true}
+            onCourseLikeClicked={handleDataContainerCourseToggleLike}
+            courseContext={currentCourseContext}
           />
         </div>
       )}

@@ -267,7 +267,7 @@ function ProfilePage() {
         </div>
       </div>
       {modalVisible && modalType === ModalType.AddInterestsModal && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Profile-page__add-interests-modal">
           <AddInterestsModal
             closeModalHandler={() => setModalVisible(false)}
             addInterestTagsSubmitHandler={handleAddTags}
@@ -275,7 +275,7 @@ function ProfilePage() {
         </div>
       )}
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Profile-page__courseSummaryListModal">
           <CourseSummaryListModal
             handleCloseModal={handleCloseModal}
             courseRecommendations={courseRecommendations}

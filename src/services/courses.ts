@@ -6,9 +6,8 @@ import {
   IDetailedCourse,
   IProcessedUser,
 } from "../types";
-import { getUserInterests } from "./users";
-import { intersection } from "lodash";
 import { API_URL, AUTH_HEADER } from "../utils/environment";
+import { sortCoursesByInterestsAndDate } from "../utils/course-recommendation/sort-courses-by-interest-and-date";
 
 export function getAllCourses({
   limit,
@@ -29,17 +28,7 @@ export function getAllCourses({
     })
       .then((req) => {
         const courses = req.data as ICourse[];
-        getUserInterests("me")
-          .then((interestTags) => {
-            if (interestTags && interestTags.length > 0) {
-              resolve(sortCoursesByInterest({ courses, interestTags }));
-            } else {
-              resolve(sortCoursesByDate(courses));
-            }
-          })
-          .catch(() => {
-            resolve(sortCoursesByDate(courses));
-          });
+        resolve(sortCoursesByInterestsAndDate(courses));
       })
       .catch((error) => {
         reject(new Error("Unable to fetch"));
@@ -140,35 +129,24 @@ export const getCourseAutoComplete = async ({
   }
 };
 
-const sortCoursesByDate = (courses: ICourse[]): ICourse[] => {
-  return courses.sort(
-    (a, b) =>
-      parseInt(b.createdAt.replace(/[-.:\D]/g, "")) -
-      parseInt(a.createdAt.replace(/[-.:\D]/g, ""))
-  );
-};
-
-const sortCoursesByInterest = ({
-  courses,
-  interestTags,
+export const toggleCourseLike = async ({
+  id,
 }: {
+  id: string;
+}): Promise<{
   courses: ICourse[];
-  interestTags: string[];
-}): ICourse[] => {
-  return courses.sort((a, b) => {
-    const aIntersection = intersection(
-      a.tags.map((tag) => tag.trim().toLowerCase()),
-      interestTags
-    );
-    const bIntersection = intersection(
-      b.tags.map((tag) => tag.trim().toLowerCase()),
-      interestTags
-    );
-    if (aIntersection > bIntersection) {
-      return 1;
-    } else if (aIntersection < bIntersection) {
-      return 0;
-    }
-    return 0;
+  actionTaken: string;
+  courseChanged: ICourse;
+}> => {
+  const req = await axios({
+    withCredentials: true,
+    method: "PATCH",
+    url: `${API_URL}/api/courses/${id}/like`,
+    headers: AUTH_HEADER,
   });
+  if (req.status === 200) {
+    const sortedCourses = await sortCoursesByInterestsAndDate(req.data.courses);
+    return { ...req.data, courses: sortedCourses };
+  }
+  return Promise.reject("Unable to toggle like");
 };

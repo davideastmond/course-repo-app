@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-no-target-blank */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ContentTag from "../Content-tag";
 import ExternalLinkIcon from "../../images/link-icons/external-link.svg";
 import "./course-card-style.css";
@@ -12,12 +12,18 @@ import {
 import { getUserById } from "../../services/users";
 import GenericUserRecommendationIcon from "../profile-icon/GenericRecommendationIcon";
 import dayjs from "dayjs";
+import SocialMediaModule from "../social-media-module";
+import { getLikesCount } from "../../utils/course-recommendation/get-likes-count";
+import { SocialMediaModuleType } from "../social-media-module/types";
 
 interface ICourseCardProps {
   color?: string | CourseCategory;
   course: ICourse;
   courseCardClickHandler: (id: string) => void;
   genericUserProfileClickHandler: (id: string) => void;
+  onLikeClicked?: (courseId: string) => void;
+  showLikes: boolean;
+  isLikedByUser?: boolean;
 }
 
 function CourseCard(props: ICourseCardProps) {
@@ -41,6 +47,12 @@ function CourseCard(props: ICourseCardProps) {
   const handleGenericUserProfileIconClick = () => {
     if (userName && userName[props.course.postedByUserId]) {
       props.genericUserProfileClickHandler(props.course.postedByUserId);
+    }
+  };
+
+  const handleCourseCardClickedLikeButton = () => {
+    if (props.showLikes) {
+      props.onLikeClicked && props.onLikeClicked(props.course._id);
     }
   };
 
@@ -100,6 +112,17 @@ function CourseCard(props: ICourseCardProps) {
               <ContentTag title={tag} key={`${index}_${tag}`} />
             ))}
         </div>
+        {props.showLikes && (
+          <div className="Course-card__likesFooter-section">
+            <SocialMediaModule
+              checked={!!props.isLikedByUser}
+              likesCount={getLikesCount({ data: props.course.likes })}
+              forCourseId={props.course._id}
+              onClicked={handleCourseCardClickedLikeButton}
+              moduleType={SocialMediaModuleType.Like}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

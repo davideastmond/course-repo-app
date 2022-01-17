@@ -1,0 +1,24 @@
+
+.NotificationPanelItemContextMenu__button-icon__bigCircle {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: var(--charcoal);
+}
+
+.elipses_dot {
+  height: 3px;
+  width: 3px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+.ElipsesDotsParent {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 13px;
+}
+
+.NotificationPanelItemContextMenu__body {
+  position: absolute;
+}

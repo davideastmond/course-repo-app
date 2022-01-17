@@ -3,22 +3,28 @@ import React, { useState, useEffect } from "react";
 import {
   getCourseRecommendationsByUser,
   getUserById,
+  toggleFollowUser,
 } from "../../services/users";
 import ProfileIcon from "../profile-icon";
 import "./profile-view-style.css";
 import "../../pages/profile/profile-page-style.css";
 import WindowCloseButton from "../../images/icons/x-close-window.svg";
 import TagApplet from "../Tags-applet";
-import { ICourse, IProcessedUser } from "../../types";
+import { ICourse, IDetailedCourse, IProcessedUser } from "../../types";
 import { ModalType } from "../../types/modal.types";
 import { UserCourseSummaryTable } from "./User-course-summary-list";
 import CourseSummaryListModal from "../CourseSummaryListModal";
 import { shallowEqual, useSelector } from "react-redux";
 import { selectLoggedInUser } from "../../reducers";
+import SocialMediaFollowModule from "../social-media-module";
+import { SocialMediaModuleType } from "../social-media-module/types";
 export interface IProfileViewProps {
   userId: string;
   closeButtonVisible: boolean;
   onModalClose?: (visible: boolean) => void;
+  onCourseLikeClicked?: (courseId: string) => void;
+  courseContext?: IDetailedCourse;
+  hasSearchContext?: boolean;
 }
 
 function ProfileView(props: IProfileViewProps) {
@@ -35,13 +41,17 @@ function ProfileView(props: IProfileViewProps) {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [modalType, setModalType] = useState<ModalType>(ModalType.nullModal);
   const [isLoggedInUser, setIsLoggedInUser] = useState<boolean>(false);
+  const [isFollowButtonChecked, setIsFollowButtonChecked] =
+    useState<boolean>(false);
 
   const loggedInUser = useSelector(selectLoggedInUser, shallowEqual);
+
   const getUser = async () => {
     try {
       if (props.userId && props.userId !== "") {
         const user = await getUserById(props.userId);
         setUserData(user);
+        setIsFollowButtonChecked(!!user!.followedBy[loggedInUser._id]);
         if (loggedInUser && loggedInUser._id === props.userId) {
           setIsLoggedInUser(true);
         } else {
@@ -78,13 +88,22 @@ function ProfileView(props: IProfileViewProps) {
   };
 
   const handleCloseModal = () => {
-    setModalVisible(false);
     setModalType(ModalType.nullModal);
+    setModalVisible(false);
   };
 
   const handleUserCourseSummaryTableCoursesChanged = () => {
     getCourseRecommendations();
   };
+
+  const handleFollowToggle = async () => {
+    const followData = await toggleFollowUser({ id: props.userId });
+    setUserData(followData.targetUser);
+    setIsFollowButtonChecked(
+      !!followData.targetUser.followedBy[loggedInUser._id]
+    );
+  };
+
   return (
     <div className="Profile-view__Main__Window">
       <div className="Profile-view__Main__container window-padding-1p">
@@ -164,7 +183,9 @@ function ProfileView(props: IProfileViewProps) {
             </div>
             <div className="Profile_view__my-recommendations-footer">
               <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
-                My Recommendations
+                {userData?.firstName
+                  ? `Recommendations by ${userData.firstName}`
+                  : "Recommendations"}
               </div>
               <UserCourseSummaryTable
                 sourceId="Profile view"
@@ -177,6 +198,8 @@ function ProfileView(props: IProfileViewProps) {
                     : courseRecommendations.length
                 }
                 onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+                onCourseLikeClicked={props.onCourseLikeClicked}
+                hasSearchContext={props.hasSearchContext}
               />
               {courseRecommendations && courseRecommendations.length >= 3 && (
                 <div
@@ -187,17 +210,35 @@ function ProfileView(props: IProfileViewProps) {
                 </div>
               )}
             </div>
+            {props.userId !== loggedInUser._id && (
+              <div className="Profile_view_social-media-footer">
+                <div className="bottom-border cell-padding open-sans-font-family font-size-25px">
+                  Social
+                </div>
+                <div className="Follow-social-media-main-enclosure flex-container">
+                  <SocialMediaFollowModule
+                    checked={isFollowButtonChecked}
+                    moduleType={SocialMediaModuleType.Follow}
+                    onClicked={handleFollowToggle}
+                    forUserId={userData?._id}
+                    caption={"You're following this user"}
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
       {modalVisible && modalType === ModalType.FullUserCourseSummaryList && (
-        <div className="Page-Modal">
+        <div className="Page-Modal Profile-view_Full-course-summary-list">
           <CourseSummaryListModal
             handleCloseModal={handleCloseModal}
             courseRecommendations={courseRecommendations}
             userData={userData}
             editable={isLoggedInUser}
             onCourseDataChanged={handleUserCourseSummaryTableCoursesChanged}
+            onCourseLikeClicked={props.onCourseLikeClicked}
+            courseContext={props.courseContext}
           />
         </div>
       )}
